@@ -13,8 +13,16 @@ namespace PushEngine
         {
             view[0].X = center.X - (size.Width / 2);
             view[1].X = center.X + (size.Width / 2);
-            view[0].Y = center.Y - (size.Height / 2);
-            view[1].Y = center.X + (size.Height / 2);
+            view[0].Y = center.Y + (size.Height / 2);
+            view[1].Y = center.Y - (size.Height / 2);
+        }
+
+        internal RectangleF View
+        {
+            get
+            {
+                return new RectangleF(view[0].X, view[1].Y, view[1].X, view[0].Y);
+            }
         }
 
         internal void apply()
