@@ -55,6 +55,7 @@
     <Compile Include="Draw\DrawElement.cs" />
     <Compile Include="DrawManager.cs" />
     <Compile Include="Draw\Quad.cs" />
+    <Compile Include="Draw\Scene.cs" />
     <Compile Include="Draw\TextLabel.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="PEClient.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Projection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushEngineCore.cs" />
+    <Compile Include="TextAlignment.cs" />
     <Compile Include="Texture.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

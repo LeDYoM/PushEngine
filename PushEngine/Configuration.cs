@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using OpenTK.Graphics;
+using OpenTK;
 
 namespace PushEngine
 {
@@ -13,8 +14,10 @@ namespace PushEngine
     {
         public Color SystemBackgroundColor = Color.Black;
         public Size WindowSize = new Size(800, 600);
+        public Vector2 virtualWindowTopLeft = new Vector2(-400, -300);
+        public Vector2 virtualWindowDownRight = new Vector2(400, 300);
         public string WindowTitle = "PushEngine";
-        public GraphicsMode graphicsMode = new GraphicsMode(new ColorFormat(32));
+        public int bpp = 32;
     }
 
     internal class Configuration
@@ -22,6 +25,7 @@ namespace PushEngine
         public ConfigurationData configurationData = new ConfigurationData();
 
         private static string configFile = "config.bin";
+        public GraphicsMode graphicsMode = null;
 
         internal void Start()
         {
@@ -34,6 +38,8 @@ namespace PushEngine
         {
             PushEngineCore.Instance.Width = configurationData.WindowSize.Width;
             PushEngineCore.Instance.Height = configurationData.WindowSize.Height;
+            graphicsMode = new GraphicsMode(new ColorFormat(configurationData.bpp));
+
 
         }
 

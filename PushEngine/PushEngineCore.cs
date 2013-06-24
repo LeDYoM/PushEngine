@@ -16,6 +16,8 @@ namespace PushEngine
             Debug.Assert(instance == null);
             configuration.Start();
             instance = new PushEngineCore();
+            instance.Title = configuration.configurationData.WindowTitle;
+            instance.VSync = VSyncMode.Off;
         }
 
         internal static int Execute()
@@ -31,8 +33,11 @@ namespace PushEngine
         }
 
         private PushEngineCore() : base(configuration.configurationData.WindowSize.Width, 
-            configuration.configurationData.WindowSize.Height, configuration.configurationData.graphicsMode)
+            configuration.configurationData.WindowSize.Height, configuration.graphicsMode)
         {
+            systemProjection = new Projection(
+                configuration.configurationData.virtualWindowTopLeft,
+                configuration.configurationData.virtualWindowDownRight);
             InitSubModules();
         }
 
@@ -44,7 +49,7 @@ namespace PushEngine
             processManager.Start();
         }
 
-        Projection systemProjection = new Projection(new Vector2(0, 0), new System.Drawing.SizeF(800, 600));
+        Projection systemProjection;
 
         private void clearScreen()
         {
@@ -62,9 +67,19 @@ namespace PushEngine
             systemProjection.apply();
         }
 
+        private double ellapsed = 0.0;
+
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
+
+            ellapsed += e.Time;
+            if (ellapsed > 1)
+            {
+                Title = configuration.configurationData.WindowTitle + " Ellapsed now: " + e.Time + "FPS: " + 1.0 / e.Time;
+                ellapsed = 0;
+            }
+
             processManager.OnUpdateFrame(e);
         }
 

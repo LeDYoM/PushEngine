@@ -21,9 +21,7 @@ namespace PushEngine.Demos
             quad.PostInit();
 
             label = new TextLabel();
-            label.PostInit();
- 
-            state = State.Running;
+            label.PostInit(); 
         }
 
         public override void Update(OpenTK.FrameEventArgs e)
@@ -33,6 +31,15 @@ namespace PushEngine.Demos
             if (Keyboard[OpenTK.Input.Key.A])
             {
                 quad.position.X++;
+            }
+            if (Keyboard[OpenTK.Input.Key.B])
+            {
+                quad.setLeftPosition(0);
+            }
+
+            if (Keyboard[OpenTK.Input.Key.C])
+            {
+                quad.setTopPosition(0);
             }
 
         }

@@ -105,22 +105,37 @@ namespace PushEngine
             return gfx_t.MeasureString(text, font);
         }
 
-        internal static Texture CreateTextTexture(string text, Font font, Color4 foreColor, Color4 backColor)
+        internal static Texture CreateTextTexture(string text, Font font, Color4 foreColor, Color4 backColor, Size size, TextAlignment alignment)
         {
-            return CreateTextTexture(text, font, foreColor, backColor, MeasureString(text, font).ToSize());
-        }
-
-        internal static Texture CreateTextTexture(string text, Font font, Color4 foreColor, Color4 backColor,Size size)
-        {
-//            SizeF size = MeasureString(text, font);
+            if (size.Width < 1 || size.Height < 1)
+            {
+                size = MeasureString(text, font).ToSize();
+            }
 
             Bitmap bmp = new Bitmap((int)size.Width, (int)size.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             Graphics gfx = Graphics.FromImage(bmp);
             gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             Color tr = Color.Transparent;
-             //            tr = Color.FromArgb(128, 0, 0, 0);
+//            tr = Color.FromArgb(128, 0, 0, 0);
             gfx.Clear((Color)backColor);
-            gfx.DrawString(text, font, new SolidBrush((Color)foreColor), new Point());
+
+            Point pointWhereDraw;
+            Size s = MeasureString(text, font).ToSize();
+
+            switch (alignment)
+            {
+                case TextAlignment.Center:
+                    pointWhereDraw = new Point(size.Width / 2, size.Height / 2);
+                    break;
+                default:
+                case TextAlignment.Left:
+                    pointWhereDraw = new Point(0, 0);
+                    break;
+                case TextAlignment.Right:
+                    pointWhereDraw = new Point(size.Width - s.Width, size.Height - s.Height);
+                    break;
+            }
+            gfx.DrawString(text, font, new SolidBrush((Color)foreColor), pointWhereDraw);
             gfx.Dispose();
 
             return CreateFromBitmap(bmp);

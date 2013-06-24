@@ -16,8 +16,11 @@ namespace PushEngine.Draw
         internal protected bool hasTransparency = false;
         internal protected int numVertex = 0;
         internal protected Color transparentColor = Color.Black;
+
         internal Texture texture = null;
-        private bool initialized = false;
+        
+        protected bool initialized = false;
+
 
         internal DrawElement()
         {
@@ -51,20 +54,31 @@ namespace PushEngine.Draw
         {
             Debug.Assert(initialized, "You must call PostInit() after setting the properties");
             PreRender();
+            RenderObject();
             RenderImpl();
             PostRender();
         }
 
         internal void PreRender()
         {
+            if (hasTransparency)
+            {
+                GL.Enable(EnableCap.Blend);
+                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            }
+
             if (texture != null)
             {
                 GL.Enable(EnableCap.Texture2D);
                 GL.BindTexture(TextureTarget.Texture2D, texture.Id);
             }
 
+            GL.PushMatrix();
             GL.Translate(position.X, position.Y, 0);
+        }
 
+        internal void RenderObject()
+        {
             GL.Begin(BeginMode.Polygon);
             for (int i = 0; i < numVertex; ++i)
             {
@@ -73,24 +87,31 @@ namespace PushEngine.Draw
             GL.End();
         }
 
-        internal protected void DrawVertex(ref Vector2d v, ref Vector2d t, ref Color4 c)
-        {
-            GL.TexCoord2(t);
-            GL.Color4(c);
-            GL.Vertex2(v);
-        }
-
         internal virtual void RenderImpl()
         {
         }
 
         internal void PostRender()
         {
+            GL.PopMatrix();
+
             if (texture != null)
             {
                 GL.Disable(EnableCap.Texture2D);
             }
+
+            if (hasTransparency)
+            {
+                GL.Disable(EnableCap.Blend);
+            }
+
         }
 
+        internal protected void DrawVertex(ref Vector2d v, ref Vector2d t, ref Color4 c)
+        {
+            GL.TexCoord2(t);
+            GL.Color4(c);
+            GL.Vertex2(v);
+        }
     }
 }

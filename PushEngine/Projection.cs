@@ -9,12 +9,12 @@ namespace PushEngine
     {
         internal Vector2[] view = new Vector2[2];
 
-        internal Projection(Vector2 center, SizeF size)
+        internal Projection(Vector2 topLeft, Vector2 downRight)
         {
-            view[0].X = center.X - (size.Width / 2);
-            view[1].X = center.X + (size.Width / 2);
-            view[0].Y = center.Y + (size.Height / 2);
-            view[1].Y = center.Y - (size.Height / 2);
+            view[0].X = topLeft.X;
+            view[1].X = downRight.X;
+            view[0].Y = downRight.Y;
+            view[1].Y = topLeft.Y;
         }
 
         internal RectangleF View

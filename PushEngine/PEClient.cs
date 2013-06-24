@@ -24,6 +24,7 @@ namespace PushEngine
         public virtual void Start()
         {
             Keyboard = PushEngineCore.Instance.Keyboard;
+            state = State.Running;
         }
 
         public virtual void Update(FrameEventArgs e)
