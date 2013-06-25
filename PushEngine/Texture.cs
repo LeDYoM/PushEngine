@@ -27,6 +27,12 @@ namespace PushEngine
             gfx = Graphics.FromImage(originalTexture);
         }
 
+        internal void UpdateTexture(Bitmap bmp, Rectangle rect)
+        {
+            dirty_region.Intersect(rect);
+            UploadBitmap();
+        }
+
         internal static Texture CreateFromBitmap(Bitmap bmp)
         {
             int id = GL.GenTexture();
@@ -56,7 +62,7 @@ namespace PushEngine
             
         }
 
-        private void UploadBitmap()
+        internal void UploadBitmap()
         {
             if (dirty_region != RectangleF.Empty)
             {
@@ -100,23 +106,33 @@ namespace PushEngine
         private static Bitmap bmp_t = new Bitmap(1, 1);
         private static Graphics gfx_t = Graphics.FromImage(bmp_t);
 
-        private static SizeF MeasureString(string text, Font font)
+        internal static SizeF MeasureString(string text, Font font)
         {
             return gfx_t.MeasureString(text, font);
         }
 
-        internal static Texture CreateTextTexture(string text, Font font, Color4 foreColor, Color4 backColor, Size size, TextAlignment alignment)
+        internal void Clear(Color4 color)
+        {
+            gfx.Clear((Color)color);
+            dirty_region = new Rectangle(0, 0, originalTexture.Width, originalTexture.Height);
+        }
+
+        internal void DrawString(string text, Font font, Color4 foreColor,
+            Color4 backColor, Size size, TextAlignment alignment)
+        {
+            Rectangle rect = Texture.DrawString(text, font, foreColor, backColor, size, alignment, ref gfx);
+            dirty_region.Intersect(rect);
+        }
+
+        internal static Rectangle DrawString(string text, Font font, Color4 foreColor, 
+            Color4 backColor, Size size, TextAlignment alignment, ref Graphics gfx)
         {
             if (size.Width < 1 || size.Height < 1)
             {
                 size = MeasureString(text, font).ToSize();
             }
 
-            Bitmap bmp = new Bitmap((int)size.Width, (int)size.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            Graphics gfx = Graphics.FromImage(bmp);
             gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-            Color tr = Color.Transparent;
-//            tr = Color.FromArgb(128, 0, 0, 0);
             gfx.Clear((Color)backColor);
 
             Point pointWhereDraw;
@@ -136,6 +152,18 @@ namespace PushEngine
                     break;
             }
             gfx.DrawString(text, font, new SolidBrush((Color)foreColor), pointWhereDraw);
+            Rectangle rect = new Rectangle(pointWhereDraw, s);
+            return rect;
+
+        }
+
+        internal static Texture CreateTextTexture(string text, Font font, Color4 foreColor, Color4 backColor, Size size, TextAlignment alignment)
+        {
+            Bitmap bmp = new Bitmap((int)size.Width, (int)size.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Graphics gfx = Graphics.FromImage(bmp);
+
+            DrawString(text, font, foreColor, backColor, size, alignment, ref gfx);
+
             gfx.Dispose();
 
             return CreateFromBitmap(bmp);
