@@ -66,6 +66,8 @@
     <Compile Include="PushEngineCore.cs" />
     <Compile Include="TextAlignment.cs" />
     <Compile Include="Texture.cs" />
+    <Compile Include="TextureUtils.cs" />
+    <Compile Include="ViewVars.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

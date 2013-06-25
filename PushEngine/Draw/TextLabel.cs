@@ -24,7 +24,7 @@ namespace PushEngine.Draw
 
                 if (initialized)
                 {
-                    SizeF s = Texture.MeasureString(text, font);
+                    SizeF s = TextureUtils.MeasureString(text, font);
                     if (autoSize)
                     {
                         if (s.Width != width || s.Height != height)
@@ -53,7 +53,7 @@ namespace PushEngine.Draw
         internal override void PostInit()
         {
             // Create a new text texture.
-            texture = Texture.CreateTextTexture(text, font, foregroundColor, backgroundColor, new Size((int)width, (int)height), alignment);
+            texture = TextureUtils.CreateTextTexture(text, font, foregroundColor, backgroundColor, new Size((int)width, (int)height), alignment);
             hasTransparency = true;
             base.PostInit();
         }

@@ -42,6 +42,12 @@ namespace PushEngine.Demos
                 quad.setTopPosition(0);
             }
 
+            if (Keyboard[OpenTK.Input.Key.D])
+            {
+                label.Text = "a";
+            }
+
+
         }
 
         public override void Render(OpenTK.FrameEventArgs e)
