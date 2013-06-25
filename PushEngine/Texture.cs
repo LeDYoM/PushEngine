@@ -77,6 +77,11 @@ namespace PushEngine
         internal void Clear(Color4 color)
         {
             gfx.Clear((Color)color);
+            dirtyAll();
+        }
+
+        internal void dirtyAll()
+        {
             dirty_region = new Rectangle(0, 0, originalTexture.Width, originalTexture.Height);
         }
 
@@ -84,7 +89,7 @@ namespace PushEngine
             Color4 backColor, Size size, TextAlignment alignment)
         {
             Rectangle rect = TextureUtils.DrawString(text, font, foreColor, backColor, size, alignment, ref gfx);
-            dirty_region.Intersect(rect);
+            dirtyAll();
         }
 
         public void Dispose()
