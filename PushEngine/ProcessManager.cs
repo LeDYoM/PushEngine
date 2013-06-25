@@ -4,7 +4,7 @@ using PushEngine.Demos;
 
 namespace PushEngine
 {
-    internal class ProcessManager : Manager
+    internal class ProcessManager : Manager, IDisposable
     {
         DirectDemoQuad directDemoQuad;
 
@@ -13,13 +13,19 @@ namespace PushEngine
             base.Start();
 
             directDemoQuad = new DirectDemoQuad();
+            PEContext context = new PEContext();
+
+            context.Keyboard = PushEngineCore.Instance.Keyboard;
+            context.state = PEContext.State.Created;
+
+            directDemoQuad.setContext(context);
 
             Success();
         }
 
         internal void startCreatedProcesses()
         {
-            if (directDemoQuad.state == PEClient.State.Created)
+            if (directDemoQuad.Context.state == PEContext.State.Created)
             {
                 directDemoQuad.Start();
             }
@@ -37,5 +43,10 @@ namespace PushEngine
             directDemoQuad.Render(e);
         }
 
+
+        public void Dispose()
+        {
+            directDemoQuad.Dispose();
+        }
     }
 }

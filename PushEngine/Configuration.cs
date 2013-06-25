@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
@@ -22,15 +21,16 @@ namespace PushEngine
 
     internal class Configuration
     {
-        public ConfigurationData configurationData = new ConfigurationData();
+        private DebugHelper dh = Debugger.getDH("Configuration");
 
+        public ConfigurationData configurationData = new ConfigurationData();
         private static string configFile = "config.bin";
         public GraphicsMode graphicsMode = null;
 
         internal void Start()
         {
-            Debug.Write("Reading config file...");
-
+            dh.WriteLine("Reading config file...");
+            
             ReadConfigFile();
         }
 
@@ -56,7 +56,7 @@ namespace PushEngine
                 Stream stream = new FileStream(configFile, FileMode.Open, FileAccess.Read, FileShare.Read);
                 configurationData = (ConfigurationData)formatter.Deserialize(stream);
                 stream.Close();
-                Debug.WriteLine("Config file read successfully");
+                dh.WriteLine("Config file read successfully");
             }
             catch (FileNotFoundException)
             {
@@ -64,7 +64,7 @@ namespace PushEngine
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Exception: " + e.Message);
+                dh.WriteLine("Exception: " + e.Message);
             }
         }
 
@@ -77,12 +77,12 @@ namespace PushEngine
                 stream = new FileStream(configFile, FileMode.Create, FileAccess.Write, FileShare.None);
                 formatter.Serialize(stream, configurationData);
                 stream.Close();
-                Debug.WriteLine("Config file saved successfully");
+                dh.WriteLine("Config file saved successfully");
 
             }
             catch (Exception)
             {
-                Debug.WriteLine("Cannot save configuration file");
+                dh.WriteLine("Cannot save configuration file");
                 if (stream != null)
                     stream.Close();
             }

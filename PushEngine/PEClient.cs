@@ -1,30 +1,29 @@
 ﻿using System;
 using OpenTK;
 using OpenTK.Input;
+using System.Diagnostics;
 
 namespace PushEngine
 {
-    public class PEClient
+    public class PEClient : IDisposable
     {
-        protected KeyboardDevice Keyboard = null;
+        private DebugHelper dh = Debugger.getDH("PEClient");
 
-        public enum State
+        protected PEContext context = null;
+        internal PEContext Context { get { return context; } }
+
+        internal void setContext(PEContext context_)
         {
-            Created = 0,
-            Running
+            context = context_;
         }
-
-        public State state { get;  protected set; }
 
         public PEClient()
         {
-            state = State.Created;
         }
 
         public virtual void Start()
         {
-            Keyboard = PushEngineCore.Instance.Keyboard;
-            state = State.Running;
+            context.state = PEContext.State.Running;
         }
 
         public virtual void Update(FrameEventArgs e)
@@ -34,5 +33,17 @@ namespace PushEngine
         public virtual void Render(FrameEventArgs e)
         {
         }
+
+        public virtual void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
+
+        ~PEClient()
+        {
+            dh.WriteLine("Destructor from PEClient called!");
+            Dispose();
+        }
+
     }
 }

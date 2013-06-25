@@ -51,14 +51,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="CoreProcesses\DebugVars.cs" />
     <Compile Include="Demos\DirectDemoQuad.cs" />
     <Compile Include="Draw\DrawElement.cs" />
     <Compile Include="DrawManager.cs" />
     <Compile Include="Draw\Quad.cs" />
     <Compile Include="Draw\Scene.cs" />
     <Compile Include="Draw\TextLabel.cs" />
+    <Compile Include="Debugger.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="PEClient.cs" />
+    <Compile Include="PEContext.cs" />
     <Compile Include="ProcessManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projection.cs" />
@@ -67,7 +70,6 @@
     <Compile Include="TextAlignment.cs" />
     <Compile Include="Texture.cs" />
     <Compile Include="TextureUtils.cs" />
-    <Compile Include="ViewVars.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

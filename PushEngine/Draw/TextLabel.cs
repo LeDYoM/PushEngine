@@ -46,7 +46,7 @@ namespace PushEngine.Draw
             }
         }
 
-        internal TextLabel(): base()
+        public TextLabel(): base()
         {
         }
 

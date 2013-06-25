@@ -2,7 +2,6 @@
 using OpenTK;
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
-using System.Diagnostics;
 
 namespace PushEngine.Draw
 {
@@ -11,30 +10,18 @@ namespace PushEngine.Draw
         public float width = -1;
         public float height = -1;
 
-        internal Quad()
+        public Quad()
         {
         }
 
         internal void setLeftPosition(double x)
         {
-            if (!initialized)
-            {
-                Debug.WriteLine("WARNING: entity not initialized");
-            }
-
-            position.X = x + (width / 2.0);
-            
+            position.X = x + (width / 2.0);           
         }
 
         internal void setTopPosition(double y)
         {
-            if (!initialized)
-            {
-                Debug.WriteLine("WARNING: entity not initialized");
-            }
-
             position.Y = y + (height / 2.0);
-
         }
 
         internal override void PostInit()

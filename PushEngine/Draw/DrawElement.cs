@@ -1,14 +1,15 @@
 ﻿using System;
 using OpenTK;
-using System.Diagnostics;
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 
 namespace PushEngine.Draw
 {
-    internal class DrawElement
+    internal class DrawElement : IDisposable
     {
+        private DebugHelper dh = Debugger.getDH("DrawElement");
+
         internal protected Vector2d[] vertex = null;
         internal protected Color4[] color = null;
         internal protected Vector2d[] textureCoordinates = null;
@@ -28,7 +29,7 @@ namespace PushEngine.Draw
 
         protected void resetVertex(int nVertex)
         {
-            Debug.Assert(nVertex > 0);
+            dh.Assert(nVertex > 0);
             numVertex = nVertex;
             vertex = new Vector2d[numVertex];
             color = new Color4[numVertex];
@@ -52,7 +53,7 @@ namespace PushEngine.Draw
 
         internal void Render()
         {
-            Debug.Assert(initialized, "You must call PostInit() after setting the properties");
+            dh.Assert(initialized);
             PreRender();
             RenderObject();
             RenderImpl();
@@ -113,5 +114,23 @@ namespace PushEngine.Draw
             GL.Color4(c);
             GL.Vertex2(v);
         }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+
+            if (texture != null)
+            {
+                texture.Dispose();
+            }
+            texture = null;
+        }
+
+        ~DrawElement()
+        {
+            dh.WriteLine("Destructor from DrawElement called!");
+            Dispose();
+        }
+
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using OpenTK;
-using System.Diagnostics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 
@@ -8,21 +7,23 @@ namespace PushEngine
 {
     sealed class PushEngineCore : GameWindow
     {
+        private DebugHelper dh = Debugger.getDH("PushEngineCore");
+
         private static PushEngineCore instance = null;
         internal static Configuration configuration = new Configuration();
 
         internal static void Create()
         {
-            Debug.Assert(instance == null);
             configuration.Start();
             instance = new PushEngineCore();
             instance.Title = configuration.configurationData.WindowTitle;
             instance.VSync = VSyncMode.Off;
+
+            instance.InitSubModules();
         }
 
         internal static int Execute()
         {
-            Debug.Assert(instance != null);
             instance.Run();
             return 0;
         }
@@ -38,14 +39,13 @@ namespace PushEngine
             systemProjection = new Projection(
                 configuration.configurationData.virtualWindowTopLeft,
                 configuration.configurationData.virtualWindowDownRight);
-            InitSubModules();
         }
 
         internal ProcessManager processManager = new ProcessManager();
 
         private void InitSubModules()
         {
-            Debug.WriteLine("Starting submanagers");
+            dh.WriteLine("Starting submanagers");
             processManager.Start();
         }
 
@@ -89,6 +89,7 @@ namespace PushEngine
             clearScreen();
 
             processManager.OnRenderFrame(e);
+
             SwapBuffers();
         }
 
@@ -97,9 +98,11 @@ namespace PushEngine
             base.OnUnload(e);
 
             processManager.Stop();
+            processManager.Dispose();
             configuration.Stop();
+            configuration = null;
 
-            Debug.WriteLine("SubManagers stopped");
+            dh.WriteLine("SubManagers stopped");
 
         }
 
