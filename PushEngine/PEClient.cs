@@ -17,6 +17,11 @@ namespace PushEngine
             context = context_;
         }
 
+        public virtual PEData Data()
+        {
+            return new PEData();
+        }
+
         public PEClient()
         {
         }
@@ -26,11 +31,11 @@ namespace PushEngine
             context.state = PEContext.State.Running;
         }
 
-        public virtual void Update(FrameEventArgs e)
+        public virtual void Update()
         {
         }
 
-        public virtual void Render(FrameEventArgs e)
+        public virtual void Render()
         {
         }
 

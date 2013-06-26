@@ -12,7 +12,12 @@ namespace PushEngine
         }
 
         public KeyboardDevice Keyboard;
-        public State state;
+        public State state = State.Created;
+        public FrameData frameData = new FrameData();
 
+        public PEContext()
+        {
+            Keyboard = PushEngineCore.Instance.Keyboard;
+        }
     }
 }

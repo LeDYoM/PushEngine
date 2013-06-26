@@ -16,10 +16,8 @@ namespace PushEngine.Draw
         internal protected Vector2d position = new Vector2d();
         internal protected bool hasTransparency = false;
         internal protected int numVertex = 0;
-        internal protected Color transparentColor = Color.Black;
-
+        internal protected Color4 baseColor = Color4.White;
         internal Texture texture = null;
-        
         protected bool initialized = false;
 
 
@@ -33,7 +31,7 @@ namespace PushEngine.Draw
             numVertex = nVertex;
             vertex = new Vector2d[numVertex];
             color = new Color4[numVertex];
-            setColor(Color4.White);
+            setColor(baseColor);
             textureCoordinates = new Vector2d[numVertex];
         }
 

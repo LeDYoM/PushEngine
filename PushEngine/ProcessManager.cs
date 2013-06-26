@@ -1,33 +1,37 @@
 ﻿using System;
 using OpenTK;
 using PushEngine.Demos;
+using System.Collections.Generic;
 
 namespace PushEngine
 {
     internal class ProcessManager : Manager, IDisposable
     {
-        DirectDemoQuad directDemoQuad;
+        private List<PEClient> clients = new List<PEClient>();
 
         internal override void Start()
         {
             base.Start();
 
-            directDemoQuad = new DirectDemoQuad();
-            PEContext context = new PEContext();
+//            clients.Add(new DirectDemoQuad());
+            clients.Add(new Blocker());
 
-            context.Keyboard = PushEngineCore.Instance.Keyboard;
-            context.state = PEContext.State.Created;
-
-            directDemoQuad.setContext(context);
+            foreach (PEClient client in clients)
+            {
+                client.setContext(new PEContext());
+            }
 
             Success();
         }
 
         internal void startCreatedProcesses()
         {
-            if (directDemoQuad.Context.state == PEContext.State.Created)
+            foreach (PEClient client in clients)
             {
-                directDemoQuad.Start();
+                if (client.Context.state == PEContext.State.Created)
+                {
+                    client.Start();
+                }
             }
         }
 
@@ -35,18 +39,40 @@ namespace PushEngine
         {
             startCreatedProcesses();
 
-            directDemoQuad.Update(e);
+            foreach (PEClient client in clients)
+            {
+                if (client.Context.state == PEContext.State.Created)
+                {
+                    client.Update();
+                }
+            }
         }
 
         internal void OnRenderFrame(FrameEventArgs e)
         {
-            directDemoQuad.Render(e);
+            foreach (PEClient client in clients)
+            {
+                if (client.Context.state == PEContext.State.Running)
+                {
+                    client.Context.frameData.Apply(e);
+                    client.Render();
+                }
+            }
         }
-
 
         public void Dispose()
         {
-            directDemoQuad.Dispose();
+            GC.SuppressFinalize(this);
+
+            foreach (PEClient client in clients)
+            {
+                if (client.Context.state == PEContext.State.Created)
+                {
+                    client.Dispose();
+                }
+            }
+
+            clients.Clear();
         }
     }
 }

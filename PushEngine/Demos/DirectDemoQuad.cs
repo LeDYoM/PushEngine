@@ -13,6 +13,14 @@ namespace PushEngine.Demos
         {
         }
 
+        public override PEData Data()
+        {
+            PEData data = base.Data();
+            data.Name = "DirectDemoQuad";
+            data.Version = "1.00";
+            return data;
+
+        }
         public override void Start()
         {
             base.Start();
@@ -26,9 +34,9 @@ namespace PushEngine.Demos
             label.PostInit(); 
         }
 
-        public override void Update(OpenTK.FrameEventArgs e)
+        public override void Update()
         {
-            base.Update(e);
+            base.Update();
 
             if (context.Keyboard[OpenTK.Input.Key.A])
             {
@@ -52,9 +60,9 @@ namespace PushEngine.Demos
 
         }
 
-        public override void Render(OpenTK.FrameEventArgs e)
+        public override void Render()
         {
-            base.Render(e);
+            base.Render();
             scene.Render();
         }
 

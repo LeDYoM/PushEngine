@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
-    <Compile Include="CoreProcesses\DebugVars.cs" />
+    <Compile Include="Demos\Blocker.cs" />
     <Compile Include="Demos\DirectDemoQuad.cs" />
     <Compile Include="Draw\DrawElement.cs" />
     <Compile Include="DrawManager.cs" />
@@ -59,9 +59,11 @@
     <Compile Include="Draw\Scene.cs" />
     <Compile Include="Draw\TextLabel.cs" />
     <Compile Include="Debugger.cs" />
+    <Compile Include="FrameData.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="PEClient.cs" />
     <Compile Include="PEContext.cs" />
+    <Compile Include="PEData.cs" />
     <Compile Include="ProcessManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projection.cs" />
