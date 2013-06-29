@@ -41,7 +41,7 @@ namespace PushEngine
 
             foreach (PEClient client in clients)
             {
-                if (client.Context.state == PEContext.State.Created)
+                if (client.Context.state == PEContext.State.Running)
                 {
                     client.Update();
                 }

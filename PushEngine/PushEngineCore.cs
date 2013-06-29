@@ -49,7 +49,8 @@ namespace PushEngine
             processManager.Start();
         }
 
-        Projection systemProjection;
+        private Projection systemProjection;
+        internal Projection SystemProjection { get { return systemProjection; } }
 
         private void clearScreen()
         {

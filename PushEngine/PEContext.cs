@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenTK.Input;
+using System.Drawing;
 
 namespace PushEngine
 {
@@ -14,10 +15,12 @@ namespace PushEngine
         public KeyboardDevice Keyboard;
         public State state = State.Created;
         public FrameData frameData = new FrameData();
+        public Rectangle viewPort;
 
         public PEContext()
         {
             Keyboard = PushEngineCore.Instance.Keyboard;
+            viewPort = PushEngineCore.Instance.SystemProjection.View;
         }
     }
 }

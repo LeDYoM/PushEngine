@@ -5,8 +5,8 @@ namespace PushEngine
 {
     public class FrameData
     {
-        double ellapsedSinceStart = 0;
-        double ellapsedSinceLastFrame = 0;
+        public double ellapsedSinceStart = 0;
+        public double ellapsedSinceLastFrame = 0;
 
         internal FrameData()
         {

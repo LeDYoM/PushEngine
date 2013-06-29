@@ -56,8 +56,6 @@ namespace PushEngine.Demos
             {
                 label.Text = "a";
             }
-
-
         }
 
         public override void Render()

@@ -53,6 +53,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Demos\Blocker.cs" />
     <Compile Include="Demos\DirectDemoQuad.cs" />
+    <Compile Include="Draw\Ellipse.cs" />
     <Compile Include="Draw\DrawElement.cs" />
     <Compile Include="DrawManager.cs" />
     <Compile Include="Draw\Quad.cs" />
