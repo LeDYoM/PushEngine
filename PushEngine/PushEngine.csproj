@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="DebugVars.cs" />
     <Compile Include="Demos\Blocker.cs" />
     <Compile Include="Demos\DirectDemoQuad.cs" />
     <Compile Include="Draw\Ellipse.cs" />

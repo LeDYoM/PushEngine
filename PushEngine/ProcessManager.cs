@@ -8,13 +8,14 @@ namespace PushEngine
     internal class ProcessManager : Manager, IDisposable
     {
         private List<PEClient> clients = new List<PEClient>();
+        internal DebugVars dVars = new DebugVars();
 
         internal override void Start()
         {
             base.Start();
 
-//            clients.Add(new DirectDemoQuad());
             clients.Add(new Blocker());
+            clients.Add(dVars);
 
             foreach (PEClient client in clients)
             {

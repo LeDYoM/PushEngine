@@ -16,11 +16,13 @@ namespace PushEngine
         public State state = State.Created;
         public FrameData frameData = new FrameData();
         public Rectangle viewPort;
+        public DebugVars dVars;
 
         public PEContext()
         {
             Keyboard = PushEngineCore.Instance.Keyboard;
             viewPort = PushEngineCore.Instance.SystemProjection.View;
+            dVars = PushEngineCore.Instance.processManager.dVars;
         }
     }
 }
