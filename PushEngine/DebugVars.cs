@@ -20,15 +20,22 @@ namespace PushEngine
             dVars.Add(name_, obj.ToString());
         }
 
+        private int a = 387658765;
+        public override void Update()
+        {
+            base.Update();
+            AddVar("abc", a);
+        }
         public override void  Render()
         {
             base.Render();
             while (labels.Count < dVars.Count)
             {
-                    TextLabel label = scene.GetNewDrawElement<TextLabel>();
-                    label.PostInit();
-                    label.setTopPosition(-400 + (20 * labels.Count));
-                    labels.Add(label);
+                TextLabel label = scene.GetNewDrawElement<TextLabel>();
+                label.text = "AAAAAAAAAAAAAAAAAAAAA";
+                label.PostInit();
+                label.setTopPosition(context.viewPort.Top + (20 * labels.Count));
+                labels.Add(label);
             }
 
             int index = 0;

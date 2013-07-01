@@ -78,14 +78,11 @@ namespace PushEngine
 
         }
 
-        internal static Texture CreateTextTexture(string text, Font font, Color4 foreColor, Color4 backColor, Size size, TextAlignment alignment)
+        internal static Texture CreateTextTexture(string text, Font font, Color4 foreColor, Color4 backColor, TextAlignment alignment)
         {
-            if (size.Width < 1 || size.Height < 1)
-            {
-                size = TextureUtils.MeasureString(text, font).ToSize();
-            }
+            Size size = TextureUtils.MeasureString(text, font).ToSize();
 
-            Bitmap bmp = new Bitmap((int)size.Width, (int)size.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap bmp = new Bitmap(size.Width, size.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             Graphics gfx = Graphics.FromImage(bmp);
 
             DrawString(text, font, foreColor, backColor, size, alignment, ref gfx);

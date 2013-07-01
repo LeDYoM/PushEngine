@@ -14,7 +14,7 @@ namespace PushEngine
         {
             base.Start();
 
-            clients.Add(new Blocker());
+            //clients.Add(new Blocker());
             clients.Add(dVars);
 
             foreach (PEClient client in clients)

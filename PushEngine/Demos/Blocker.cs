@@ -74,7 +74,7 @@ namespace PushEngine.Demos
         }
 
         private double playerAccel_x = 0.0;
-        private double accelRate_x = 200;
+        private double accelRate_x = 1;
         private double pressRate = 500;
         private double maxAccel = 0.5;
 
@@ -94,17 +94,17 @@ namespace PushEngine.Demos
             if (playerAccel_x > 0)
             {
                 playerAccel_x -= (context.frameData.ellapsedSinceLastFrame * accelRate_x);
-                if (player_x < 0)
-                    player_x = 0;
+                if (playerAccel_x < 0.0)
+                    playerAccel_x = 0.0;
                 else if (playerAccel_x > maxAccel)
                     playerAccel_x = maxAccel;
 
             }
-            else if (playerAccel_x < 0)
+            else if (playerAccel_x < 0.0)
             {
                 playerAccel_x += (context.frameData.ellapsedSinceLastFrame * accelRate_x);
-                if (playerAccel_x > 0)
-                    playerAccel_x = 0;
+                if (playerAccel_x > 0.0)
+                    playerAccel_x = 0.0;
                 else if (playerAccel_x < -1 * maxAccel)
                     playerAccel_x = -1 * maxAccel;
             }
@@ -130,7 +130,8 @@ namespace PushEngine.Demos
         public override void Dispose()
         {
             base.Dispose();
-
+            scene.Dispose();
+            scene = null;
         }
     }
 }
