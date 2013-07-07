@@ -68,10 +68,7 @@ namespace PushEngine
 
             foreach (PEClient client in clients)
             {
-                if (client.Context.state == PEContext.State.Created)
-                {
-                    client.Dispose();
-                }
+                client.Dispose();
             }
 
             clients.Clear();
