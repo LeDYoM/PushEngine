@@ -1,5 +1,6 @@
 ﻿using System;
 using PushEngine.Draw;
+using System.Collections.Generic;
 
 namespace PushEngine.Demos
 {
@@ -26,12 +27,13 @@ namespace PushEngine.Demos
             base.Start();
             scene = new Scene();
             quad = scene.GetNewDrawElement<Quad>();
-            quad.width = 100;
-            quad.height = 100;
-            quad.PostInit();
+            quad.initObject(new PENamedPropertyList() {
+                new PENamedProperty("width", 100.0),
+                new PENamedProperty("height", 100)
+            });
 
             label = scene.GetNewDrawElement<TextLabel>();
-            label.PostInit(); 
+            label.initObject();
         }
 
         public override void Update()

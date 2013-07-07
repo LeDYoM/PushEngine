@@ -3,13 +3,15 @@ using OpenTK;
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
+using System.Collections.Generic;
 
 namespace PushEngine.Draw
 {
-    internal class DrawElement : IDisposable
+    public class DrawElement : IDisposable
     {
         private DebugHelper dh = Debugger.getDH("DrawElement");
 
+        public ModelProperties initProperties;
         internal protected Vector2d[] vertex = null;
         internal protected Color4[] color = null;
         internal protected Vector2d[] textureCoordinates = null;
@@ -23,6 +25,30 @@ namespace PushEngine.Draw
 
         internal DrawElement()
         {
+            // Define the model object properties.
+            initProperties = new ModelProperties(
+                new PENamedPropertyList()
+                {
+                    new PENamedProperty("transparent", false)
+                }
+                );
+        }
+
+        public T getProperty<T>(string key) where T : IConvertible
+        {
+            return initProperties.getList().ByName<T>(key);
+        }
+
+        public virtual void initObject()
+        {
+            initObject(new PENamedPropertyList());
+        }
+
+        public virtual void initObject(PENamedPropertyList prop)
+        {
+            initProperties.setList(prop);
+            hasTransparency = getProperty<bool>("transparent");
+            initialized = true;
         }
 
         protected void resetVertex(int nVertex)
@@ -41,12 +67,6 @@ namespace PushEngine.Draw
             {
                 color[i] = color_;
             }
-        }
-
-
-        internal virtual void PostInit()
-        {
-            initialized = true;
         }
 
         internal void Render()

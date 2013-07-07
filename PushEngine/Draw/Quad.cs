@@ -2,16 +2,23 @@
 using OpenTK;
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
+using System.Collections.Generic;
 
 namespace PushEngine.Draw
 {
     internal class Quad : DrawElement
     {
-        public float width = -1;
-        public float height = -1;
+        public double width = -1;
+        public double height = -1;
 
         public Quad()
         {
+            initProperties.AddDefaults(new PENamedPropertyList()
+                {
+                    new PENamedProperty("width", -1),
+                    new PENamedProperty("height", -1),
+                }
+                );
         }
 
         internal void setLeftPosition(double x)
@@ -24,8 +31,12 @@ namespace PushEngine.Draw
             position.Y = y + (height / 2.0);
         }
 
-        internal override void PostInit()
+        public override void initObject(PENamedPropertyList prop)
         {
+            base.initObject(prop);
+            width = getProperty<double>("width");
+            height = getProperty<double>("height");
+
             resetVertex(4);
 
             if (texture != null)
@@ -46,7 +57,6 @@ namespace PushEngine.Draw
             textureCoordinates[1] = new Vector2d(1, 1);
             textureCoordinates[2] = new Vector2d(1, 0);
             textureCoordinates[3] = new Vector2d(0, 0);
-            base.PostInit();
         }
     }
 }

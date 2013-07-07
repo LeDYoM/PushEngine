@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using OpenTK.Graphics;
+using System.Collections.Generic;
 
 namespace PushEngine.Draw
 {
@@ -13,6 +14,32 @@ namespace PushEngine.Draw
         internal TextAlignment alignment = TextAlignment.Left;
         internal bool autoSize = false;
 
+        public TextLabel()
+        {
+            initProperties.AddDefaults(new PENamedPropertyList()
+                {
+                    new PENamedProperty("transparent", true),
+                    new PENamedProperty("text", "none"),
+                    new PENamedProperty("fontIndex", -1),
+                    new PENamedProperty("backgroundColor_R", 0),
+                    new PENamedProperty("backgroundColor_G", 0),
+                    new PENamedProperty("backgroundColor_B", 0),
+                    new PENamedProperty("backgroundColor_A", 0),
+                    new PENamedProperty("foregroundColor_R", 1),
+                    new PENamedProperty("foregroundColor_G", 1),
+                    new PENamedProperty("foregroundColor_B", 1),
+                    new PENamedProperty("foregroundColor_A", 1),
+                    new PENamedProperty("alignment", TextAlignment.Center),
+                }
+            );
+        }
+
+        internal string Text
+        {
+            get { return text; }
+            set { text = value; }
+        }
+        /*
         internal string Text
         {
             get { return text; }
@@ -45,17 +72,21 @@ namespace PushEngine.Draw
                 }
             }
         }
-
-        public TextLabel(): base()
-        {
-        }
-
-        internal override void PostInit()
+        */
+        public override void initObject(PENamedPropertyList prop)
         {
             // Create a new text texture.
-            texture = TextureUtils.CreateTextTexture(text, font, foregroundColor, backgroundColor, alignment);
-            hasTransparency = true;
-            base.PostInit();
+            if (getProperty<int>("fontIndex") == -1)
+                font = SystemFonts.DefaultFont;
+
+
+            texture = TextureUtils.CreateTextTexture(getProperty<string>("text"),
+                font, 
+                PENamedPropertyListUtils.getColor4("foregroundColor", initProperties.getList()),
+                PENamedPropertyListUtils.getColor4("backgroundColor", initProperties.getList()),
+                getProperty<TextAlignment>("alignment"));
+
+            base.initObject(prop);
         }
     }
 }

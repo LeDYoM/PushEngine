@@ -33,7 +33,7 @@ namespace PushEngine
             {
                 TextLabel label = scene.GetNewDrawElement<TextLabel>();
                 label.text = "AAAAAAAAAAAAAAAAAAAAA";
-                label.PostInit();
+//                label.PostInit();
                 label.setTopPosition(context.viewPort.Top + (20 * labels.Count));
                 labels.Add(label);
             }

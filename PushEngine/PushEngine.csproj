@@ -63,9 +63,13 @@
     <Compile Include="Debugger.cs" />
     <Compile Include="FrameData.cs" />
     <Compile Include="Manager.cs" />
+    <Compile Include="ModelProperties.cs" />
     <Compile Include="PEClient.cs" />
     <Compile Include="PEContext.cs" />
     <Compile Include="PEData.cs" />
+    <Compile Include="PENamedProperty.cs" />
+    <Compile Include="PENamedPropertyList.cs" />
+    <Compile Include="PENamedPropertyListUtils.cs" />
     <Compile Include="ProcessManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projection.cs" />

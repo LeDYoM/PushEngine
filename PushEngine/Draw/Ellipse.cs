@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenTK;
+using System.Collections.Generic;
 
 namespace PushEngine.Draw
 {
@@ -22,7 +23,7 @@ namespace PushEngine.Draw
             position.Y = y + (height / 2.0);
         }
 
-        internal override void PostInit()
+        public override void initObject(PENamedPropertyList prop)
         {
             int nVertex = numVertex;
 
@@ -46,7 +47,7 @@ namespace PushEngine.Draw
             textureCoordinates[1] = new Vector2d(1, 1);
             textureCoordinates[2] = new Vector2d(1, 0);
             textureCoordinates[3] = new Vector2d(0, 0);
-            base.PostInit();
+            //base.PostInit();
         }
 
     }

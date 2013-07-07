@@ -20,6 +20,11 @@ namespace PushEngine
             Debug.WriteLineIf(enabled, obj, category);
         }
 
+        internal void WriteLineIf(bool condition, object obj)
+        {
+            Debug.WriteLineIf(enabled && condition, obj, category);
+        }
+
         internal void Assert(bool condition)
         {
             Debug.Assert(condition);

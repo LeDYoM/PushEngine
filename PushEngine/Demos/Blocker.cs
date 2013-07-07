@@ -43,7 +43,7 @@ namespace PushEngine.Demos
             player.setLeftPosition(player_x);
             player.setTopPosition(player_y);
             player.baseColor = Color4.Aqua;
-            player.PostInit();
+//            player.PostInit();
         }
 
         private void CreateBall()
@@ -59,7 +59,7 @@ namespace PushEngine.Demos
             block.setTopPosition(TopBase + (y * qHeight));
             block.baseColor = x % 2 == 0 ? 
                 (y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ?Color4.Yellow : Color4.Violet);
-            block.PostInit();
+//            block.PostInit();
         }
 
         private void CreateBoard()

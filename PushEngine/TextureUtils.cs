@@ -36,7 +36,7 @@ namespace PushEngine
 
         internal static Texture CreateEmpty(Size size, Color4 color = default(Color4))
         {
-            Bitmap bmp = new Bitmap(size.Width, size.Height);
+            Bitmap bmp = new Bitmap(size.Width, size.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             Graphics gfx = Graphics.FromImage(bmp);
             gfx.Clear((Color)color);
             gfx.Dispose();
