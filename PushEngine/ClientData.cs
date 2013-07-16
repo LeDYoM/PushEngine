@@ -2,7 +2,7 @@
 
 namespace PushEngine
 {
-    public struct PEData
+    public struct ClientData
     {
         public string Name;
         public string Version;

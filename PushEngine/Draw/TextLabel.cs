@@ -16,22 +16,7 @@ namespace PushEngine.Draw
 
         public TextLabel()
         {
-            initProperties.AddDefaults(new PENamedPropertyList()
-                {
-                    new PENamedProperty("transparent", true),
-                    new PENamedProperty("text", "none"),
-                    new PENamedProperty("fontIndex", -1),
-                    new PENamedProperty("backgroundColor_R", 0),
-                    new PENamedProperty("backgroundColor_G", 0),
-                    new PENamedProperty("backgroundColor_B", 0),
-                    new PENamedProperty("backgroundColor_A", 0),
-                    new PENamedProperty("foregroundColor_R", 1),
-                    new PENamedProperty("foregroundColor_G", 1),
-                    new PENamedProperty("foregroundColor_B", 1),
-                    new PENamedProperty("foregroundColor_A", 1),
-                    new PENamedProperty("alignment", TextAlignment.Center),
-                }
-            );
+            hasTransparency = true;
         }
 
         internal string Text
@@ -73,20 +58,10 @@ namespace PushEngine.Draw
             }
         }
         */
-        public override void initObject(PENamedPropertyList prop)
+        public override void Create()
         {
-            // Create a new text texture.
-            if (getProperty<int>("fontIndex") == -1)
-                font = SystemFonts.DefaultFont;
-
-
-            texture = TextureUtils.CreateTextTexture(getProperty<string>("text"),
-                font, 
-                PENamedPropertyListUtils.getColor4("foregroundColor", initProperties.getList()),
-                PENamedPropertyListUtils.getColor4("backgroundColor", initProperties.getList()),
-                getProperty<TextAlignment>("alignment"));
-
-            base.initObject(prop);
+            texture = TextureUtils.CreateTextTexture(text, font,  foregroundColor, backgroundColor, alignment);
+            base.Create();
         }
     }
 }

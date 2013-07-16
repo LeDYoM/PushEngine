@@ -7,57 +7,73 @@ using System.Collections.Generic;
 
 namespace PushEngine.Draw
 {
-    public class DrawElement : IDisposable
-    {
-        private DebugHelper dh = Debugger.getDH("DrawElement");
+    public delegate void DrawElementDelegate();
 
-        public ModelProperties initProperties;
+    public class DrawElement : ObjectWithContext, IUpdateAndRender, IDisposable
+    {
+        // Delegates
+        public DrawElementDelegate OnCreationCompleted = null;
+
+        // Private properties
+        private DebugHelper dh = Debugger.getDH("DrawElement");
         internal protected Vector2d[] vertex = null;
         internal protected Color4[] color = null;
         internal protected Vector2d[] textureCoordinates = null;
         internal protected Vector2d position = new Vector2d();
-        internal protected bool hasTransparency = false;
         internal protected int numVertex = 0;
-        internal protected Color4 baseColor = Color4.White;
         internal Texture texture = null;
+
+        // Model properties
         protected bool initialized = false;
+        protected bool hasTransparency = false;
+        protected Color4 baseColor = Color.White;
+        protected SizeF size = new SizeF(-1, -1);
 
-
-        internal DrawElement()
-        {
-            // Define the model object properties.
-            initProperties = new ModelProperties(
-                new PENamedPropertyList()
-                {
-                    new PENamedProperty("transparent", false)
-                }
-                );
+        public bool HasTransparency {
+            get { return hasTransparency; }
         }
 
-        public T getProperty<T>(string key) where T : IConvertible
-        {
-            return initProperties.getList().ByName<T>(key);
+        public Color4 BaseColor {
+            get { return baseColor; }
+            set { baseColor = value; }
         }
 
-        public virtual void initObject()
+        public float Width
         {
-            initObject(new PENamedPropertyList());
+            get { return size.Width; }
+            set { size.Width = value; }
         }
 
-        public virtual void initObject(PENamedPropertyList prop)
-        {
-            initProperties.setList(prop);
-            hasTransparency = getProperty<bool>("transparent");
-            initialized = true;
+        public float Height {
+            get { return size.Height; }
+            set { size.Height = value; }
         }
 
+        internal void setLeftPosition(double x)
+        {
+            position.X = x + (size.Width / 2.0);
+        }
+
+        internal void setTopPosition(double y)
+        {
+            position.Y = y + (size.Height / 2.0);
+        }
+
+        internal DrawElement() : base("DrawElement")
+        {
+        }
+
+        internal DrawElement(string id_)
+            : base(id_)
+        {
+        }
         protected void resetVertex(int nVertex)
         {
             dh.Assert(nVertex > 0);
             numVertex = nVertex;
             vertex = new Vector2d[numVertex];
             color = new Color4[numVertex];
-            setColor(baseColor);
+            setColor(BaseColor);
             textureCoordinates = new Vector2d[numVertex];
         }
 
@@ -69,9 +85,25 @@ namespace PushEngine.Draw
             }
         }
 
-        internal void Render()
+        public virtual void Create()
         {
-            dh.Assert(initialized);
+            dh.Assert(!initialized);
+            initialized = true;
+        }
+
+        public void Update()
+        {
+            if (!initialized)
+            {
+                Create();
+                if (OnCreationCompleted != null)
+                    OnCreationCompleted();
+            }
+        }
+
+        public void Render()
+        {
+            Update();
             PreRender();
             RenderObject();
             RenderImpl();
@@ -80,7 +112,7 @@ namespace PushEngine.Draw
 
         internal void PreRender()
         {
-            if (hasTransparency)
+            if (HasTransparency)
             {
                 GL.Enable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
@@ -119,7 +151,7 @@ namespace PushEngine.Draw
                 GL.Disable(EnableCap.Texture2D);
             }
 
-            if (hasTransparency)
+            if (HasTransparency)
             {
                 GL.Disable(EnableCap.Blend);
             }

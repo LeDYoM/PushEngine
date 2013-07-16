@@ -7,20 +7,20 @@ namespace PushEngine
 {
     internal class ProcessManager : Manager, IDisposable
     {
-        private List<PEClient> clients = new List<PEClient>();
+        private List<Client> clients = new List<Client>();
         internal DebugVars dVars = new DebugVars();
 
         internal override void Start()
         {
             base.Start();
 
-            //clients.Add(new Blocker());
-            //clients.Add(dVars);
-            clients.Add(new DirectDemoQuad());
+            clients.Add(new Blocker());
+            clients.Add(dVars);
+            //clients.Add(new DirectDemoQuad());
 
-            foreach (PEClient client in clients)
+            foreach (Client client in clients)
             {
-                client.setContext(new PEContext());
+                client.setContext(new Context());
             }
 
             Success();
@@ -28,9 +28,9 @@ namespace PushEngine
 
         internal void startCreatedProcesses()
         {
-            foreach (PEClient client in clients)
+            foreach (Client client in clients)
             {
-                if (client.Context.state == PEContext.State.Created)
+                if (client.Context.state == Context.State.Created)
                 {
                     client.Start();
                 }
@@ -41,9 +41,9 @@ namespace PushEngine
         {
             startCreatedProcesses();
 
-            foreach (PEClient client in clients)
+            foreach (Client client in clients)
             {
-                if (client.Context.state == PEContext.State.Running)
+                if (client.Context.state == Context.State.Running)
                 {
                     client.Update();
                 }
@@ -52,9 +52,9 @@ namespace PushEngine
 
         internal void OnRenderFrame(FrameEventArgs e)
         {
-            foreach (PEClient client in clients)
+            foreach (Client client in clients)
             {
-                if (client.Context.state == PEContext.State.Running)
+                if (client.Context.state == Context.State.Running)
                 {
                     client.Context.frameData.Apply(e);
                     client.Render();
@@ -66,7 +66,7 @@ namespace PushEngine
         {
             GC.SuppressFinalize(this);
 
-            foreach (PEClient client in clients)
+            foreach (Client client in clients)
             {
                 client.Dispose();
             }

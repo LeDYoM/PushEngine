@@ -4,19 +4,18 @@ using System.Collections.Generic;
 
 namespace PushEngine.Demos
 {
-    internal class DirectDemoQuad : PEClient
+    internal class DirectDemoQuad : Client
     {
         Quad quad = null;
         TextLabel label = null;
-        Scene scene = null;
 
         internal DirectDemoQuad() : base()
         {
         }
 
-        public override PEData Data()
+        public override ClientData Data()
         {
-            PEData data = base.Data();
+            ClientData data = base.Data();
             data.Name = "DirectDemoQuad";
             data.Version = "1.00";
             return data;
@@ -25,15 +24,11 @@ namespace PushEngine.Demos
         public override void Start()
         {
             base.Start();
-            scene = new Scene();
+            Scene scene = context.sceneDirector.GetNewAndPush();
             quad = scene.GetNewDrawElement<Quad>();
-            quad.initObject(new PENamedPropertyList() {
-                new PENamedProperty("width", 100.0),
-                new PENamedProperty("height", 100)
-            });
-
+            quad.Width = 100;
+            quad.Height = 100;
             label = scene.GetNewDrawElement<TextLabel>();
-            label.initObject();
         }
 
         public override void Update()
@@ -58,20 +53,6 @@ namespace PushEngine.Demos
             {
                 label.Text = "a";
             }
-        }
-
-        public override void Render()
-        {
-            base.Render();
-            scene.Render();
-        }
-
-        public override void Dispose()
-        {
-            base.Dispose();
-            scene.Dispose();
-            scene = null;
-
         }
     }
 }

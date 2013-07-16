@@ -5,9 +5,8 @@ using OpenTK.Graphics;
 
 namespace PushEngine.Demos
 {
-    internal class Blocker : PEClient
+    internal class Blocker : Client
     {
-        Scene scene = null;
         private int leftBase;
         private int TopBase;
         private int rightBase;
@@ -16,6 +15,8 @@ namespace PushEngine.Demos
         private Quad player;
         int qWidth = 40;
         int qHeight = 50;
+        int pWidth = 100;
+        int pHeight = 50;
 
         internal Blocker()
             : base()
@@ -25,25 +26,26 @@ namespace PushEngine.Demos
         public override void Start()
         {
             base.Start();
+            context.sceneDirector.GetNewAndPush();
+
             leftBase = context.viewPort.Left;
             TopBase = context.viewPort.Top;
             rightBase = context.viewPort.Right;
 
-            scene = new Scene();
             CreateBoard();
             CreatePlayer();
-            CreateBall();
+            //CreateBall();
         }
 
         private void CreatePlayer()
         {
-            player = scene.GetNewDrawElement<Quad>();
-            player.width = 100;
-            player.height = 40;
-            player.setLeftPosition(player_x);
-            player.setTopPosition(player_y);
-            player.baseColor = Color4.Aqua;
-//            player.PostInit();
+            player = context.sceneDirector.CurrentScene.GetNewDrawElement<Quad>();
+            player.Width = pWidth;
+            player.Height = pHeight;
+
+//            player.setLeftPosition(player_x);
+//            player.setTopPosition(player_y);
+            player.BaseColor = Color4.Aqua;
         }
 
         private void CreateBall()
@@ -52,14 +54,17 @@ namespace PushEngine.Demos
 
         private void CreateBlock(int x, int y)
         {
-            Quad block = scene.GetNewDrawElement<Quad>();
-            block.width = qWidth;
-            block.height = qHeight;
-            block.setLeftPosition(leftBase + (x * qWidth));
-            block.setTopPosition(TopBase + (y * qHeight));
-            block.baseColor = x % 2 == 0 ? 
+            Quad block = context.sceneDirector.CurrentScene.GetNewDrawElement<Quad>();
+            block.Width = qWidth;
+            block.Height = qHeight;
+            block.OnCreationCompleted = delegate()
+                {
+                    block.setLeftPosition(leftBase + (x * qWidth));
+                    block.setTopPosition(TopBase + (y * qHeight));
+                };
+
+            block.BaseColor = x % 2 == 0 ? 
                 (y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ?Color4.Yellow : Color4.Violet);
-//            block.PostInit();
         }
 
         private void CreateBoard()
@@ -118,20 +123,8 @@ namespace PushEngine.Demos
             player.position.X = player_x;
             player.position.Y = player_y;
 
-            context.dVars.AddVar("playerAccel_x", playerAccel_x);
+//            context.dVars.AddVar("playerAccel_x", playerAccel_x);
         }
 
-        public override void Render()
-        {
-            base.Render();
-            scene.Render();
-        }
-
-        public override void Dispose()
-        {
-            base.Dispose();
-            scene.Dispose();
-            scene = null;
-        }
     }
 }

@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace PushEngine.Draw
 {
-    internal class Scene : IDisposable
+    public class Scene : IDisposable
     {
         private DebugHelper dh = Debugger.getDH("Scene");
 

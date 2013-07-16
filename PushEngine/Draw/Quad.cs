@@ -8,45 +8,24 @@ namespace PushEngine.Draw
 {
     internal class Quad : DrawElement
     {
-        public double width = -1;
-        public double height = -1;
-
         public Quad()
         {
-            initProperties.AddDefaults(new PENamedPropertyList()
-                {
-                    new PENamedProperty("width", -1),
-                    new PENamedProperty("height", -1),
-                }
-                );
         }
 
-        internal void setLeftPosition(double x)
+        public override void  Create()
         {
-            position.X = x + (width / 2.0);           
-        }
-
-        internal void setTopPosition(double y)
-        {
-            position.Y = y + (height / 2.0);
-        }
-
-        public override void initObject(PENamedPropertyList prop)
-        {
-            base.initObject(prop);
-            width = getProperty<double>("width");
-            height = getProperty<double>("height");
+            base.Create();
 
             resetVertex(4);
 
             if (texture != null)
             {
-                width = texture.TextureSize.Width;
-                height = texture.TextureSize.Height;
+                Width = texture.TextureSize.Width;
+                Height = texture.TextureSize.Height;
             }
 
-            double w2 = width / 2.0;
-            double h2 = height / 2.0;
+            double w2 = Width / 2.0;
+            double h2 = Height / 2.0;
 
             vertex[0] = new Vector2d(w2 * -1, h2);
             vertex[1] = new Vector2d(w2, h2);

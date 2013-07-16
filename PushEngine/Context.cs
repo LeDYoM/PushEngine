@@ -1,10 +1,11 @@
 ﻿using System;
 using OpenTK.Input;
 using System.Drawing;
+using PushEngine.Draw;
 
 namespace PushEngine
 {
-    public class PEContext
+    public class Context : IDisposable
     {
         public enum State
         {
@@ -17,12 +18,19 @@ namespace PushEngine
         public FrameData frameData = new FrameData();
         public Rectangle viewPort;
         public DebugVars dVars;
+        public SceneDirector sceneDirector = new SceneDirector();
 
-        public PEContext()
+        public Context()
         {
             Keyboard = PushEngineCore.Instance.Keyboard;
             viewPort = PushEngineCore.Instance.SystemProjection.View;
             dVars = PushEngineCore.Instance.processManager.dVars;
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+            sceneDirector.Dispose();
         }
     }
 }

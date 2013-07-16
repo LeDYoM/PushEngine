@@ -5,30 +5,30 @@ using System.Diagnostics;
 
 namespace PushEngine
 {
-    public class PEClient : IDisposable
+    public class Client : IDisposable
     {
         private DebugHelper dh = Debugger.getDH("PEClient");
 
-        protected PEContext context = null;
-        internal PEContext Context { get { return context; } }
+        protected Context context = null;
+        internal Context Context { get { return context; } }
 
-        internal void setContext(PEContext context_)
+        internal void setContext(Context context_)
         {
             context = context_;
         }
 
-        public virtual PEData Data()
+        public virtual ClientData Data()
         {
-            return new PEData();
+            return new ClientData();
         }
 
-        public PEClient()
+        public Client()
         {
         }
 
         public virtual void Start()
         {
-            context.state = PEContext.State.Running;
+            context.state = Context.State.Running;
         }
 
         public virtual void Update()
@@ -37,14 +37,20 @@ namespace PushEngine
 
         public virtual void Render()
         {
+            context.sceneDirector.Render();
         }
 
         public virtual void Dispose()
         {
             GC.SuppressFinalize(this);
+
+            dh.Assert(context != null);
+            context.Dispose();
+            context = null;
+
         }
 
-        ~PEClient()
+        ~Client()
         {
             dh.WriteLine("Destructor from PEClient called!");
             Dispose();

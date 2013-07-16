@@ -4,11 +4,10 @@ using PushEngine.Draw;
 
 namespace PushEngine
 {
-    public class DebugVars : PEClient
+    public class DebugVars : Client
     {
         private Dictionary<string, string> dVars = new Dictionary<string, string>();
         List<TextLabel> labels = new List<TextLabel>();
-        Scene scene = new Scene();
 
         internal void AddVar(string name_, object obj)
         {
@@ -20,6 +19,12 @@ namespace PushEngine
             dVars.Add(name_, obj.ToString());
         }
 
+        public override void Start()
+        {
+            base.Start();
+            Scene scene = context.sceneDirector.GetNewAndPush();
+        }
+
         private int a = 387658765;
         public override void Update()
         {
@@ -29,12 +34,17 @@ namespace PushEngine
         public override void  Render()
         {
             base.Render();
+
             while (labels.Count < dVars.Count)
             {
-                TextLabel label = scene.GetNewDrawElement<TextLabel>();
-                label.text = "AAAAAAAAAAAAAAAAAAAAA";
-//                label.PostInit();
-                label.setTopPosition(context.viewPort.Top + (20 * labels.Count));
+                TextLabel label = context.sceneDirector.CurrentScene.GetNewDrawElement<TextLabel>();
+                label.setContextProperty("index", labels.Count);
+                label.OnCreationCompleted += delegate()
+                {
+                    int pos = (int)label.getAndRemoveContextProperty("index");
+                    label.setLeftPosition(context.viewPort.Left);
+                    label.setTopPosition(context.viewPort.Top + (20 * pos));
+                };
                 labels.Add(label);
             }
 
@@ -42,13 +52,9 @@ namespace PushEngine
             foreach (KeyValuePair<string, string> kvp in dVars)
             {
                 labels[index].Text = kvp.Key + ": " + kvp.Value;
-                labels[index].setLeftPosition(0);
             }
 
             dVars.Clear();
-
-            scene.Render();
-
         }
     }
 }
