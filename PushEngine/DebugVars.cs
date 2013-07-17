@@ -39,11 +39,11 @@ namespace PushEngine
             {
                 TextLabel label = context.sceneDirector.CurrentScene.GetNewDrawElement<TextLabel>();
                 label.setContextProperty("index", labels.Count);
-                label.OnCreationCompleted += delegate()
+                label.OnCreationCompleted += delegate(DrawElement self)
                 {
                     int pos = (int)label.getAndRemoveContextProperty("index");
-                    label.setLeftPosition(context.viewPort.Left);
-                    label.setTopPosition(context.viewPort.Top + (20 * pos));
+                    self.setLeftPosition(context.viewPort.Left);
+                    self.setTopPosition(context.viewPort.Top + (20 * pos));
                 };
                 labels.Add(label);
             }

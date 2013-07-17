@@ -10,8 +10,6 @@ namespace PushEngine.Demos
         private int leftBase;
         private int TopBase;
         private int rightBase;
-        private double player_x = 100;
-        private double player_y = 200;
         private Quad player;
         int qWidth = 40;
         int qHeight = 50;
@@ -42,10 +40,15 @@ namespace PushEngine.Demos
             player = context.sceneDirector.CurrentScene.GetNewDrawElement<Quad>();
             player.Width = pWidth;
             player.Height = pHeight;
-
-//            player.setLeftPosition(player_x);
-//            player.setTopPosition(player_y);
             player.BaseColor = Color4.Aqua;
+
+            player.setContextProperty("playerAccel_x", 0.0);
+            player.setContextProperty("accelRate_x", 1.0);
+            player.setContextProperty("pressRate", 500.0);
+            player.setContextProperty("maxAccel", 0.5);
+            player.setContextProperty("player_x", 100.0);
+            player.setContextProperty("player_y", 200.0);
+
         }
 
         private void CreateBall()
@@ -57,10 +60,10 @@ namespace PushEngine.Demos
             Quad block = context.sceneDirector.CurrentScene.GetNewDrawElement<Quad>();
             block.Width = qWidth;
             block.Height = qHeight;
-            block.OnCreationCompleted = delegate()
+            block.OnCreationCompleted = delegate(DrawElement self)
                 {
-                    block.setLeftPosition(leftBase + (x * qWidth));
-                    block.setTopPosition(TopBase + (y * qHeight));
+                    self.setLeftPosition(leftBase + (x * qWidth));
+                    self.setTopPosition(TopBase + (y * qHeight));
                 };
 
             block.BaseColor = x % 2 == 0 ? 
@@ -78,14 +81,14 @@ namespace PushEngine.Demos
             }
         }
 
-        private double playerAccel_x = 0.0;
-        private double accelRate_x = 1;
-        private double pressRate = 500;
-        private double maxAccel = 0.5;
 
         public override void Update()
         {
             base.Update();
+            double playerAccel_x = (double)player.getContextProperty("playerAccel_x");
+            double maxAccel = (double)player.getContextProperty("maxAccel");
+            double pressRate = (double)player.getContextProperty("pressRate");
+            double accelRate_x = (double)player.getContextProperty("accelRate_x");
 
             if (context.Keyboard[OpenTK.Input.Key.A])
             {
@@ -118,10 +121,14 @@ namespace PushEngine.Demos
                 playerAccel_x = 0;
             }
 
-            player_x += playerAccel_x;
+            player.setContextProperty("player_x", 
+                (double)((double)player.getContextProperty("player_x")) + playerAccel_x
+                );
 
-            player.position.X = player_x;
-            player.position.Y = player_y;
+            player.setContextProperty("playerAccel_x", playerAccel_x);
+
+            player.position.X = (double)player.getContextProperty("player_x");
+            player.position.Y = (double)player.getContextProperty("player_y");
 
 //            context.dVars.AddVar("playerAccel_x", playerAccel_x);
         }

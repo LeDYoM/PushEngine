@@ -7,12 +7,13 @@ using System.Collections.Generic;
 
 namespace PushEngine.Draw
 {
-    public delegate void DrawElementDelegate();
+    public delegate void DrawElementDelegate(DrawElement self);
 
     public class DrawElement : ObjectWithContext, IUpdateAndRender, IDisposable
     {
         // Delegates
         public DrawElementDelegate OnCreationCompleted = null;
+        public DrawElementDelegate OnUpdate = null;
 
         // Private properties
         private DebugHelper dh = Debugger.getDH("DrawElement");
@@ -97,7 +98,13 @@ namespace PushEngine.Draw
             {
                 Create();
                 if (OnCreationCompleted != null)
-                    OnCreationCompleted();
+                    OnCreationCompleted(this);
+                initialized = true;
+            }
+            else
+            {
+                if (OnUpdate != null)
+                    OnUpdate(this);
             }
         }
 
