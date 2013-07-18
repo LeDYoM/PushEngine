@@ -8,18 +8,24 @@ namespace PushEngine
     {
         protected Dictionary<string, object> contextProperties = new Dictionary<string, object>();
 
+        public object this[string key]
+        {
+            get { return contextProperties[key]; }
+            set { contextProperties[key] = value; }
+        }
+
         public ObjectWithContext(string id_):base(id_)
         {
         }
 
         public void setContextProperty(string key, object val)
         {
-            contextProperties[key] = val;
+            this[key] = val;
         }
 
         public object getContextProperty(string key)
         {
-            return contextProperties[key];
+            return this[key];
         }
 
         public void removeContextProperty(string key)

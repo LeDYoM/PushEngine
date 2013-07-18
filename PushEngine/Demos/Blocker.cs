@@ -85,10 +85,10 @@ namespace PushEngine.Demos
         public override void Update()
         {
             base.Update();
-            double playerAccel_x = (double)player.getContextProperty("playerAccel_x");
-            double maxAccel = (double)player.getContextProperty("maxAccel");
-            double pressRate = (double)player.getContextProperty("pressRate");
-            double accelRate_x = (double)player.getContextProperty("accelRate_x");
+            double playerAccel_x = (double)player["playerAccel_x"];
+            double maxAccel = (double)player["maxAccel"];
+            double pressRate = (double)player["pressRate"];
+            double accelRate_x = (double)player["accelRate_x"];
 
             if (context.Keyboard[OpenTK.Input.Key.A])
             {
@@ -121,14 +121,12 @@ namespace PushEngine.Demos
                 playerAccel_x = 0;
             }
 
-            player.setContextProperty("player_x", 
-                (double)((double)player.getContextProperty("player_x")) + playerAccel_x
-                );
+            player["player_x"] = (double)((double)player["player_x"]) + playerAccel_x;
 
-            player.setContextProperty("playerAccel_x", playerAccel_x);
+            player["playerAccel_x"] = playerAccel_x;
 
-            player.position.X = (double)player.getContextProperty("player_x");
-            player.position.Y = (double)player.getContextProperty("player_y");
+            player.position.X = (double)player["player_x"];
+            player.position.Y = (double)player["player_y"];
 
 //            context.dVars.AddVar("playerAccel_x", playerAccel_x);
         }
