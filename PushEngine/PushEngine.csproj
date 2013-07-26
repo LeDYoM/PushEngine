@@ -55,14 +55,15 @@
     <Compile Include="Demos\Blocker.cs" />
     <Compile Include="Demos\DirectDemoQuad.cs" />
     <Compile Include="Draw\DrawElement.cs" />
-    <Compile Include="DrawManager.cs" />
     <Compile Include="Draw\IUpdateAndRender.cs" />
     <Compile Include="Draw\Quad.cs" />
     <Compile Include="Draw\Scene.cs" />
     <Compile Include="Draw\TextLabel.cs" />
     <Compile Include="Debugger.cs" />
     <Compile Include="FrameData.cs" />
-    <Compile Include="Manager.cs" />
+    <Compile Include="Input\Key.cs" />
+    <Compile Include="Input\Keyboard.cs" />
+    <Compile Include="Input\KeyData.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ClientData.cs" />

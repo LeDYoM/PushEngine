@@ -2,18 +2,17 @@
 using OpenTK;
 using PushEngine.Demos;
 using System.Collections.Generic;
+using OpenTK.Input;
 
 namespace PushEngine
 {
-    internal class ProcessManager : Manager, IDisposable
+    internal class ProcessManager : IDisposable
     {
         private List<Client> clients = new List<Client>();
         internal DebugVars dVars = new DebugVars();
 
-        internal override void Start()
+        internal void Start()
         {
-            base.Start();
-
             clients.Add(new Blocker());
             clients.Add(dVars);
             //clients.Add(new DirectDemoQuad());
@@ -23,7 +22,6 @@ namespace PushEngine
                 client.setContext(new Context());
             }
 
-            Success();
         }
 
         internal void startCreatedProcesses()
@@ -61,6 +59,11 @@ namespace PushEngine
                 }
             }
         }
+
+        internal void Stop()
+        {
+        }
+
 
         public void Dispose()
         {

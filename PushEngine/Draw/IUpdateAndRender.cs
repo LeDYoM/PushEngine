@@ -2,7 +2,7 @@
 {
     internal interface IUpdateAndRender
     {
-        void Update();
-        void Render();
+        void Update(Context context);
+        void Render(Context context);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PushEngine.Draw;
 using OpenTK.Graphics;
+using PushEngine.Input;
 
 namespace PushEngine.Demos
 {
@@ -35,20 +36,28 @@ namespace PushEngine.Demos
             //CreateBall();
         }
 
+        private const double pressRate = 500.0;
+
         private void CreatePlayer()
         {
             player = context.sceneDirector.CurrentScene.GetNewDrawElement<Quad>();
             player.Width = pWidth;
             player.Height = pHeight;
             player.BaseColor = Color4.Aqua;
+            player.position.X = 100.0;
+            player.position.Y = 200.0;
 
-            player.setContextProperty("playerAccel_x", 0.0);
-            player.setContextProperty("accelRate_x", 1.0);
-            player.setContextProperty("pressRate", 500.0);
-            player.setContextProperty("maxAccel", 0.5);
-            player.setContextProperty("player_x", 100.0);
-            player.setContextProperty("player_y", 200.0);
-
+            player.OnKeyPressing = delegate(DrawElement self, Key key)
+            {
+                if (key == Key.A)
+                {
+                    self.position.X -= (context.frameData.ellapsedSinceLastFrame * pressRate);
+                }
+                else if (key == Key.D)
+                {
+                    player.position.X += (context.frameData.ellapsedSinceLastFrame * pressRate);
+                }
+            };
         }
 
         private void CreateBall()
@@ -85,49 +94,17 @@ namespace PushEngine.Demos
         public override void Update()
         {
             base.Update();
-            double playerAccel_x = (double)player["playerAccel_x"];
-            double maxAccel = (double)player["maxAccel"];
-            double pressRate = (double)player["pressRate"];
-            double accelRate_x = (double)player["accelRate_x"];
-
+/*
             if (context.Keyboard[OpenTK.Input.Key.A])
             {
-                playerAccel_x -= (context.frameData.ellapsedSinceLastFrame * pressRate);
+                player.position.X -= (context.frameData.ellapsedSinceLastFrame * pressRate);
             }
             else if (context.Keyboard[OpenTK.Input.Key.D])
             {
-                playerAccel_x += (context.frameData.ellapsedSinceLastFrame * pressRate);
+                player.position.X += (context.frameData.ellapsedSinceLastFrame * pressRate);
             }
 
-            if (playerAccel_x > 0)
-            {
-                playerAccel_x -= (context.frameData.ellapsedSinceLastFrame * accelRate_x);
-                if (playerAccel_x < 0.0)
-                    playerAccel_x = 0.0;
-                else if (playerAccel_x > maxAccel)
-                    playerAccel_x = maxAccel;
-
-            }
-            else if (playerAccel_x < 0.0)
-            {
-                playerAccel_x += (context.frameData.ellapsedSinceLastFrame * accelRate_x);
-                if (playerAccel_x > 0.0)
-                    playerAccel_x = 0.0;
-                else if (playerAccel_x < -1 * maxAccel)
-                    playerAccel_x = -1 * maxAccel;
-            }
-            else
-            {
-                playerAccel_x = 0;
-            }
-
-            player["player_x"] = (double)((double)player["player_x"]) + playerAccel_x;
-
-            player["playerAccel_x"] = playerAccel_x;
-
-            player.position.X = (double)player["player_x"];
-            player.position.Y = (double)player["player_y"];
-
+            */
 //            context.dVars.AddVar("playerAccel_x", playerAccel_x);
         }
 

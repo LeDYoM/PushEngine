@@ -2,6 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
+using PushEngine.Input;
 
 namespace PushEngine
 {
@@ -42,11 +43,18 @@ namespace PushEngine
         }
 
         internal ProcessManager processManager = new ProcessManager();
+        internal Keyboard keyboard = new Keyboard();
 
         private void InitSubModules()
         {
             dh.WriteLine("Starting submanagers");
+            keyboard.setKeyboard(instance.Keyboard);
+
             processManager.Start();
+
+            instance.Keyboard.KeyDown += new EventHandler<OpenTK.Input.KeyboardKeyEventArgs>(keyboard.ApplyKeyDown);
+            instance.Keyboard.KeyUp += new EventHandler<OpenTK.Input.KeyboardKeyEventArgs>(keyboard.ApplyKeyUp);
+
         }
 
         private Projection systemProjection;
@@ -68,6 +76,16 @@ namespace PushEngine
             systemProjection.apply();
         }
 
+        protected override void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+        }
+
+        protected override void OnKeyUp(OpenTK.Input.KeyboardKeyEventArgs e)
+        {
+            base.OnKeyUp(e);
+        }
+
         private double ellapsed = 0.0;
 
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -82,6 +100,8 @@ namespace PushEngine
             }
 
             processManager.OnUpdateFrame(e);
+
+            keyboard.ApplyUpdate();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)

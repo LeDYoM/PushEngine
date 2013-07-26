@@ -42,14 +42,16 @@ namespace PushEngine.Draw
             return tmp;
         }
 
-        public void Update()
-        {
-        }
-
-        public void Render()
+        public void Update(Context context)
         {
             if (currentScene != null)
-                currentScene.Render();
+                currentScene.Update(context);
+        }
+
+        public void Render(Context context)
+        {
+            if (currentScene != null)
+                currentScene.Render(context);
         }
 
         public void Dispose()

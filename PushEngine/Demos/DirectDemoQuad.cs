@@ -34,7 +34,7 @@ namespace PushEngine.Demos
         public override void Update()
         {
             base.Update();
-
+            /*
             if (context.Keyboard[OpenTK.Input.Key.A])
             {
                 quad.position.X++;
@@ -53,6 +53,7 @@ namespace PushEngine.Demos
             {
                 label.Text = "a";
             }
+             * */
         }
     }
 }

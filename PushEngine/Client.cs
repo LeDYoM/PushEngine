@@ -2,6 +2,7 @@
 using OpenTK;
 using OpenTK.Input;
 using System.Diagnostics;
+using PushEngine.Draw;
 
 namespace PushEngine
 {
@@ -33,11 +34,12 @@ namespace PushEngine
 
         public virtual void Update()
         {
+            context.sceneDirector.CurrentScene.Update(context);
         }
 
         public virtual void Render()
         {
-            context.sceneDirector.Render();
+            context.sceneDirector.Render(context);
         }
 
         public virtual void Dispose()

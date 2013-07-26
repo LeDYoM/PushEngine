@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace PushEngine.Draw
 {
-    public class Scene : IDisposable
+    public class Scene : IUpdateAndRender, IDisposable
     {
         private DebugHelper dh = Debugger.getDH("Scene");
 
@@ -21,11 +21,19 @@ namespace PushEngine.Draw
             return obj;
         }
 
-        internal void Render()
+        public void Update(Context context)
         {
             foreach (DrawElement element in sceneElements)
             {
-                element.Render();
+                element.Update(context);
+            }
+        }
+
+        public void Render(Context context)
+        {
+            foreach (DrawElement element in sceneElements)
+            {
+                element.Render(context);
             }
         }
 

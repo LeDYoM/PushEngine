@@ -4,16 +4,21 @@ using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 using System.Collections.Generic;
+using PushEngine.Input;
 
 namespace PushEngine.Draw
 {
     public delegate void DrawElementDelegate(DrawElement self);
+    public delegate void DrawElementKeyboardDelegate(DrawElement self, Key key);
+
 
     public class DrawElement : ObjectWithContext, IUpdateAndRender, IDisposable
     {
         // Delegates
         public DrawElementDelegate OnCreationCompleted = null;
-        public DrawElementDelegate OnUpdate = null;
+        public DrawElementKeyboardDelegate OnKeyPressed = null;
+        public DrawElementKeyboardDelegate OnKeyReleased = null;
+        public DrawElementKeyboardDelegate OnKeyPressing = null;
 
         // Private properties
         private DebugHelper dh = Debugger.getDH("DrawElement");
@@ -92,7 +97,7 @@ namespace PushEngine.Draw
             initialized = true;
         }
 
-        public void Update()
+        public void Update(Context context)
         {
             if (!initialized)
             {
@@ -103,14 +108,35 @@ namespace PushEngine.Draw
             }
             else
             {
-                if (OnUpdate != null)
-                    OnUpdate(this);
+                foreach (KeyData kd in context.keyboard.ActiveKeys)
+                {
+                    switch (kd.keyState)
+                    {
+                        case KeyData.KeyState.NotPressed:
+                            break;
+                        case KeyData.KeyState.Pressed:
+                            if (OnKeyPressed != null)
+                                OnKeyPressed(this, kd.KeyId);
+                            break;
+                        case KeyData.KeyState.Pressing:
+                            if (OnKeyPressing != null)
+                                OnKeyPressing(this, kd.KeyId);
+                            break;
+                        case KeyData.KeyState.Released:
+                            if (OnKeyReleased != null)
+                                OnKeyReleased(this, kd.KeyId);
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
             }
         }
 
-        public void Render()
+        public void Render(Context context)
         {
-            Update();
+            Update(context);
             PreRender();
             RenderObject();
             RenderImpl();

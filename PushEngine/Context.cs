@@ -1,7 +1,7 @@
 ﻿using System;
-using OpenTK.Input;
 using System.Drawing;
 using PushEngine.Draw;
+using PushEngine.Input;
 
 namespace PushEngine
 {
@@ -13,16 +13,17 @@ namespace PushEngine
             Running
         }
 
-        public KeyboardDevice Keyboard;
         public State state = State.Created;
         public FrameData frameData = new FrameData();
         public Rectangle viewPort;
         public DebugVars dVars;
         public SceneDirector sceneDirector = new SceneDirector();
+        public Keyboard keyboard;
+
 
         public Context()
         {
-            Keyboard = PushEngineCore.Instance.Keyboard;
+            keyboard = PushEngineCore.Instance.keyboard;
             viewPort = PushEngineCore.Instance.SystemProjection.View;
             dVars = PushEngineCore.Instance.processManager.dVars;
         }
@@ -31,6 +32,7 @@ namespace PushEngine
         {
             GC.SuppressFinalize(this);
             sceneDirector.Dispose();
+            sceneDirector = null;
         }
     }
 }
