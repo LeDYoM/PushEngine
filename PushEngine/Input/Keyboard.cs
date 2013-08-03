@@ -6,6 +6,8 @@ namespace PushEngine.Input
 {
     public class Keyboard
     {
+        private DebugHelper dh = Debugger.getDH("Keyboard");
+
         private KeyData[] keyData = new KeyData[(int)Key.LastKey];
         private KeyboardDevice keyboardReference = null;
         private List<KeyData> active = new List<KeyData>();
@@ -39,9 +41,27 @@ namespace PushEngine.Input
             {
                 kd.UpdateIdle();
                 if (kd.keyState != KeyData.KeyState.NotPressed)
+                {
                     temp.Add(kd);
+                    switch (kd.keyState)
+                    {
+                        case KeyData.KeyState.Pressed:
+                            PushEngineCore.Instance.eManager.AddEvent(PEEvent.KeyPressedEvent(kd.KeyId));
+                            break;
+                        case KeyData.KeyState.Pressing:
+                            PushEngineCore.Instance.eManager.AddEvent(PEEvent.KeyPressingEvent(kd.KeyId));
+                            break;
+                        case KeyData.KeyState.Released:
+                            PushEngineCore.Instance.eManager.AddEvent(PEEvent.KeyReleasedEvent(kd.KeyId));
+                            break;
+                        default:
+                            dh.Assert(false);
+                            break;
+                    }
+                }
             }
             active = temp;
+
         }
 
         internal List<KeyData> ActiveKeys { get { return active; } }

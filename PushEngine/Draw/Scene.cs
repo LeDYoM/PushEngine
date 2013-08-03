@@ -14,6 +14,14 @@ namespace PushEngine.Draw
         {
         }
 
+        public void ReceiveEvent(PEEvent event_)
+        {
+            foreach (DrawElement element in sceneElements)
+            {
+                element.ReceiveEvent(event_);
+            }
+        }
+
         internal T GetNewDrawElement<T>() where T : DrawElement, new()
         {
             T obj = new T();

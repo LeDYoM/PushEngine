@@ -60,6 +60,17 @@ namespace PushEngine
             }
         }
 
+        internal void EventForProcesses(PEEvent event_)
+        {
+            foreach (Client client in clients)
+            {
+                if (client.Context.state == Context.State.Running)
+                {
+                    client.ReceiveEvent(event_);
+                }
+            }
+        }
+
         internal void Stop()
         {
         }

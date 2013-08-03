@@ -11,6 +11,8 @@ namespace PushEngine.Demos
         private int leftBase;
         private int TopBase;
         private int rightBase;
+        private int boardLeftBase;
+        private int boardRightBase;
         private Quad player;
         int qWidth = 40;
         int qHeight = 50;
@@ -31,6 +33,9 @@ namespace PushEngine.Demos
             TopBase = context.viewPort.Top;
             rightBase = context.viewPort.Right;
 
+            boardLeftBase = leftBase;
+            boardRightBase = rightBase;
+
             CreateBoard();
             CreatePlayer();
             //CreateBall();
@@ -44,18 +49,39 @@ namespace PushEngine.Demos
             player.Width = pWidth;
             player.Height = pHeight;
             player.BaseColor = Color4.Aqua;
-            player.position.X = 100.0;
-            player.position.Y = 200.0;
+            player.PositionX = 100.0;
+            player.PositionY = 200.0;
 
-            player.OnKeyPressing = delegate(DrawElement self, Key key)
+            player.OnEventReceived = delegate(PEEvent event_)
             {
-                if (key == Key.A)
+                switch (event_.eType)
                 {
-                    self.position.X -= (context.frameData.ellapsedSinceLastFrame * pressRate);
-                }
-                else if (key == Key.D)
-                {
-                    player.position.X += (context.frameData.ellapsedSinceLastFrame * pressRate);
+                    case PEEvent.EventType.Key:
+                        if (event_.IsKeyPressing)
+                        {
+                            if (event_.EventKey == Key.A)
+                            {
+                                player.PositionX -= (context.frameData.ellapsedSinceLastFrame * pressRate);
+                            }
+                            else if (event_.EventKey == Key.D)
+                            {
+                                player.PositionX += (context.frameData.ellapsedSinceLastFrame * pressRate);
+                            }
+
+                            if (player.PositionX < boardLeftBase)
+                            {
+                                player.PositionX = boardLeftBase;
+                            }
+                            else if (player.PositionX > boardRightBase)
+                            {
+                                player.PositionX = boardRightBase;
+                            }
+                        }
+                        break;
+                    case PEEvent.EventType.ObjectState:
+                        break;
+                    default:
+                        break;
                 }
             };
         }

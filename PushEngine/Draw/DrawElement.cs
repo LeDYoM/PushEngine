@@ -9,23 +9,21 @@ using PushEngine.Input;
 namespace PushEngine.Draw
 {
     public delegate void DrawElementDelegate(DrawElement self);
-    public delegate void DrawElementKeyboardDelegate(DrawElement self, Key key);
 
+    public delegate void PEEventReceiver(PEEvent event_);
 
     public class DrawElement : ObjectWithContext, IUpdateAndRender, IDisposable
     {
         // Delegates
+        public PEEventReceiver OnEventReceived = null;
         public DrawElementDelegate OnCreationCompleted = null;
-        public DrawElementKeyboardDelegate OnKeyPressed = null;
-        public DrawElementKeyboardDelegate OnKeyReleased = null;
-        public DrawElementKeyboardDelegate OnKeyPressing = null;
 
         // Private properties
         private DebugHelper dh = Debugger.getDH("DrawElement");
         internal protected Vector2d[] vertex = null;
         internal protected Color4[] color = null;
         internal protected Vector2d[] textureCoordinates = null;
-        internal protected Vector2d position = new Vector2d();
+        protected Vector2d position = new Vector2d();
         internal protected int numVertex = 0;
         internal Texture texture = null;
 
@@ -35,8 +33,30 @@ namespace PushEngine.Draw
         protected Color4 baseColor = Color.White;
         protected SizeF size = new SizeF(-1, -1);
 
-        public bool HasTransparency {
-            get { return hasTransparency; }
+        public bool HasTransparency { get { return hasTransparency; } }
+
+        internal void ReceiveEvent(PEEvent event_)
+        {
+            if (OnEventReceived != null)
+            {
+                OnEventReceived(event_);
+            }
+        }
+
+        public double PositionX { 
+            get { return position.X; }
+            set {
+                position.X = value;
+            }
+        }
+
+        public double PositionY
+        {
+            get { return position.Y; }
+            set
+            {
+                position.Y = value;
+            }
         }
 
         public Color4 BaseColor {
@@ -57,12 +77,12 @@ namespace PushEngine.Draw
 
         internal void setLeftPosition(double x)
         {
-            position.X = x + (size.Width / 2.0);
+            PositionX = x + (size.Width / 2.0);
         }
 
         internal void setTopPosition(double y)
         {
-            position.Y = y + (size.Height / 2.0);
+            PositionY = y + (size.Height / 2.0);
         }
 
         internal DrawElement() : base("DrawElement")
@@ -104,39 +124,14 @@ namespace PushEngine.Draw
                 Create();
                 if (OnCreationCompleted != null)
                     OnCreationCompleted(this);
-                initialized = true;
             }
             else
             {
-                foreach (KeyData kd in context.keyboard.ActiveKeys)
-                {
-                    switch (kd.keyState)
-                    {
-                        case KeyData.KeyState.NotPressed:
-                            break;
-                        case KeyData.KeyState.Pressed:
-                            if (OnKeyPressed != null)
-                                OnKeyPressed(this, kd.KeyId);
-                            break;
-                        case KeyData.KeyState.Pressing:
-                            if (OnKeyPressing != null)
-                                OnKeyPressing(this, kd.KeyId);
-                            break;
-                        case KeyData.KeyState.Released:
-                            if (OnKeyReleased != null)
-                                OnKeyReleased(this, kd.KeyId);
-                            break;
-                        default:
-                            break;
-                    }
-
-                }
             }
         }
 
         public void Render(Context context)
         {
-            Update(context);
             PreRender();
             RenderObject();
             RenderImpl();

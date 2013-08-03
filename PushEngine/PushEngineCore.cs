@@ -44,10 +44,12 @@ namespace PushEngine
 
         internal ProcessManager processManager = new ProcessManager();
         internal Keyboard keyboard = new Keyboard();
+        internal EventManager eManager = new EventManager();
 
         private void InitSubModules()
         {
             dh.WriteLine("Starting submanagers");
+            eManager.Start();
             keyboard.setKeyboard(instance.Keyboard);
 
             processManager.Start();
@@ -99,6 +101,7 @@ namespace PushEngine
                 ellapsed = 0;
             }
 
+            eManager.ProcessEvents();
             processManager.OnUpdateFrame(e);
 
             keyboard.ApplyUpdate();
@@ -118,6 +121,8 @@ namespace PushEngine
         {
             base.OnUnload(e);
 
+            eManager.Stop();
+            eManager = null;
             processManager.Stop();
             processManager.Dispose();
             configuration.Stop();

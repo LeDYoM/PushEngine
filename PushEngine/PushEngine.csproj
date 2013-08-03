@@ -60,6 +60,7 @@
     <Compile Include="Draw\Scene.cs" />
     <Compile Include="Draw\TextLabel.cs" />
     <Compile Include="Debugger.cs" />
+    <Compile Include="EventManager.cs" />
     <Compile Include="FrameData.cs" />
     <Compile Include="Input\Key.cs" />
     <Compile Include="Input\Keyboard.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="ClientData.cs" />
     <Compile Include="Object.cs" />
     <Compile Include="ObjectWithContext.cs" />
+    <Compile Include="PEEvent.cs" />
     <Compile Include="ProcessManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projection.cs" />

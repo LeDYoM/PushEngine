@@ -42,6 +42,16 @@ namespace PushEngine
             context.sceneDirector.Render(context);
         }
 
+        public void SendEvent(PEEvent event_)
+        {
+            PushEngineCore.Instance.eManager.AddEvent(event_);
+        }
+
+        public void ReceiveEvent(PEEvent event_)
+        {
+            context.sceneDirector.ReceiveEvent(event_);
+        }
+
         public virtual void Dispose()
         {
             GC.SuppressFinalize(this);
