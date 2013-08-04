@@ -29,7 +29,7 @@ namespace PushEngine
         {
             get
             {
-                return new Rectangle((int)view[0].X, (int)view[1].Y, (int)view[1].X, (int)view[0].Y);
+                return new Rectangle((int)view[0].X, (int)view[1].Y, (int)(view[1].X - view[0].X), (int)(view[0].Y - view[1].Y));
             }
         }
 

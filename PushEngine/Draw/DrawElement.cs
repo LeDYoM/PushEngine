@@ -75,14 +75,28 @@ namespace PushEngine.Draw
             set { size.Height = value; }
         }
 
-        internal void setLeftPosition(double x)
+        public double LeftPosition
         {
-            PositionX = x + (size.Width / 2.0);
+            get { return PositionX - (size.Width / 2.0); }
+            set { PositionX = value + (size.Width / 2.0); }
         }
 
-        internal void setTopPosition(double y)
+        public double TopPosition
         {
-            PositionY = y + (size.Height / 2.0);
+            get { return PositionY - (size.Height / 2.0); }
+            set { PositionY = value + (size.Height / 2.0); }
+        }
+
+        public double RightPosition
+        {
+            get { return PositionX + (size.Width / 2.0); }
+            set { PositionX = value - (size.Width / 2.0); }
+        }
+
+        public double BottomPosition
+        {
+            get { return PositionY + (size.Height / 2.0); }
+            set { PositionY = value - (size.Height / 2.0); }
         }
 
         internal DrawElement() : base("DrawElement")

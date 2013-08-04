@@ -26,6 +26,9 @@ namespace PushEngine.Draw
         {
             T obj = new T();
             sceneElements.Add(obj);
+            PEEvent evnt = new PEEvent(PEEvent.EventType.ObjectState, PEEvent.EventScope.All);
+            evnt.setContextProperty("Object", obj);
+            PushEngineCore.Instance.eManager.AddEvent(evnt);
             return obj;
         }
 

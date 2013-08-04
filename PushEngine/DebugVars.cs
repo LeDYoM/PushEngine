@@ -42,8 +42,8 @@ namespace PushEngine
                 label.OnCreationCompleted += delegate(DrawElement self)
                 {
                     int pos = (int)label.getAndRemoveContextProperty("index");
-                    self.setLeftPosition(context.viewPort.Left);
-                    self.setTopPosition(context.viewPort.Top + (20 * pos));
+                    self.LeftPosition = context.viewPort.Left;
+                    self.TopPosition = context.viewPort.Top + (20 * pos);
                 };
                 labels.Add(label);
             }

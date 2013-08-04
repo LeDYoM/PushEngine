@@ -68,13 +68,13 @@ namespace PushEngine.Demos
                                 player.PositionX += (context.frameData.ellapsedSinceLastFrame * pressRate);
                             }
 
-                            if (player.PositionX < boardLeftBase)
+                            if (player.LeftPosition < boardLeftBase)
                             {
-                                player.PositionX = boardLeftBase;
+                                player.LeftPosition = boardLeftBase;
                             }
-                            else if (player.PositionX > boardRightBase)
+                            else if (player.RightPosition > boardRightBase)
                             {
-                                player.PositionX = boardRightBase;
+                                player.RightPosition = boardRightBase;
                             }
                         }
                         break;
@@ -97,8 +97,8 @@ namespace PushEngine.Demos
             block.Height = qHeight;
             block.OnCreationCompleted = delegate(DrawElement self)
                 {
-                    self.setLeftPosition(leftBase + (x * qWidth));
-                    self.setTopPosition(TopBase + (y * qHeight));
+                    self.LeftPosition = leftBase + (x * qWidth);
+                    self.TopPosition = TopBase + (y * qHeight);
                 };
 
             block.BaseColor = x % 2 == 0 ? 
@@ -115,24 +115,5 @@ namespace PushEngine.Demos
                 }
             }
         }
-
-
-        public override void Update()
-        {
-            base.Update();
-/*
-            if (context.Keyboard[OpenTK.Input.Key.A])
-            {
-                player.position.X -= (context.frameData.ellapsedSinceLastFrame * pressRate);
-            }
-            else if (context.Keyboard[OpenTK.Input.Key.D])
-            {
-                player.position.X += (context.frameData.ellapsedSinceLastFrame * pressRate);
-            }
-
-            */
-//            context.dVars.AddVar("playerAccel_x", playerAccel_x);
-        }
-
     }
 }
