@@ -22,23 +22,29 @@ namespace PushEngine.Demos
         internal Blocker()
             : base()
         {
+            OnEventReceived = delegate(PEEvent event_)
+            {
+                if (event_.IsStartForProcess)
+                {
+                    context.sceneDirector.GetNewAndPush();
+
+                    leftBase = context.viewPort.Left;
+                    TopBase = context.viewPort.Top;
+                    rightBase = context.viewPort.Right;
+
+                    boardLeftBase = leftBase;
+                    boardRightBase = rightBase;
+
+                    CreateBoard();
+                    CreatePlayer();
+                    //CreateBall();
+                }
+            };
         }
 
         public override void Start()
         {
             base.Start();
-            context.sceneDirector.GetNewAndPush();
-
-            leftBase = context.viewPort.Left;
-            TopBase = context.viewPort.Top;
-            rightBase = context.viewPort.Right;
-
-            boardLeftBase = leftBase;
-            boardRightBase = rightBase;
-
-            CreateBoard();
-            CreatePlayer();
-            //CreateBall();
         }
 
         private const double pressRate = 500.0;
@@ -54,34 +60,28 @@ namespace PushEngine.Demos
 
             player.OnEventReceived = delegate(PEEvent event_)
             {
-                switch (event_.eType)
+                if (event_.isKeyEvent)
                 {
-                    case PEEvent.EventType.Key:
-                        if (event_.IsKeyPressing)
+                    if (event_.IsKeyPressing)
+                    {
+                        if (event_.EventKey == Key.A)
                         {
-                            if (event_.EventKey == Key.A)
-                            {
-                                player.PositionX -= (context.frameData.ellapsedSinceLastFrame * pressRate);
-                            }
-                            else if (event_.EventKey == Key.D)
-                            {
-                                player.PositionX += (context.frameData.ellapsedSinceLastFrame * pressRate);
-                            }
-
-                            if (player.LeftPosition < boardLeftBase)
-                            {
-                                player.LeftPosition = boardLeftBase;
-                            }
-                            else if (player.RightPosition > boardRightBase)
-                            {
-                                player.RightPosition = boardRightBase;
-                            }
+                            player.PositionX -= (context.frameData.ellapsedSinceLastFrame * pressRate);
                         }
-                        break;
-                    case PEEvent.EventType.ObjectState:
-                        break;
-                    default:
-                        break;
+                        else if (event_.EventKey == Key.D)
+                        {
+                            player.PositionX += (context.frameData.ellapsedSinceLastFrame * pressRate);
+                        }
+
+                        if (player.LeftPosition < boardLeftBase)
+                        {
+                            player.LeftPosition = boardLeftBase;
+                        }
+                        else if (player.RightPosition > boardRightBase)
+                        {
+                            player.RightPosition = boardRightBase;
+                        }
+                    }
                 }
             };
         }

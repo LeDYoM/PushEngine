@@ -13,6 +13,8 @@ namespace PushEngine
         protected Context context = null;
         internal Context Context { get { return context; } }
 
+        public PEEventReceiver OnEventReceived = null;
+
         internal void setContext(Context context_)
         {
             context = context_;
@@ -34,12 +36,12 @@ namespace PushEngine
 
         public virtual void Update()
         {
-            context.sceneDirector.CurrentScene.Update(context);
+            context.sceneDirector.CurrentScene.Update();
         }
 
         public virtual void Render()
         {
-            context.sceneDirector.Render(context);
+            context.sceneDirector.Render();
         }
 
         public void SendEvent(PEEvent event_)
@@ -49,7 +51,18 @@ namespace PushEngine
 
         public void ReceiveEvent(PEEvent event_)
         {
-            context.sceneDirector.ReceiveEvent(event_);
+            if (event_.receiverObject == null)
+            {
+                if (OnEventReceived != null)
+                {
+                    OnEventReceived(event_);
+                }
+            }
+            else
+            {
+                // Send the event to the object.
+                context.sceneDirector.ReceiveEvent(event_);
+            }
         }
 
         public virtual void Dispose()

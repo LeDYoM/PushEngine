@@ -5,6 +5,8 @@ using PushEngine.Input;
 
 namespace PushEngine
 {
+    public delegate void PEEventReceiver(PEEvent event_);
+
     public class Context : IDisposable
     {
         public enum State
@@ -17,12 +19,14 @@ namespace PushEngine
         public FrameData frameData = new FrameData();
         public Rectangle viewPort;
         public DebugVars dVars;
-        public SceneDirector sceneDirector = new SceneDirector();
+        public SceneDirector sceneDirector = null;
         public Keyboard keyboard;
+        public Client client = null;
 
-
-        public Context()
+        public Context(Client client_)
         {
+            client = client_;
+            sceneDirector = new SceneDirector(this);
             keyboard = PushEngineCore.Instance.keyboard;
             viewPort = PushEngineCore.Instance.SystemProjection.View;
             dVars = PushEngineCore.Instance.processManager.dVars;

@@ -4,14 +4,16 @@ using System.Diagnostics;
 
 namespace PushEngine.Draw
 {
-    public class Scene : IUpdateAndRender, IDisposable
+    public class Scene : IDisposable
     {
         private DebugHelper dh = Debugger.getDH("Scene");
 
         private List<DrawElement> sceneElements = new List<DrawElement>();
+        private Context context = null;
 
-        internal Scene()
+        internal Scene(Context context_)
         {
+            context = context_;
         }
 
         public void ReceiveEvent(PEEvent event_)
@@ -26,13 +28,15 @@ namespace PushEngine.Draw
         {
             T obj = new T();
             sceneElements.Add(obj);
-            PEEvent evnt = new PEEvent(PEEvent.EventType.ObjectState, PEEvent.EventScope.All);
-            evnt.setContextProperty("Object", obj);
+            PEEvent evnt = new PEEvent(PEEvent.EventScope.Object);
+            evnt.receiverObject = obj;
+            evnt.receiverClient = context.client;
+            evnt.Action = "CreateCompleted";
             PushEngineCore.Instance.eManager.AddEvent(evnt);
             return obj;
         }
 
-        public void Update(Context context)
+        public void Update()
         {
             foreach (DrawElement element in sceneElements)
             {
@@ -40,7 +44,7 @@ namespace PushEngine.Draw
             }
         }
 
-        public void Render(Context context)
+        public void Render()
         {
             foreach (DrawElement element in sceneElements)
             {

@@ -10,8 +10,6 @@ namespace PushEngine.Draw
 {
     public delegate void DrawElementDelegate(DrawElement self);
 
-    public delegate void PEEventReceiver(PEEvent event_);
-
     public class DrawElement : ObjectWithContext, IUpdateAndRender, IDisposable
     {
         // Delegates

@@ -8,6 +8,8 @@ namespace PushEngine
 {
     internal class ProcessManager : IDisposable
     {
+        private DebugHelper dh = Debugger.getDH("ProcessManager");
+
         private List<Client> clients = new List<Client>();
         internal DebugVars dVars = new DebugVars();
 
@@ -19,7 +21,7 @@ namespace PushEngine
 
             foreach (Client client in clients)
             {
-                client.setContext(new Context());
+                client.setContext(new Context(client));
             }
 
         }
@@ -30,7 +32,7 @@ namespace PushEngine
             {
                 if (client.Context.state == Context.State.Created)
                 {
-                    client.Start();
+                    PushEngineCore.Instance.eManager.AddEvent(PEEvent.StartEventForClient(client));
                 }
             }
         }
@@ -64,9 +66,20 @@ namespace PushEngine
         {
             foreach (Client client in clients)
             {
-                if (client.Context.state == Context.State.Running)
+                client.ReceiveEvent(event_);
+            }
+        }
+
+        internal void EventForProcess(PEEvent event_)
+        {
+            Client cl = event_.receiverClient;
+            dh.Assert(cl != null);
+            if (cl != null)
+            {
+                foreach (Client client in clients)
                 {
-                    client.ReceiveEvent(event_);
+                    if (client == cl)
+                        client.ReceiveEvent(event_);
                 }
             }
         }

@@ -3,14 +3,16 @@ using System.Collections.Generic;
 
 namespace PushEngine.Draw
 {
-    public class SceneDirector : IUpdateAndRender, IDisposable
+    public class SceneDirector : IDisposable
     {
         private Stack<Scene> scenesStack = new Stack<Scene>();
         private List<Scene> scenes = new List<Scene>();
         private Scene currentScene = null;
+        private Context context = null;
 
-        internal SceneDirector()
+        internal SceneDirector(Context context_)
         {
+            context = context_;
         }
 
         public Scene CurrentScene { get { return currentScene; } }
@@ -30,7 +32,7 @@ namespace PushEngine.Draw
 
         public Scene GetNew()
         {
-            Scene tmp = new Scene();
+            Scene tmp = new Scene(context);
             scenes.Add(tmp);
             return tmp;
         }
@@ -42,16 +44,16 @@ namespace PushEngine.Draw
             return tmp;
         }
 
-        public void Update(Context context)
+        public void Update()
         {
             if (currentScene != null)
-                currentScene.Update(context);
+                currentScene.Update();
         }
 
-        public void Render(Context context)
+        public void Render()
         {
             if (currentScene != null)
-                currentScene.Render(context);
+                currentScene.Render();
         }
 
         public void ReceiveEvent(PEEvent event_)
