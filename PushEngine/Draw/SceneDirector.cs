@@ -56,12 +56,6 @@ namespace PushEngine.Draw
                 currentScene.Render();
         }
 
-        public void ReceiveEvent(PEEvent event_)
-        {
-            if (currentScene != null)
-                currentScene.ReceiveEvent(event_);
-        }
-
         public void Dispose()
         {
             GC.SuppressFinalize(this);

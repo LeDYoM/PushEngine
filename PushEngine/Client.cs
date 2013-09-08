@@ -6,7 +6,7 @@ using PushEngine.Draw;
 
 namespace PushEngine
 {
-    public class Client : IDisposable
+    public class Client : Object, IDisposable
     {
         private DebugHelper dh = Debugger.getDH("PEClient");
 
@@ -29,9 +29,19 @@ namespace PushEngine
         {
         }
 
-        public virtual void Start()
+        public override void ReceiveEvent(PEEvent event_)
         {
+            if (OnEventReceived != null)
+            {
+                OnEventReceived(event_);
+            }
+
             context.state = Context.State.Running;
+        }
+
+        internal SceneDirector Director
+        {
+            get { return context.sceneDirector; }
         }
 
         public virtual void Update()
@@ -49,22 +59,6 @@ namespace PushEngine
             PushEngineCore.Instance.eManager.AddEvent(event_);
         }
 
-        public void ReceiveEvent(PEEvent event_)
-        {
-            if (event_.receiverObject == null)
-            {
-                if (OnEventReceived != null)
-                {
-                    OnEventReceived(event_);
-                }
-            }
-            else
-            {
-                // Send the event to the object.
-                context.sceneDirector.ReceiveEvent(event_);
-            }
-        }
-
         public virtual void Dispose()
         {
             GC.SuppressFinalize(this);
@@ -80,6 +74,5 @@ namespace PushEngine
             dh.WriteLine("Destructor from PEClient called!");
             Dispose();
         }
-
     }
 }

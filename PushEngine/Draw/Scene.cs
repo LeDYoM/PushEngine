@@ -16,50 +16,34 @@ namespace PushEngine.Draw
             context = context_;
         }
 
-        public void ReceiveEvent(PEEvent event_)
-        {
-            foreach (DrawElement element in sceneElements)
-            {
-                element.ReceiveEvent(event_);
-            }
-        }
-
         internal T GetNewDrawElement<T>() where T : DrawElement, new()
         {
             T obj = new T();
             sceneElements.Add(obj);
-            PEEvent evnt = new PEEvent(PEEvent.EventScope.Object);
-            evnt.receiverObject = obj;
-            evnt.receiverClient = context.client;
-            evnt.Action = "CreateCompleted";
+            PEEvent evnt = PEEvent.CreatedEventForObject(context.client, obj);
             PushEngineCore.Instance.eManager.AddEvent(evnt);
             return obj;
         }
 
         public void Update()
         {
-            foreach (DrawElement element in sceneElements)
-            {
-                element.Update(context);
-            }
+            sceneElements.ForEach(x => x.Update(context));
         }
 
         public void Render()
         {
-            foreach (DrawElement element in sceneElements)
-            {
-                element.Render(context);
-            }
+            sceneElements.ForEach(x => x.Render(context));
+        }
+
+        internal List<DrawElement> ActiveElements
+        {
+            get { return sceneElements; } 
         }
 
         public void Dispose()
         {
             GC.SuppressFinalize(this);
-            foreach (DrawElement element in sceneElements)
-            {
-                element.Dispose();
-            }
-
+            sceneElements.ForEach(x => x.Dispose());
             sceneElements.Clear();
         }
 

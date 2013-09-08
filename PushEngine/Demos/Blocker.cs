@@ -24,7 +24,7 @@ namespace PushEngine.Demos
         {
             OnEventReceived = delegate(PEEvent event_)
             {
-                if (event_.IsStartForProcess)
+                if (event_.isAction(PEEvent.ActionStartProcess))
                 {
                     context.sceneDirector.GetNewAndPush();
 
@@ -40,11 +40,6 @@ namespace PushEngine.Demos
                     //CreateBall();
                 }
             };
-        }
-
-        public override void Start()
-        {
-            base.Start();
         }
 
         private const double pressRate = 500.0;

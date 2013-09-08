@@ -11,6 +11,17 @@ namespace PushEngine.Demos
 
         internal DirectDemoQuad() : base()
         {
+            OnEventReceived = delegate(PEEvent event_)
+            {
+                if (event_.isAction(PEEvent.ActionStartProcess))
+                {
+                    Scene scene = context.sceneDirector.GetNewAndPush();
+                    quad = scene.GetNewDrawElement<Quad>();
+                    quad.Width = 100;
+                    quad.Height = 100;
+                    label = scene.GetNewDrawElement<TextLabel>();
+                }
+            };
         }
 
         public override ClientData Data()
@@ -20,15 +31,6 @@ namespace PushEngine.Demos
             data.Version = "1.00";
             return data;
 
-        }
-        public override void Start()
-        {
-            base.Start();
-            Scene scene = context.sceneDirector.GetNewAndPush();
-            quad = scene.GetNewDrawElement<Quad>();
-            quad.Width = 100;
-            quad.Height = 100;
-            label = scene.GetNewDrawElement<TextLabel>();
         }
 
         public override void Update()

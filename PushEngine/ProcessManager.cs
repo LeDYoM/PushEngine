@@ -41,47 +41,17 @@ namespace PushEngine
         {
             startCreatedProcesses();
 
-            foreach (Client client in clients)
-            {
-                if (client.Context.state == Context.State.Running)
-                {
-                    client.Update();
-                }
-            }
+            ActiveProcesses().ForEach(x => x.Update());
+        }
+
+        internal List<Client> ActiveProcesses()
+        {
+            return clients.FindAll(x => x.Context.state == Context.State.Running);
         }
 
         internal void OnRenderFrame(FrameEventArgs e)
         {
-            foreach (Client client in clients)
-            {
-                if (client.Context.state == Context.State.Running)
-                {
-                    client.Context.frameData.Apply(e);
-                    client.Render();
-                }
-            }
-        }
-
-        internal void EventForProcesses(PEEvent event_)
-        {
-            foreach (Client client in clients)
-            {
-                client.ReceiveEvent(event_);
-            }
-        }
-
-        internal void EventForProcess(PEEvent event_)
-        {
-            Client cl = event_.receiverClient;
-            dh.Assert(cl != null);
-            if (cl != null)
-            {
-                foreach (Client client in clients)
-                {
-                    if (client == cl)
-                        client.ReceiveEvent(event_);
-                }
-            }
+            ActiveProcesses().ForEach(x => { x.Context.frameData.Apply(e); x.Render(); });
         }
 
         internal void Stop()

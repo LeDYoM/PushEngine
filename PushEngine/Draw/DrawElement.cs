@@ -33,8 +33,19 @@ namespace PushEngine.Draw
 
         public bool HasTransparency { get { return hasTransparency; } }
 
-        internal void ReceiveEvent(PEEvent event_)
+        public override void ReceiveEvent(PEEvent event_)
         {
+            if (event_.isAction(PEEvent.ActionObjectCreated))
+            {
+                if (!initialized)
+                {
+                    Create();
+                    if (OnCreationCompleted != null)
+                        OnCreationCompleted(this);
+                }
+                return;
+            }
+
             if (OnEventReceived != null)
             {
                 OnEventReceived(event_);
@@ -131,15 +142,6 @@ namespace PushEngine.Draw
 
         public void Update(Context context)
         {
-            if (!initialized)
-            {
-                Create();
-                if (OnCreationCompleted != null)
-                    OnCreationCompleted(this);
-            }
-            else
-            {
-            }
         }
 
         public void Render(Context context)
@@ -221,6 +223,5 @@ namespace PushEngine.Draw
             dh.WriteLine("Destructor from DrawElement called!");
             Dispose();
         }
-
     }
 }

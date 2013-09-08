@@ -9,6 +9,17 @@ namespace PushEngine
         private Dictionary<string, string> dVars = new Dictionary<string, string>();
         List<TextLabel> labels = new List<TextLabel>();
 
+        internal DebugVars()
+        {
+            OnEventReceived = delegate(PEEvent event_)
+            {
+                if (event_.isAction(PEEvent.ActionStartProcess))
+                {
+                    Scene scene = context.sceneDirector.GetNewAndPush();
+                }
+            };
+        }
+
         internal void AddVar(string name_, object obj)
         {
             dVars.Add(name_, obj.ToString());
@@ -17,12 +28,6 @@ namespace PushEngine
         internal void AddVar(string name_, ValueType obj)
         {
             dVars.Add(name_, obj.ToString());
-        }
-
-        public override void Start()
-        {
-            base.Start();
-            Scene scene = context.sceneDirector.GetNewAndPush();
         }
 
         private int a = 387658765;

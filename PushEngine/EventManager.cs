@@ -28,61 +28,37 @@ namespace PushEngine
                 PEEvent temp = events.Dequeue();
 
                 //Apply the logic to decide where the event should be forwarded.
-                if (temp.receiverClient == null)
+                if (temp.receiverClient != null)
                 {
-                    // There is no client, that should be a system event.
-                    // Not implemented yet.
+                    if (temp.receiverObject != null)
+                    {
+                        temp.receiverObject.ReceiveEvent(temp);
+                    }
+                    else
+                    {
+                        if (temp.oBroadCast == PEEvent.ObjectBroadcasting.ToActiveObjects)
+                        {
+                            toAllActiveObjects(temp, temp.receiverClient);
+                        }
+                        else
+                        {
+                            temp.receiverClient.ReceiveEvent(temp);
+                        }
+                    }
                 }
                 else
                 {
-                    temp.receiverClient.ReceiveEvent(temp);
+                    if (temp.cBroadCast == PEEvent.ClientBroadcasting.ToActiveClients)
+                    {
+                        PushEngineCore.Instance.processManager.ActiveProcesses().ForEach(x => toAllActiveObjects(temp, x));
+                    }
                 }
             }
         }
 
-        internal static PEEvent KeyPressingEvent(Key k)
+        private void toAllActiveObjects(PEEvent event_, Client cl)
         {
-            PEEvent temp = new PEEvent();
-            temp.key = k;
-            temp.Action = "KeyPressing";
-            return temp;
-        }
-
-        internal static PEEvent KeyReleasedEvent(Key k)
-        {
-            PEEvent temp = new PEEvent();
-            temp.key = k;
-            temp.Action = "KeyReleased";
-            return temp;
-        }
-
-        internal static PEEvent NewEvent(Client receiverClient, Object receiverObject, Client senderClient, Object senderObject)
-        {
-            PEEvent temp = new PEEvent();
-            temp.receiverClient = receiverClient;
-            temp.receiverObject = receiverObject;
-            temp.senderClient = senderClient;
-            temp.senderObject = senderObject;
-            return temp;
-        }
-
-        internal static PEEvent EventForObject(Client receiverClient, Object receiverObject, Client senderClient, Object senderObject)
-        {
-            PEEvent temp = NewEvent(receiverClient, receiverObject, senderClient, senderObject);
-            return temp;
-        }
-
-        internal static PEEvent EventForClient(Client receiverClient, Client senderClient, Object senderObject)
-        {
-            PEEvent temp = NewEvent(receiverClient, null, senderClient, senderObject);
-            return temp;
-        }
-
-        internal static PEEvent StartEventForClient(Client receiverClient)
-        {
-            PEEvent temp = EventForClient(receiverClient, null, null);
-            temp.Action = PEEvent.ActionStartProcess;
-            return temp;
+            cl.Director.CurrentScene.ActiveElements.ForEach(y => y.ReceiveEvent(event_));
         }
     }
 }
