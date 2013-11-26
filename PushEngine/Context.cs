@@ -18,7 +18,6 @@ namespace PushEngine
         public State state = State.Created;
         public FrameData frameData = new FrameData();
         public Rectangle viewPort;
-        public DebugVars dVars;
         public SceneDirector sceneDirector = null;
         public Keyboard keyboard;
         public Client client = null;
@@ -29,7 +28,6 @@ namespace PushEngine
             sceneDirector = new SceneDirector(this);
             keyboard = PushEngineCore.Instance.keyboard;
             viewPort = PushEngineCore.Instance.SystemProjection.View;
-            dVars = PushEngineCore.Instance.processManager.dVars;
         }
 
         public void Dispose()

@@ -24,40 +24,7 @@ namespace PushEngine.Draw
             get { return text; }
             set { text = value; }
         }
-        /*
-        internal string Text
-        {
-            get { return text; }
-            set
-            {
-                text = value;
 
-                bool updated = false;
-
-                if (initialized)
-                {
-                    SizeF s = TextureUtils.MeasureString(text, font);
-                    if (autoSize)
-                    {
-                        if (s.Width != width || s.Height != height)
-                        {
-                            texture.Dispose();
-                            texture = null;
-                            PostInit();
-                            updated = true;
-                        }
-                    }
-
-                    if (!updated)
-                    {
-                        texture.Clear(backgroundColor);
-                        texture.DrawString(text, font, foregroundColor, backgroundColor, new Size(-1, -1), alignment);
-                        texture.UploadBitmap();
-                    }
-                }
-            }
-        }
-        */
         public override void Create()
         {
             texture = TextureUtils.CreateTextTexture(text, font,  foregroundColor, backgroundColor, alignment);

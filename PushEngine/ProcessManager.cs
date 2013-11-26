@@ -11,12 +11,10 @@ namespace PushEngine
         private DebugHelper dh = Debugger.getDH("ProcessManager");
 
         private List<Client> clients = new List<Client>();
-        internal DebugVars dVars = new DebugVars();
 
         internal void Start()
         {
             clients.Add(new Blocker());
-            clients.Add(dVars);
             //clients.Add(new DirectDemoQuad());
 
             foreach (Client client in clients)
