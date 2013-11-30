@@ -73,9 +73,8 @@
     <Compile Include="Demos\DirectDemoQuad.cs" />
     <Compile Include="Draw\DrawElement.cs" />
     <Compile Include="Draw\IUpdateAndRender.cs" />
-    <Compile Include="Draw\Quad.cs" />
+    <Compile Include="Draw\Sprite.cs" />
     <Compile Include="Draw\Scene.cs" />
-    <Compile Include="Draw\TextLabel.cs" />
     <Compile Include="Debugger.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="FrameData.cs" />

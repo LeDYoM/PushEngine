@@ -6,8 +6,7 @@ namespace PushEngine.Demos
 {
     internal class DirectDemoQuad : Client
     {
-        Quad quad = null;
-        TextLabel label = null;
+        Sprite quad = null;
 
         internal DirectDemoQuad() : base()
         {
@@ -16,10 +15,9 @@ namespace PushEngine.Demos
                 if (event_.isAction(PEEvent.ActionStartProcess))
                 {
                     Scene scene = context.sceneDirector.GetNewAndPush();
-                    quad = scene.GetNewDrawElement<Quad>();
+                    quad = scene.GetNewDrawElement<Sprite>();
                     quad.Width = 100;
                     quad.Height = 100;
-                    label = scene.GetNewDrawElement<TextLabel>();
                 }
             };
         }

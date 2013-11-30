@@ -13,7 +13,7 @@ namespace PushEngine.Demos
         private int rightBase;
         private int boardLeftBase;
         private int boardRightBase;
-        private Quad player;
+        private Sprite player;
         int qWidth = 40;
         int qHeight = 50;
         int pWidth = 100;
@@ -46,7 +46,7 @@ namespace PushEngine.Demos
 
         private void CreatePlayer()
         {
-            player = context.sceneDirector.CurrentScene.GetNewDrawElement<Quad>();
+            player = context.sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
             player.Width = pWidth;
             player.Height = pHeight;
             player.BaseColor = Color4.Aqua;
@@ -87,7 +87,7 @@ namespace PushEngine.Demos
 
         private void CreateBlock(int x, int y)
         {
-            Quad block = context.sceneDirector.CurrentScene.GetNewDrawElement<Quad>();
+            Sprite block = context.sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
             block.Width = qWidth;
             block.Height = qHeight;
             block.OnCreationCompleted = delegate(DrawElement self)

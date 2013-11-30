@@ -25,8 +25,6 @@ namespace PushEngine.Draw
         internal protected int numVertex = 0;
         internal Texture texture = null;
 
-        // Model properties
-        protected bool initialized = false;
         protected bool hasTransparency = false;
         protected Color4 baseColor = Color.White;
         protected SizeF size = new SizeF(-1, -1);
@@ -35,17 +33,6 @@ namespace PushEngine.Draw
 
         public override void ReceiveEvent(PEEvent event_)
         {
-            if (event_.isAction(PEEvent.ActionObjectCreated))
-            {
-                if (!initialized)
-                {
-                    Create();
-                    if (OnCreationCompleted != null)
-                        OnCreationCompleted(this);
-                }
-                return;
-            }
-
             if (OnEventReceived != null)
             {
                 OnEventReceived(event_);
@@ -132,12 +119,6 @@ namespace PushEngine.Draw
             {
                 color[i] = color_;
             }
-        }
-
-        public virtual void Create()
-        {
-            dh.Assert(!initialized);
-            initialized = true;
         }
 
         public void Update(Context context)
