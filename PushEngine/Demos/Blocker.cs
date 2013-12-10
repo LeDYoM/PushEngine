@@ -47,11 +47,9 @@ namespace PushEngine.Demos
         private void CreatePlayer()
         {
             player = context.sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
-            player.Width = pWidth;
-            player.Height = pHeight;
-            player.BaseColor = Color4.Aqua;
-            player.PositionX = 100.0;
-            player.PositionY = 200.0;
+            player.CreateSprite(new System.Drawing.SizeF(pWidth, pHeight), Color4.Aqua);
+            player.PositionX = 100;
+            player.PositionY = 200;
 
             player.OnEventReceived = delegate(PEEvent event_)
             {
@@ -88,16 +86,13 @@ namespace PushEngine.Demos
         private void CreateBlock(int x, int y)
         {
             Sprite block = context.sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
+            block.CreateSprite(new System.Drawing.SizeF(qWidth,qHeight), 
+                x % 2 == 0 ? 
+                (y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ?Color4.Yellow : Color4.Violet));
             block.Width = qWidth;
             block.Height = qHeight;
-            block.OnCreationCompleted = delegate(DrawElement self)
-                {
-                    self.LeftPosition = leftBase + (x * qWidth);
-                    self.TopPosition = TopBase + (y * qHeight);
-                };
-
-            block.BaseColor = x % 2 == 0 ? 
-                (y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ?Color4.Yellow : Color4.Violet);
+            block.LeftPosition = leftBase + (x * qWidth);
+            block.TopPosition = TopBase + (y * qHeight);
         }
 
         private void CreateBoard()

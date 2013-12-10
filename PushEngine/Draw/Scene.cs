@@ -6,9 +6,7 @@ namespace PushEngine.Draw
 {
     public class Scene : IDisposable
     {
-        private DebugHelper dh = Debugger.getDH("Scene");
-
-        private List<DrawElement> sceneElements = new List<DrawElement>();
+        private List<SceneElement> sceneElements = new List<SceneElement>();
         private Context context = null;
 
         internal Scene(Context context_)
@@ -16,7 +14,7 @@ namespace PushEngine.Draw
             context = context_;
         }
 
-        internal T GetNewDrawElement<T>() where T : DrawElement, new()
+        internal T GetNewDrawElement<T>() where T : SceneElement, new()
         {
             T obj = new T();
             sceneElements.Add(obj);
@@ -35,7 +33,7 @@ namespace PushEngine.Draw
             sceneElements.ForEach(x => x.Render(context));
         }
 
-        internal List<DrawElement> ActiveElements
+        internal List<SceneElement> ActiveElements
         {
             get { return sceneElements; } 
         }
@@ -49,7 +47,6 @@ namespace PushEngine.Draw
 
         ~Scene()
         {
-            dh.WriteLine("Destructor from scene called!");
             Dispose();
         }
 
