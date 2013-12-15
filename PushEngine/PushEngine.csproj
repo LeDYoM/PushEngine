@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="Demos\Blocker.cs" />
+    <Compile Include="Renderer.cs" />
     <Compile Include="Draw\SceneElement.cs" />
     <Compile Include="Draw\IUpdateAndRender.cs" />
     <Compile Include="Draw\Material.cs" />

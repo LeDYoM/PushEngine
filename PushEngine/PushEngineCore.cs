@@ -12,6 +12,7 @@ namespace PushEngine
 
         private static PushEngineCore instance = null;
         internal static Configuration configuration = new Configuration();
+        internal Renderer renderer = null;
 
         internal static void Create()
         {
@@ -50,6 +51,7 @@ namespace PushEngine
         {
             dh.WriteLine("Starting submanagers");
             eManager.Start();
+            renderer = new Renderer();
             keyboard.setKeyboard(instance.Keyboard);
 
             processManager.Start();

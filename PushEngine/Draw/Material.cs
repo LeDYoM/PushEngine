@@ -49,14 +49,12 @@ namespace PushEngine.Draw
 
             if (HasTransparency)
             {
-                GL.Enable(EnableCap.Blend);
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                PushEngineCore.Instance.renderer.StartBlending();
             }
 
             if (texture != null)
             {
-                GL.Enable(EnableCap.Texture2D);
-                GL.BindTexture(TextureTarget.Texture2D, texture.Id);
+                PushEngineCore.Instance.renderer.BindTexture(texture.Id);
             }
         }
 
@@ -68,15 +66,8 @@ namespace PushEngine.Draw
 
         internal void PostRender()
         {
-            if (texture != null)
-            {
-                GL.Disable(EnableCap.Texture2D);
-            }
-
-            if (HasTransparency)
-            {
-                GL.Disable(EnableCap.Blend);
-            }
+            PushEngineCore.Instance.renderer.UnbindTexture();
+            PushEngineCore.Instance.renderer.EndBlending();
         }
 
         public void Dispose()
