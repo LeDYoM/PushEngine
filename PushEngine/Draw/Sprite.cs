@@ -1,9 +1,7 @@
 ﻿using System;
-using OpenTK;
 using System.Drawing;
-using OpenTK.Graphics.OpenGL;
-using System.Collections.Generic;
 using OpenTK.Graphics;
+using OpenTK;
 
 namespace PushEngine.Draw
 {
@@ -17,9 +15,8 @@ namespace PushEngine.Draw
         {
             Create(4);
 
-            material = new Material(4, null);
+            material = new Material(4, null, color);
             size_ = s;
-            GlobalColor = color.HasValue ? color.Value : Color4.White;
             PostCreate();
 
         }
@@ -28,9 +25,8 @@ namespace PushEngine.Draw
         {
             Create(4);
 
-            material = new Material(4, t);
+            material = new Material(4, t, color);
             size_ = t.TextureSize;
-            GlobalColor = color.HasValue ? color.Value : Color4.White;
             PostCreate();
         }
 
@@ -55,28 +51,18 @@ namespace PushEngine.Draw
         internal override void PreRender()
         {
             material.startMaterialRenderer();
+            renderer.PutMatrix(ref matrix);
 
-            GL.PushMatrix();
-            GL.MultMatrix(ref matrix);
         }
 
         internal override void RenderObject()
         {
-            GL.Begin(BeginMode.Polygon);
-
-            for (int i = 0; i < numVertex; ++i)
-            {
-                // TODO: Combine material color and GlobalColor
-                material.RenderNextVertex();
-                GL.Color4(GlobalColor);
-                GL.Vertex2(vertex[i]);
-            }
-            GL.End();
+            renderer.RenderPolygon(numVertex, vertex, material.textureCoordinates, material.color);
         }
 
         internal override void PostRender()
         {
-            GL.PopMatrix();
+            renderer.PopMatrix();
             material.PostRender();
         }
 

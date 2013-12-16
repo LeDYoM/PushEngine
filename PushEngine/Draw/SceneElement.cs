@@ -15,9 +15,10 @@ namespace PushEngine.Draw
         // Delegates
         public PEEventReceiver OnEventReceived = null;
 
+        protected Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
+
         internal Material material;
         protected SizeF size_;
-        public Color4 GlobalColor = Color4.White;
 
         // Private properties
         internal protected Vector2d[] vertex = null;

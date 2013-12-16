@@ -1,7 +1,6 @@
 ﻿using System;
 using OpenTK;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 
 namespace PushEngine.Draw
 {
@@ -12,6 +11,8 @@ namespace PushEngine.Draw
         internal Texture texture = null;
         protected bool hasTransparency = false;
         private int numVertex = 0;
+
+        protected Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
 
         internal Material(int numVertex_, Texture t,Color4? color_ = null)
         {
@@ -41,33 +42,23 @@ namespace PushEngine.Draw
             }
         }
 
-        private int nv = 0;
-
         public void startMaterialRenderer()
         {
-            nv = 0;
-
             if (HasTransparency)
             {
-                PushEngineCore.Instance.renderer.StartBlending();
+                renderer.StartBlending();
             }
 
             if (texture != null)
             {
-                PushEngineCore.Instance.renderer.BindTexture(texture.Id);
+                renderer.BindTexture(texture.Id);
             }
-        }
-
-        public void RenderNextVertex()
-        {
-            GL.TexCoord2(textureCoordinates[nv]);
-            GL.Color4(color[nv]);
         }
 
         internal void PostRender()
         {
-            PushEngineCore.Instance.renderer.UnbindTexture();
-            PushEngineCore.Instance.renderer.EndBlending();
+            renderer.UnbindTexture();
+            renderer.EndBlending();
         }
 
         public void Dispose()
