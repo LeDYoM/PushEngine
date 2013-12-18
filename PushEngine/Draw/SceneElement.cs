@@ -21,7 +21,7 @@ namespace PushEngine.Draw
         protected SizeF size_;
 
         // Private properties
-        internal protected Vector2d[] vertex = null;
+        internal protected Vector3d[] vertex = null;
         protected Matrix4d matrix = Matrix4d.Identity;
         internal protected int numVertex = 0;
 
@@ -101,7 +101,7 @@ namespace PushEngine.Draw
         protected void resetVertex(int nVertex)
         {
             numVertex = nVertex;
-            vertex = new Vector2d[numVertex];
+            vertex = new Vector3d[numVertex];
         }
 
         public void Update(Context context)

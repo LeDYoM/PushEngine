@@ -35,11 +35,10 @@ namespace PushEngine.Draw
             base.SizeChanged();
             double w2 = Width / 2.0;
             double h2 = Height / 2.0;
-
-            vertex[0] = new Vector2d(w2 * -1, h2);
-            vertex[1] = new Vector2d(w2, h2);
-            vertex[2] = new Vector2d(w2, h2 * -1);
-            vertex[3] = new Vector2d(w2 * -1, h2 * -1);
+            vertex[0] = new Vector3d(w2 * -1, h2, 0);
+            vertex[1] = new Vector3d(w2, h2, 0);
+            vertex[2] = new Vector3d(w2, h2 * -1, 0);
+            vertex[3] = new Vector3d(w2 * -1, h2 * -1, 0);
 
         }
 
