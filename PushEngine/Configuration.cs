@@ -27,13 +27,6 @@ namespace PushEngine
         private static string configFile = "config.bin";
         public GraphicsMode graphicsMode = null;
 
-        internal void Start()
-        {
-            dh.WriteLine("Reading config file...");
-            
-            ReadConfigFile();
-        }
-
         internal void ApplyConfiguration()
         {
             PushEngineCore.Instance.Width = configurationData.WindowSize.Width;
@@ -41,11 +34,6 @@ namespace PushEngine
             graphicsMode = new GraphicsMode(new ColorFormat(configurationData.bpp));
 
 
-        }
-
-        internal void  Stop()
-        {
-            SaveConfigFile();
         }
 
         internal void ReadConfigFile()

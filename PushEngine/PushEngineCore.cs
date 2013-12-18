@@ -16,7 +16,7 @@ namespace PushEngine
 
         internal static void Create()
         {
-            configuration.Start();
+            configuration.ReadConfigFile();
             instance = new PushEngineCore();
             instance.Title = configuration.configurationData.WindowTitle;
             instance.VSync = VSyncMode.Off;
@@ -127,7 +127,7 @@ namespace PushEngine
             eManager = null;
             processManager.Stop();
             processManager.Dispose();
-            configuration.Stop();
+            configuration.SaveConfigFile();
             configuration = null;
 
             dh.WriteLine("SubManagers stopped");
