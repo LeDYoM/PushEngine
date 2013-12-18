@@ -8,8 +8,6 @@ namespace PushEngine
 {
     internal class ProcessManager : IDisposable
     {
-        private DebugHelper dh = Debugger.getDH("ProcessManager");
-
         private List<Client> clients = new List<Client>();
 
         internal void Start()
