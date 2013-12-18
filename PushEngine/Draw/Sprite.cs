@@ -57,7 +57,7 @@ namespace PushEngine.Draw
 
         internal override void RenderObject()
         {
-            renderer.RenderPolygon(numVertex, vertex, material.textureCoordinates, material.color);
+            renderer.RenderQuad(vertex, material.textureCoordinates, material.color);
         }
 
         internal override void PostRender()

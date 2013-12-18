@@ -44,6 +44,24 @@ namespace PushEngine
             GL.End();
         }
 
+        public void RenderQuad(Vector2d[] v, Vector2d[] t, Color4[] col)
+        {
+            GL.Begin(BeginMode.Quads);
+            GL.TexCoord2(t[0]);
+            GL.Color4(col[0]);
+            GL.Vertex2(v[0]);
+            GL.TexCoord2(t[1]);
+            GL.Color4(col[1]);
+            GL.Vertex2(v[1]);
+            GL.TexCoord2(t[2]);
+            GL.Color4(col[2]);
+            GL.Vertex2(v[2]);
+            GL.TexCoord2(t[3]);
+            GL.Color4(col[3]);
+            GL.Vertex2(v[3]);
+            GL.End();
+        }
+
         public void RenderVertexTextureAndColor(ref Vector2d v, ref Vector2d t, ref Color4 col)
         {
             GL.TexCoord2(t);
