@@ -8,8 +8,6 @@ namespace PushEngine
 {
     sealed class PushEngineCore : GameWindow
     {
-        private DebugHelper dh = Debugger.getDH("PushEngineCore");
-
         private static PushEngineCore instance = null;
         internal static Configuration configuration = new Configuration();
         internal Renderer renderer = null;
@@ -49,7 +47,6 @@ namespace PushEngine
 
         private void InitSubModules()
         {
-            dh.WriteLine("Starting submanagers");
             eManager.Start();
             renderer = new Renderer();
             keyboard.setKeyboard(instance.Keyboard);
@@ -129,8 +126,6 @@ namespace PushEngine
             processManager.Dispose();
             configuration.SaveConfigFile();
             configuration = null;
-
-            dh.WriteLine("SubManagers stopped");
 
         }
 

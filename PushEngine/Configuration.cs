@@ -21,8 +21,6 @@ namespace PushEngine
 
     internal class Configuration
     {
-        private DebugHelper dh = Debugger.getDH("Configuration");
-
         public ConfigurationData configurationData = new ConfigurationData();
         private static string configFile = "config.bin";
         public GraphicsMode graphicsMode = null;
@@ -44,15 +42,13 @@ namespace PushEngine
                 Stream stream = new FileStream(configFile, FileMode.Open, FileAccess.Read, FileShare.Read);
                 configurationData = (ConfigurationData)formatter.Deserialize(stream);
                 stream.Close();
-                dh.WriteLine("Config file read successfully");
             }
             catch (FileNotFoundException)
             {
                 // It is ok, no problem.
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                dh.WriteLine("Exception: " + e.Message);
             }
         }
 
@@ -65,12 +61,9 @@ namespace PushEngine
                 stream = new FileStream(configFile, FileMode.Create, FileAccess.Write, FileShare.None);
                 formatter.Serialize(stream, configurationData);
                 stream.Close();
-                dh.WriteLine("Config file saved successfully");
-
             }
             catch (Exception)
             {
-                dh.WriteLine("Cannot save configuration file");
                 if (stream != null)
                     stream.Close();
             }

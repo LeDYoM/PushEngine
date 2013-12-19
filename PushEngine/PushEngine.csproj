@@ -77,7 +77,6 @@
     <Compile Include="Draw\Material.cs" />
     <Compile Include="Draw\Sprite.cs" />
     <Compile Include="Draw\Scene.cs" />
-    <Compile Include="Debugger.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="FrameData.cs" />
     <Compile Include="Input\Key.cs" />

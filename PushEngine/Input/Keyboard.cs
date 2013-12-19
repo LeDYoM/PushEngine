@@ -6,8 +6,6 @@ namespace PushEngine.Input
 {
     public class Keyboard
     {
-        private DebugHelper dh = Debugger.getDH("Keyboard");
-
         private KeyData[] keyData = new KeyData[(int)Key.LastKey];
         private KeyboardDevice keyboardReference = null;
         private List<KeyData> active = new List<KeyData>();
@@ -55,7 +53,6 @@ namespace PushEngine.Input
                             PushEngineCore.Instance.eManager.AddEvent(PEEvent.KeyReleasedEvent(kd.KeyId));
                             break;
                         default:
-                            dh.Assert(false);
                             break;
                     }
                 }

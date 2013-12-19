@@ -10,8 +10,6 @@ namespace PushEngine
 {
     internal class Texture : IDisposable
     {
-        private DebugHelper dh = Debugger.getDH("Texture");
-
         private int id = -1;
         private Bitmap originalTexture = null;
         private Graphics gfx;
@@ -21,9 +19,6 @@ namespace PushEngine
 
         internal Texture(int id_, Bitmap original)
         {
-            dh.Assert(id_ > 0);
-            dh.Assert(original != null);
-
             id = id_;
             originalTexture = original;
             gfx = Graphics.FromImage(originalTexture);
@@ -101,12 +96,11 @@ namespace PushEngine
             if (id > -1)
             {
                 GL.DeleteTexture(id);
-                dh.WriteLine("Texture " + id + " disposed");
             }
             else
             {
-                dh.WriteLine("Called dispose from empty texture");
             }
+
             if (originalTexture != null)
             {
                 originalTexture.Dispose();
@@ -122,7 +116,6 @@ namespace PushEngine
 
         ~Texture()
         {
-            dh.WriteLine("Destructor from texture called!");
             Dispose();
         }
     }

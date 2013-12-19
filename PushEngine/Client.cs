@@ -8,8 +8,6 @@ namespace PushEngine
 {
     public class Client : Object, IDisposable
     {
-        private DebugHelper dh = Debugger.getDH("PEClient");
-
         protected Context context = null;
         internal Context Context { get { return context; } }
 
@@ -63,7 +61,6 @@ namespace PushEngine
         {
             GC.SuppressFinalize(this);
 
-            dh.Assert(context != null);
             context.Dispose();
             context = null;
 
@@ -71,7 +68,6 @@ namespace PushEngine
 
         ~Client()
         {
-            dh.WriteLine("Destructor from PEClient called!");
             Dispose();
         }
     }
