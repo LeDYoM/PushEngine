@@ -1,21 +1,24 @@
 ﻿using System;
 using OpenTK;
 using OpenTK.Input;
-using System.Diagnostics;
 using PushEngine.Draw;
+using PushEngine.Containers;
 
 namespace PushEngine
 {
-    public class Client : Object, IDisposable
+    public class Client : Object, IDisposable, IContained
     {
-        protected Context context = null;
-        internal Context Context { get { return context; } }
+        internal Context Context
+        {
+            get;
+            private set;
+        }
 
         public PEEventReceiver OnEventReceived = null;
 
         internal void setContext(Context context_)
         {
-            context = context_;
+            Context = context_;
         }
 
         public virtual ClientData Data()
@@ -34,22 +37,22 @@ namespace PushEngine
                 OnEventReceived(event_);
             }
 
-            context.state = Context.State.Running;
+            Context.state = Context.State.Running;
         }
 
         internal SceneDirector Director
         {
-            get { return context.sceneDirector; }
+            get { return Context.sceneDirector; }
         }
 
         public virtual void Update()
         {
-            context.sceneDirector.CurrentScene.Update();
+            Context.sceneDirector.CurrentScene.Update();
         }
 
         public virtual void Render()
         {
-            context.sceneDirector.Render();
+            Context.sceneDirector.Render();
         }
 
         public void SendEvent(PEEvent event_)
@@ -61,14 +64,26 @@ namespace PushEngine
         {
             GC.SuppressFinalize(this);
 
-            context.Dispose();
-            context = null;
+            Context.Dispose();
+            Context = null;
 
         }
 
         ~Client()
         {
             Dispose();
+        }
+
+        public IContainer ParentContainer
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

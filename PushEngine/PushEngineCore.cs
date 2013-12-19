@@ -3,6 +3,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 using PushEngine.Input;
+using PushEngine.Containers;
 
 namespace PushEngine
 {
@@ -36,7 +37,7 @@ namespace PushEngine
         private PushEngineCore() : base(configuration.configurationData.WindowSize.Width, 
             configuration.configurationData.WindowSize.Height, configuration.graphicsMode)
         {
-            systemProjection = new Projection(
+            mainWindowContainer = new WindowContainer(
                 configuration.configurationData.virtualWindowTopLeft,
                 configuration.configurationData.virtualWindowDownRight);
         }
@@ -58,8 +59,11 @@ namespace PushEngine
 
         }
 
-        private Projection systemProjection;
-        internal Projection SystemProjection { get { return systemProjection; } }
+        internal WindowContainer mainWindowContainer
+        {
+            private set;
+            get;
+        }
 
         private void clearScreen()
         {
@@ -74,7 +78,7 @@ namespace PushEngine
         {
             base.OnResize(e);
             GL.Viewport(0, 0, Width, Height);
-            systemProjection.apply();
+            mainWindowContainer.apply();
         }
 
         protected override void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)

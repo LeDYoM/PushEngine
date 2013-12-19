@@ -13,8 +13,8 @@ namespace PushEngine
     {
         public Color SystemBackgroundColor = Color.Black;
         public Size WindowSize = new Size(800, 600);
-        public Vector2 virtualWindowTopLeft = new Vector2(-400, -300);
-        public Vector2 virtualWindowDownRight = new Vector2(400, 300);
+        public Vector2 virtualWindowTopLeft = new Vector2(-400, 300);
+        public Vector2 virtualWindowDownRight = new Vector2(400, -300);
         public string WindowTitle = "PushEngine";
         public int bpp = 32;
     }
@@ -40,7 +40,7 @@ namespace PushEngine
             {
                 IFormatter formatter = new BinaryFormatter();
                 Stream stream = new FileStream(configFile, FileMode.Open, FileAccess.Read, FileShare.Read);
-                configurationData = (ConfigurationData)formatter.Deserialize(stream);
+                //configurationData = (ConfigurationData)formatter.Deserialize(stream);
                 stream.Close();
             }
             catch (FileNotFoundException)

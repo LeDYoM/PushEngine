@@ -76,6 +76,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="Containers\IContained.cs" />
+    <Compile Include="Containers\IContainer.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Demos\Blocker.cs" />
     <Compile Include="Renderer.cs" />
@@ -98,7 +100,7 @@
     <Compile Include="PEEvent.cs" />
     <Compile Include="ProcessManager.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Projection.cs" />
+    <Compile Include="Containers\WindowContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushEngineCore.cs" />
     <Compile Include="Draw\SceneDirector.cs" />

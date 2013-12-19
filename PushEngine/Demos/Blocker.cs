@@ -8,11 +8,6 @@ namespace PushEngine.Demos
 {
     internal class Blocker : Client
     {
-        private int leftBase;
-        private int TopBase;
-        private int rightBase;
-        private int boardLeftBase;
-        private int boardRightBase;
         private Sprite player;
         int qWidth = 40;
         int qHeight = 50;
@@ -26,14 +21,7 @@ namespace PushEngine.Demos
             {
                 if (event_.isAction(PEEvent.ActionStartProcess))
                 {
-                    context.sceneDirector.GetNewAndPush();
-
-                    leftBase = context.viewPort.Left;
-                    TopBase = context.viewPort.Top;
-                    rightBase = context.viewPort.Right;
-
-                    boardLeftBase = leftBase;
-                    boardRightBase = rightBase;
+                    Context.sceneDirector.GetNewAndPush();
 
                     CreateBoard();
                     CreatePlayer();
@@ -46,7 +34,7 @@ namespace PushEngine.Demos
 
         private void CreatePlayer()
         {
-            player = context.sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
+            player = Context.sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
             player.CreateSprite(new System.Drawing.SizeF(pWidth, pHeight), Color4.Aqua);
             player.PositionX = 100;
             player.PositionY = 200;
@@ -59,20 +47,20 @@ namespace PushEngine.Demos
                     {
                         if (event_.EventKey == Key.A)
                         {
-                            player.PositionX -= (context.frameData.ellapsedSinceLastFrame * pressRate);
+                            player.PositionX -= (Context.frameData.ellapsedSinceLastFrame * pressRate);
                         }
                         else if (event_.EventKey == Key.D)
                         {
-                            player.PositionX += (context.frameData.ellapsedSinceLastFrame * pressRate);
+                            player.PositionX += (Context.frameData.ellapsedSinceLastFrame * pressRate);
                         }
 
-                        if (player.LeftPosition < boardLeftBase)
+                        if (player.LeftPosition < Context.parentContainer.TopLeft.X)
                         {
-                            player.LeftPosition = boardLeftBase;
+                            player.LeftPosition = Context.parentContainer.TopLeft.X;
                         }
-                        else if (player.RightPosition > boardRightBase)
+                        else if (player.RightPosition > Context.parentContainer.DownRight.X)
                         {
-                            player.RightPosition = boardRightBase;
+                            player.RightPosition = Context.parentContainer.DownRight.X;
                         }
                     }
                 }
@@ -85,14 +73,14 @@ namespace PushEngine.Demos
 
         private void CreateBlock(int x, int y)
         {
-            Sprite block = context.sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
+            Sprite block = Context.sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
             block.CreateSprite(new System.Drawing.SizeF(qWidth,qHeight), 
                 x % 2 == 0 ? 
                 (y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ?Color4.Yellow : Color4.Violet));
             block.Width = qWidth;
             block.Height = qHeight;
-            block.LeftPosition = leftBase + (x * qWidth);
-            block.TopPosition = TopBase + (y * qHeight);
+            block.LeftPosition = Context.parentContainer.TopLeft.X + (x * qWidth);
+            block.TopPosition = /*Context.parentContainer.TopLeft.Y*/0 + (y * qHeight);
         }
 
         private void CreateBoard()

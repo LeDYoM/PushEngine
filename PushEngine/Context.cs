@@ -2,6 +2,7 @@
 using System.Drawing;
 using PushEngine.Draw;
 using PushEngine.Input;
+using PushEngine.Containers;
 
 namespace PushEngine
 {
@@ -16,18 +17,19 @@ namespace PushEngine
         }
 
         public State state = State.Created;
-        public FrameData frameData = new FrameData();
-        public Rectangle viewPort;
         public SceneDirector sceneDirector = null;
+        public FrameData frameData = new FrameData();
         public Keyboard keyboard;
         public Client client = null;
+        public IContainer parentContainer;
 
         public Context(Client client_)
         {
             client = client_;
             sceneDirector = new SceneDirector(this);
             keyboard = PushEngineCore.Instance.keyboard;
-            viewPort = PushEngineCore.Instance.SystemProjection.View;
+            parentContainer = PushEngineCore.Instance.mainWindowContainer; 
+           // viewPort = PushEngineCore.Instance.SystemProjection.View;
         }
 
         public void Dispose()
