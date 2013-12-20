@@ -76,16 +76,16 @@ namespace PushEngine.Demos
             Sprite block = Context.sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
             block.CreateSprite(new System.Drawing.SizeF(qWidth,qHeight), 
                 x % 2 == 0 ? 
-                (y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ?Color4.Yellow : Color4.Violet));
+				(y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));
             block.Width = qWidth;
             block.Height = qHeight;
             block.LeftPosition = Context.parentContainer.TopLeft.X + (x * qWidth);
-            block.TopPosition = /*Context.parentContainer.TopLeft.Y*/0 + (y * qHeight);
+			block.TopPosition = Context.parentContainer.TopLeft.Y - (y * qHeight);
         }
 
         private void CreateBoard()
         {
-            for (int y = 0; y < 4; y++)
+			for (int y = 0; y < 5; y++)
             {
                 for (int x = 0; x < 20; x++)
                 {
