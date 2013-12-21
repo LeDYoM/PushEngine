@@ -73,8 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
-    <Compile Include="Containers\IContained.cs" />
-    <Compile Include="Containers\IContainer.cs" />
+    <Compile Include="Containers\Container.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Demos\Blocker.cs" />
     <Compile Include="Renderer.cs" />
@@ -106,7 +105,5 @@
     <Compile Include="TextureUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Types\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

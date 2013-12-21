@@ -5,10 +5,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PushEngine.Containers
 {
-    public class WindowContainer : IContainer
+    public class WindowContainer : Container
     {
         private Vector2d[] view;
-        private Matrix4d matrix;
 
         private WindowContainer()
         {
@@ -41,13 +40,13 @@ namespace PushEngine.Containers
 
         }
 
-        public void apply()
+        public override void apply()
         {
+            base.apply();
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref matrix);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
         }
-
     }
 }
