@@ -2,12 +2,13 @@
 using System.Drawing;
 using OpenTK.Graphics;
 using OpenTK;
+using PushEngine.Containers;
 
 namespace PushEngine.Draw
 {
     internal class Sprite : DrawableElement
     {
-        public Sprite()
+        public Sprite() : base()
         {
         }
 

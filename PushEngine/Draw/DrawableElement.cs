@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using OpenTK;
+using PushEngine.Containers;
 
 namespace PushEngine.Draw
 {
@@ -13,6 +14,16 @@ namespace PushEngine.Draw
         // Private properties
         protected Vector3d[] vertex = null;
         protected int numVertex = 0;
+
+        public Container ParentContainer
+        {
+            internal set;
+            get;
+        }
+
+        internal DrawableElement()
+        {
+        }
 
         internal virtual void Create(int nVertex)
         {
