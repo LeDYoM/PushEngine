@@ -76,6 +76,7 @@
     <Compile Include="Containers\Container.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Demos\Blocker.cs" />
+    <Compile Include="Draw\DrawableElement.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="Draw\SceneElement.cs" />
     <Compile Include="Draw\IUpdateAndRender.cs" />

@@ -1,8 +1,8 @@
 ﻿namespace PushEngine.Draw
 {
-    internal interface IUpdateAndRender
+    public interface IUpdateAndRender
     {
-        void Update(Context context);
-        void Render(Context context);
+        void Update();
+        void Render();
     }
 }

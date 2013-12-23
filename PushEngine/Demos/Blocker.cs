@@ -54,13 +54,13 @@ namespace PushEngine.Demos
                             player.PositionX += (Context.frameData.ellapsedSinceLastFrame * pressRate);
                         }
 
-                        if (player.LeftPosition < Context.parentContainer.TopLeft.X)
+                        if (player.LeftPosition < ParentContainer.TopLeft.X)
                         {
-                            player.LeftPosition = Context.parentContainer.TopLeft.X;
+                            player.LeftPosition = ParentContainer.TopLeft.X;
                         }
-                        else if (player.RightPosition > Context.parentContainer.DownRight.X)
+                        else if (player.RightPosition > ParentContainer.DownRight.X)
                         {
-                            player.RightPosition = Context.parentContainer.DownRight.X;
+                            player.RightPosition = ParentContainer.DownRight.X;
                         }
                     }
                 }
@@ -79,8 +79,8 @@ namespace PushEngine.Demos
 				(y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));
             block.Width = qWidth;
             block.Height = qHeight;
-            block.LeftPosition = Context.parentContainer.TopLeft.X + (x * qWidth);
-			block.TopPosition = Context.parentContainer.TopLeft.Y - (y * qHeight);
+            block.LeftPosition = ParentContainer.TopLeft.X + (x * qWidth);
+			block.TopPosition = ParentContainer.TopLeft.Y - (y * qHeight);
         }
 
         private void CreateBoard()

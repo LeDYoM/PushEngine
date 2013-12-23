@@ -7,15 +7,10 @@ namespace PushEngine.Containers
 {
     public class WindowContainer : Container
     {
-        private Vector2d[] view;
 
         private WindowContainer()
         {
-            view = new Vector2d[2];
         }
-
-        public Vector2d TopLeft { get { return view[0]; } }
-        public Vector2d DownRight { get { return view[1]; } }
 
         internal WindowContainer(Vector2 topLeft, Vector2 downRight)
             : this()
@@ -48,5 +43,6 @@ namespace PushEngine.Containers
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
         }
+
     }
 }

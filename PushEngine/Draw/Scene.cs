@@ -25,12 +25,12 @@ namespace PushEngine.Draw
 
         public void Update()
         {
-            sceneElements.ForEach(x => x.Update(context));
+            sceneElements.ForEach(x => x.Update());
         }
 
         public void Render()
         {
-            sceneElements.ForEach(x => x.Render(context));
+            sceneElements.ForEach(x => x.Render());
         }
 
         internal List<SceneElement> ActiveElements

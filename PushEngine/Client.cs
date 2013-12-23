@@ -6,7 +6,7 @@ using PushEngine.Containers;
 
 namespace PushEngine
 {
-    public class Client : Object, IDisposable, IContained
+    public class Client : Object, IDisposable
     {
         internal Context Context
         {
@@ -19,6 +19,11 @@ namespace PushEngine
         internal void setContext(Context context_)
         {
             Context = context_;
+        }
+
+        public Container ParentContainer
+        {
+            get { return PushEngineCore.Instance.mainWindowContainer; }
         }
 
         public virtual ClientData Data()
@@ -72,18 +77,6 @@ namespace PushEngine
         ~Client()
         {
             Dispose();
-        }
-
-        public IContainer ParentContainer
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }

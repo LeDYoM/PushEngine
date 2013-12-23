@@ -21,15 +21,12 @@ namespace PushEngine
         public FrameData frameData = new FrameData();
         public Keyboard keyboard;
         public Client client = null;
-        public IContainer parentContainer;
 
         public Context(Client client_)
         {
             client = client_;
             sceneDirector = new SceneDirector(this);
             keyboard = PushEngineCore.Instance.keyboard;
-            parentContainer = PushEngineCore.Instance.mainWindowContainer; 
-           // viewPort = PushEngineCore.Instance.SystemProjection.View;
         }
 
         public void Dispose()

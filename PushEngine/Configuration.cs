@@ -15,6 +15,7 @@ namespace PushEngine
         public Size WindowSize = new Size(800, 600);
         public Vector2 virtualWindowTopLeft = new Vector2(-400, 300);
         public Vector2 virtualWindowDownRight = new Vector2(400, -300);
+
         public string WindowTitle = "PushEngine";
         public int bpp = 32;
     }

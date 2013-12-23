@@ -5,7 +5,7 @@ using OpenTK;
 
 namespace PushEngine.Draw
 {
-    internal class Sprite : SceneElement
+    internal class Sprite : DrawableElement
     {
         public Sprite()
         {
