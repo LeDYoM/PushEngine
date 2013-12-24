@@ -17,17 +17,16 @@ namespace PushEngine.Demos
         internal Blocker()
             : base()
         {
-            OnEventReceived = delegate(PEEvent event_)
-            {
-                if (event_.isAction(PEEvent.ActionStartProcess))
-                {
-                    sceneDirector.GetNewAndPush();
+        }
 
-                    CreateBoard();
-                    CreatePlayer();
-                    //CreateBall();
-                }
-            };
+        public override void Start()
+        {
+            base.Start();
+            sceneDirector.GetNewAndPush();
+
+            CreateBoard();
+            CreatePlayer();
+            //CreateBall();
         }
 
         private const double pressRate = 500.0;

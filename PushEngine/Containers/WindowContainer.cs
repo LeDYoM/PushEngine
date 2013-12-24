@@ -35,9 +35,9 @@ namespace PushEngine.Containers
 
         }
 
-        public override void apply()
+        public override void Apply()
         {
-            base.apply();
+            base.Apply();
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref matrix);
             GL.MatrixMode(MatrixMode.Modelview);

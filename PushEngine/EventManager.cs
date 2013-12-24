@@ -50,7 +50,7 @@ namespace PushEngine
                 {
                     if (temp.cBroadCast == PEEvent.ClientBroadcasting.ToActiveClients)
                     {
-                        PushEngineCore.Instance.processManager.ActiveProcesses().ForEach(x => toAllActiveObjects(temp, x));
+                        PushEngineCore.Instance.processManager.Clients.ForEach(x => toAllActiveObjects(temp, x));
                     }
                 }
             }

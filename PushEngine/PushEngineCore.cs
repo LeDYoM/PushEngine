@@ -78,7 +78,7 @@ namespace PushEngine
         {
             base.OnResize(e);
             GL.Viewport(0, 0, Width, Height);
-            mainWindowContainer.apply();
+            mainWindowContainer.Apply();
         }
 
         protected override void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)

@@ -27,9 +27,6 @@ namespace PushEngine
         internal ClientBroadcasting cBroadCast = ClientBroadcasting.None;
         internal ObjectBroadcasting oBroadCast = ObjectBroadcasting.None;
 
-        public const string ActionStartProcess = "StartProcess";
-        public const string ActionObjectCreated = "ObjectCreated";
-
         internal PEEvent()
             : base("PEEvent")
         {
@@ -70,22 +67,6 @@ namespace PushEngine
         {
             return NewEvent(null, null, senderClient, senderObject);
         }
-
-        // Process logic events.
-        internal static PEEvent StartEventForClient(Client receiverClient)
-        {
-            PEEvent temp = EventForClient(receiverClient, null, null);
-            temp.action = PEEvent.ActionStartProcess;
-            return temp;
-        }
-
-        internal static PEEvent CreatedEventForObject(Client receiverClient, Object receiverObject)
-        {
-            PEEvent temp = EventForObject(receiverClient, receiverObject, null, null);
-            temp.action = PEEvent.ActionObjectCreated;
-            return temp;
-        }
-
 
         // Helpers for Key events.
         public const string Key = "eventKey";

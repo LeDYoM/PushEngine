@@ -10,14 +10,14 @@ namespace PushEngine.Containers
     {
         protected Matrix4d matrix;
         protected Vector2d[] view;
-        protected List<IUpdateAndRender> sceneElements = new List<IUpdateAndRender>();
+        protected List<IUpdateAndRender> elements = new List<IUpdateAndRender>();
 
         public Container()
         {
             view = new Vector2d[2];
         }
 
-        public virtual void apply()
+        public virtual void Apply()
         {
         }
 
@@ -38,11 +38,12 @@ namespace PushEngine.Containers
 
         public void Update()
         {
+            elements.ForEach(x => x.Update());
         }
 
         public void Render()
         {
-            sceneElements.ForEach(x => x.Render());
+            elements.ForEach(x => x.Render());
         }
     }
 }

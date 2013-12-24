@@ -8,7 +8,7 @@ namespace PushEngine
 {
     public delegate void PEEventReceiver(PEEvent event_);
 
-    public class Client : Object, IDisposable
+    public class Client : Object, IUpdateAndRender, IDisposable
     {
         public PEEventReceiver OnEventReceived = null;
         public Container ParentContainer
@@ -16,13 +16,6 @@ namespace PushEngine
             get { return PushEngineCore.Instance.mainWindowContainer; }
         }
 
-        public enum State
-        {
-            Created = 0,
-            Running
-        }
-
-        public State state = State.Created;
         public SceneDirector sceneDirector = null;
         public FrameData frameData = new FrameData();
 
@@ -36,14 +29,16 @@ namespace PushEngine
             sceneDirector = new SceneDirector();
         }
 
+        public virtual void Start()
+        {
+        }
+
         public override void ReceiveEvent(PEEvent event_)
         {
             if (OnEventReceived != null)
             {
                 OnEventReceived(event_);
             }
-
-            state = State.Running;
         }
 
         internal SceneDirector Director

@@ -10,48 +10,36 @@ namespace PushEngine
     {
         private List<Client> clients = new List<Client>();
 
-        internal void Start()
+        internal List<Client> Clients
         {
-            clients.Add(new Blocker());
-            //clients.Add(new DirectDemoQuad());
-
-            foreach (Client client in clients)
-            {
-            }
+            get { return clients; }
         }
 
-        internal void startCreatedProcesses()
+        internal void Start()
         {
-            foreach (Client client in clients)
-            {
-                if (client.state == Client.State.Created)
-                {
-                    PushEngineCore.Instance.eManager.AddEvent(PEEvent.StartEventForClient(client));
-                }
-            }
+            StartNewProcess(new Blocker());
+//            StartNewProcess(new DirectDemoQuad());
+        }
+
+        internal void StartNewProcess(Client newP)
+        {
+            clients.Add(newP);
+            newP.Start();
         }
 
         internal void OnUpdateFrame(FrameEventArgs e)
         {
-            startCreatedProcesses();
-
-            ActiveProcesses().ForEach(x => x.Update());
-        }
-
-        internal List<Client> ActiveProcesses()
-        {
-            return clients.FindAll(x => x.state == Client.State.Running);
+            clients.ForEach(x => x.Update());
         }
 
         internal void OnRenderFrame(FrameEventArgs e)
         {
-            ActiveProcesses().ForEach(x => { x.frameData.Apply(e); x.Render(); });
+            clients.ForEach(x => { x.frameData.Apply(e); x.Render(); });
         }
 
         internal void Stop()
         {
         }
-
 
         public void Dispose()
         {
