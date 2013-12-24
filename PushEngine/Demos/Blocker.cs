@@ -21,7 +21,7 @@ namespace PushEngine.Demos
             {
                 if (event_.isAction(PEEvent.ActionStartProcess))
                 {
-                    Context.sceneDirector.GetNewAndPush();
+                    sceneDirector.GetNewAndPush();
 
                     CreateBoard();
                     CreatePlayer();
@@ -34,7 +34,7 @@ namespace PushEngine.Demos
 
         private void CreatePlayer()
         {
-            player = Context.sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
+            player = sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
             player.CreateSprite(new System.Drawing.SizeF(pWidth, pHeight), Color4.Aqua);
             player.PositionX = 100;
             player.PositionY = 200;
@@ -47,11 +47,11 @@ namespace PushEngine.Demos
                     {
                         if (event_.EventKey == Key.A)
                         {
-                            player.PositionX -= (Context.frameData.ellapsedSinceLastFrame * pressRate);
+                            player.PositionX -= (frameData.ellapsedSinceLastFrame * pressRate);
                         }
                         else if (event_.EventKey == Key.D)
                         {
-                            player.PositionX += (Context.frameData.ellapsedSinceLastFrame * pressRate);
+                            player.PositionX += (frameData.ellapsedSinceLastFrame * pressRate);
                         }
 
                         if (player.LeftPosition < ParentContainer.TopLeft.X)
@@ -73,7 +73,7 @@ namespace PushEngine.Demos
 
         private void CreateBlock(int x, int y)
         {
-            Sprite block = Context.sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
+            Sprite block = sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
             block.CreateSprite(new System.Drawing.SizeF(qWidth,qHeight), 
                 x % 2 == 0 ? 
 				(y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));

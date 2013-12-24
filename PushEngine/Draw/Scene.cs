@@ -7,19 +7,15 @@ namespace PushEngine.Draw
     public class Scene : IDisposable
     {
         private List<SceneElement> sceneElements = new List<SceneElement>();
-        private Context context = null;
 
-        internal Scene(Context context_)
+        internal Scene()
         {
-            context = context_;
         }
 
         internal T GetNewDrawElement<T>() where T : SceneElement, new()
         {
             T obj = new T();
             sceneElements.Add(obj);
-            PEEvent evnt = PEEvent.CreatedEventForObject(context.client, obj);
-            PushEngineCore.Instance.eManager.AddEvent(evnt);
             return obj;
         }
 

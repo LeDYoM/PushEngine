@@ -6,25 +6,25 @@ using PushEngine.Containers;
 
 namespace PushEngine
 {
+    public delegate void PEEventReceiver(PEEvent event_);
+
     public class Client : Object, IDisposable
     {
-        internal Context Context
-        {
-            get;
-            private set;
-        }
-
         public PEEventReceiver OnEventReceived = null;
-
-        internal void setContext(Context context_)
-        {
-            Context = context_;
-        }
-
         public Container ParentContainer
         {
             get { return PushEngineCore.Instance.mainWindowContainer; }
         }
+
+        public enum State
+        {
+            Created = 0,
+            Running
+        }
+
+        public State state = State.Created;
+        public SceneDirector sceneDirector = null;
+        public FrameData frameData = new FrameData();
 
         public virtual ClientData Data()
         {
@@ -33,6 +33,7 @@ namespace PushEngine
 
         public Client()
         {
+            sceneDirector = new SceneDirector();
         }
 
         public override void ReceiveEvent(PEEvent event_)
@@ -42,22 +43,22 @@ namespace PushEngine
                 OnEventReceived(event_);
             }
 
-            Context.state = Context.State.Running;
+            state = State.Running;
         }
 
         internal SceneDirector Director
         {
-            get { return Context.sceneDirector; }
+            get { return sceneDirector; }
         }
 
         public virtual void Update()
         {
-            Context.sceneDirector.CurrentScene.Update();
+            sceneDirector.CurrentScene.Update();
         }
 
         public virtual void Render()
         {
-            Context.sceneDirector.Render();
+            sceneDirector.Render();
         }
 
         public void SendEvent(PEEvent event_)
@@ -68,10 +69,6 @@ namespace PushEngine
         public virtual void Dispose()
         {
             GC.SuppressFinalize(this);
-
-            Context.Dispose();
-            Context = null;
-
         }
 
         ~Client()

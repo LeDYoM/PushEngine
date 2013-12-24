@@ -8,11 +8,9 @@ namespace PushEngine.Draw
         private Stack<Scene> scenesStack = new Stack<Scene>();
         private List<Scene> scenes = new List<Scene>();
         private Scene currentScene = null;
-        private Context context = null;
 
-        internal SceneDirector(Context context_)
+        internal SceneDirector()
         {
-            context = context_;
         }
 
         public Scene CurrentScene { get { return currentScene; } }
@@ -32,7 +30,7 @@ namespace PushEngine.Draw
 
         public Scene GetNew()
         {
-            Scene tmp = new Scene(context);
+            Scene tmp = new Scene();
             scenes.Add(tmp);
             return tmp;
         }

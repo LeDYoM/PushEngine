@@ -17,16 +17,14 @@ namespace PushEngine
 
             foreach (Client client in clients)
             {
-                client.setContext(new Context(client));
             }
-
         }
 
         internal void startCreatedProcesses()
         {
             foreach (Client client in clients)
             {
-                if (client.Context.state == Context.State.Created)
+                if (client.state == Client.State.Created)
                 {
                     PushEngineCore.Instance.eManager.AddEvent(PEEvent.StartEventForClient(client));
                 }
@@ -42,12 +40,12 @@ namespace PushEngine
 
         internal List<Client> ActiveProcesses()
         {
-            return clients.FindAll(x => x.Context.state == Context.State.Running);
+            return clients.FindAll(x => x.state == Client.State.Running);
         }
 
         internal void OnRenderFrame(FrameEventArgs e)
         {
-            ActiveProcesses().ForEach(x => { x.Context.frameData.Apply(e); x.Render(); });
+            ActiveProcesses().ForEach(x => { x.frameData.Apply(e); x.Render(); });
         }
 
         internal void Stop()
