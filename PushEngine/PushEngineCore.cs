@@ -42,7 +42,7 @@ namespace PushEngine
                 configuration.configurationData.virtualWindowDownRight);
         }
 
-        internal ProcessManager processManager = new ProcessManager();
+        internal ClientManager processManager = new ClientManager();
         internal Keyboard keyboard = new Keyboard();
         internal EventManager eManager = new EventManager();
 

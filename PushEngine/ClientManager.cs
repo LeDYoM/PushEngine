@@ -6,7 +6,7 @@ using OpenTK.Input;
 
 namespace PushEngine
 {
-    internal class ProcessManager : IDisposable
+    internal class ClientManager : IDisposable
     {
         private List<Client> clients = new List<Client>();
 

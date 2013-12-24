@@ -94,7 +94,7 @@
     <Compile Include="Object.cs" />
     <Compile Include="ObjectWithContext.cs" />
     <Compile Include="PEEvent.cs" />
-    <Compile Include="ProcessManager.cs" />
+    <Compile Include="ClientManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Containers\WindowContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
