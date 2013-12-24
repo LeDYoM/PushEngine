@@ -19,10 +19,15 @@ namespace PushEngine.Demos
         {
         }
 
+        public override string  Name()
+        {
+            return "Blocker";
+        }
+
         public override void Start()
         {
             base.Start();
-            sceneDirector.GetNewAndPush();
+            GetNewAndPush();
 
             CreateBoard();
             CreatePlayer();
@@ -33,7 +38,7 @@ namespace PushEngine.Demos
 
         private void CreatePlayer()
         {
-            player = sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
+            player = CurrentScene.GetNewDrawElement<Sprite>();
             player.CreateSprite(new System.Drawing.SizeF(pWidth, pHeight), Color4.Aqua);
             player.PositionX = 100;
             player.PositionY = 200;
@@ -72,7 +77,7 @@ namespace PushEngine.Demos
 
         private void CreateBlock(int x, int y)
         {
-            Sprite block = sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
+            Sprite block = CurrentScene.GetNewDrawElement<Sprite>();
             block.CreateSprite(new System.Drawing.SizeF(qWidth,qHeight), 
                 x % 2 == 0 ? 
 				(y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));
@@ -86,7 +91,7 @@ namespace PushEngine.Demos
         {
 			for (int y = 0; y < 5; y++)
             {
-                for (int x = 0; x < 20; x++)
+                for (int x = 0; x < 19; x++)
                 {
                     CreateBlock(x, y);
                 }

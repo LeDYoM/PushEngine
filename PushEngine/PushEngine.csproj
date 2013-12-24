@@ -89,7 +89,6 @@
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\KeyData.cs" />
     <Compile Include="Client.cs" />
-    <Compile Include="ClientData.cs" />
     <Compile Include="IEventReceiver.cs" />
     <Compile Include="Object.cs" />
     <Compile Include="ObjectWithContext.cs" />
@@ -103,6 +102,7 @@
     <Compile Include="TextAlignment.cs" />
     <Compile Include="Texture.cs" />
     <Compile Include="TextureUtils.cs" />
+    <Compile Include="View.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

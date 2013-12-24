@@ -3,6 +3,7 @@ using OpenTK;
 using PushEngine.Demos;
 using System.Collections.Generic;
 using OpenTK.Input;
+using System.Drawing;
 
 namespace PushEngine
 {
@@ -24,6 +25,8 @@ namespace PushEngine
         internal void StartNewProcess(Client newP)
         {
             clients.Add(newP);
+            Debug.Log("Created client with name:" + newP.Name());
+            Debug.Log("Client " + newP.Name() + " wants view of: " + newP.ViewRectangle);
             newP.Start();
         }
 

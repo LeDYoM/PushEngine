@@ -7,7 +7,9 @@ namespace PushEngine
     {
         public static void Log(object o)
         {
-            System.Diagnostics.Debug.WriteLine(extraInfo() + o.ToString());
+            string output = extraInfo() + o.ToString();
+            System.Diagnostics.Debug.WriteLine(output);
+            Console.WriteLine(output);
         }
 
         private static string extraInfo()

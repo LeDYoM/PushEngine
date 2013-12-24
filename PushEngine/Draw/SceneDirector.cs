@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using PushEngine.Containers;
 
 namespace PushEngine.Draw
 {
-    public class SceneDirector : IDisposable
+    public class SceneDirector : Container, IDisposable
     {
         private Stack<Scene> scenesStack = new Stack<Scene>();
         private List<Scene> scenes = new List<Scene>();
@@ -42,19 +43,19 @@ namespace PushEngine.Draw
             return tmp;
         }
 
-        public void Update()
+        public override void Update()
         {
             if (currentScene != null)
                 currentScene.Update();
         }
 
-        public void Render()
+        public override void Render()
         {
             if (currentScene != null)
                 currentScene.Render();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             GC.SuppressFinalize(this);
 

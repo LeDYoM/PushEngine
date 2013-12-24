@@ -3,12 +3,13 @@ using OpenTK;
 using OpenTK.Input;
 using PushEngine.Draw;
 using PushEngine.Containers;
+using System.Drawing;
 
 namespace PushEngine
 {
     public delegate void PEEventReceiver(PEEvent event_);
 
-    public class Client : Object, IUpdateAndRender, IDisposable
+    public class Client : SceneDirector, IDisposable
     {
         public PEEventReceiver OnEventReceived = null;
         public Container ParentContainer
@@ -16,21 +17,19 @@ namespace PushEngine
             get { return PushEngineCore.Instance.mainWindowContainer; }
         }
 
-        public SceneDirector sceneDirector = null;
-        public FrameData frameData = new FrameData();
+        internal FrameData frameData = new FrameData();
 
-        public virtual ClientData Data()
+        protected Client()
         {
-            return new ClientData();
-        }
-
-        public Client()
-        {
-            sceneDirector = new SceneDirector();
         }
 
         public virtual void Start()
         {
+        }
+
+        public virtual string Name()
+        {
+            return "NoNamed";
         }
 
         public override void ReceiveEvent(PEEvent event_)
@@ -41,19 +40,14 @@ namespace PushEngine
             }
         }
 
-        internal SceneDirector Director
+        public override void Update()
         {
-            get { return sceneDirector; }
+            base.Update();
         }
 
-        public virtual void Update()
+        public override void Render()
         {
-            sceneDirector.CurrentScene.Update();
-        }
-
-        public virtual void Render()
-        {
-            sceneDirector.Render();
+            base.Render();
         }
 
         public void SendEvent(PEEvent event_)
@@ -61,7 +55,7 @@ namespace PushEngine
             PushEngineCore.Instance.eManager.AddEvent(event_);
         }
 
-        public virtual void Dispose()
+        public override void Dispose()
         {
             GC.SuppressFinalize(this);
         }
