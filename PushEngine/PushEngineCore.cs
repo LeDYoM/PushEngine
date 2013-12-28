@@ -10,17 +10,13 @@ namespace PushEngine
     sealed class PushEngineCore : GameWindow
     {
         private static PushEngineCore instance = null;
-        internal static Configuration configuration = new Configuration();
+        internal Configuration config = new Configuration();
         internal Renderer renderer = null;
 
         internal static void Create()
         {
-            configuration.ReadConfigFile();
-            instance = new PushEngineCore();
-            instance.Title = configuration.configurationData.WindowTitle;
-            instance.VSync = VSyncMode.Off;
-
-            instance.InitSubModules();
+            Configuration config = Configuration.ReadConfigFile();
+            instance = new PushEngineCore(config);
         }
 
         internal static int Execute()
@@ -34,15 +30,14 @@ namespace PushEngine
             get { return instance; }
         }
 
-        private PushEngineCore() : base(configuration.configurationData.WindowSize.Width, 
-            configuration.configurationData.WindowSize.Height, configuration.graphicsMode)
+        private PushEngineCore(Configuration config) : base(config.WindowSize.Width, config.WindowSize.Height, new GraphicsMode(new ColorFormat(config.bpp)))
         {
-            mainWindowContainer = new WindowContainer(
-                configuration.configurationData.virtualWindowTopLeft,
-                configuration.configurationData.virtualWindowDownRight);
+            Title = config.WindowTitle;
+            VSync = VSyncMode.On;
+            InitSubModules();
         }
 
-        internal ClientManager processManager = new ClientManager();
+        internal ClientManager clientManager = new ClientManager();
         internal Keyboard keyboard = new Keyboard();
         internal EventManager eManager = new EventManager();
 
@@ -50,35 +45,19 @@ namespace PushEngine
         {
             eManager.Start();
             renderer = new Renderer();
-            keyboard.setKeyboard(instance.Keyboard);
+            keyboard.setKeyboard(Keyboard);
 
-            processManager.Start();
+            clientManager.Start();
 
-            instance.Keyboard.KeyDown += new EventHandler<OpenTK.Input.KeyboardKeyEventArgs>(keyboard.ApplyKeyDown);
-            instance.Keyboard.KeyUp += new EventHandler<OpenTK.Input.KeyboardKeyEventArgs>(keyboard.ApplyKeyUp);
-
-        }
-
-        internal WindowContainer mainWindowContainer
-        {
-            private set;
-            get;
-        }
-
-        private void clearScreen()
-        {
-            GL.ClearColor(configuration.configurationData.SystemBackgroundColor);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
+            Keyboard.KeyDown += new EventHandler<OpenTK.Input.KeyboardKeyEventArgs>(keyboard.ApplyKeyDown);
+            Keyboard.KeyUp += new EventHandler<OpenTK.Input.KeyboardKeyEventArgs>(keyboard.ApplyKeyUp);
         }
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
             GL.Viewport(0, 0, Width, Height);
-            mainWindowContainer.Apply();
+            clientManager.OnResize(e);
         }
 
         protected override void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)
@@ -100,12 +79,12 @@ namespace PushEngine
             ellapsed += e.Time;
             if (ellapsed > 1)
             {
-                Title = configuration.configurationData.WindowTitle + " Ellapsed now: " + e.Time + "FPS: " + 1.0 / e.Time;
+                Title = config.WindowTitle + " Ellapsed now: " + e.Time + "FPS: " + 1.0 / e.Time;
                 ellapsed = 0;
             }
 
             eManager.ProcessEvents();
-            processManager.OnUpdateFrame(e);
+            clientManager.OnUpdateFrame(e);
 
             keyboard.ApplyUpdate();
         }
@@ -113,9 +92,8 @@ namespace PushEngine
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
-            clearScreen();
 
-            processManager.OnRenderFrame(e);
+            clientManager.OnRenderFrame(e);
 
             SwapBuffers();
         }
@@ -126,10 +104,10 @@ namespace PushEngine
 
             eManager.Stop();
             eManager = null;
-            processManager.Stop();
-            processManager.Dispose();
-            configuration.SaveConfigFile();
-            configuration = null;
+            clientManager.Stop();
+            clientManager.Dispose();
+            Configuration.SaveConfigFile();
+            config = null;
 
         }
 

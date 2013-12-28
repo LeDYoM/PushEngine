@@ -7,6 +7,7 @@ namespace PushEngine.Draw
     public class Scene : IDisposable
     {
         private List<SceneElement> sceneElements = new List<SceneElement>();
+        private Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
 
         internal Scene()
         {
@@ -26,6 +27,8 @@ namespace PushEngine.Draw
 
         public void Render()
         {
+            renderer.ClearScreen();
+            renderer.ResetAll();
             sceneElements.ForEach(x => x.Render());
         }
 

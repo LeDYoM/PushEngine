@@ -26,8 +26,16 @@ namespace PushEngine
         {
             clients.Add(newP);
             Debug.Log("Created client with name:" + newP.Name());
-            Debug.Log("Client " + newP.Name() + " wants view of: " + newP.ViewRectangle);
+            Debug.Log("Client " + newP.Name() + " wants view of: " + newP.ClientWindow.ViewRectangle);
             newP.Start();
+        }
+
+        internal void OnResize(EventArgs e)
+        {
+            foreach (Client cl in clients)
+            {
+                cl.ClientWindow.StartContainer();
+            }
         }
 
         internal void OnUpdateFrame(FrameEventArgs e)

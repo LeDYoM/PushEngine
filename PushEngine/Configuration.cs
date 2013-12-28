@@ -13,29 +13,21 @@ namespace PushEngine
     {
         public Color SystemBackgroundColor = Color.Black;
         public Size WindowSize = new Size(800, 600);
-        public Vector2 virtualWindowTopLeft = new Vector2(-400, 300);
-        public Vector2 virtualWindowDownRight = new Vector2(400, -300);
+        public Vector2d virtualWindowTopLeft = new Vector2d(-400, 300);
+        public Vector2d virtualWindowDownRight = new Vector2d(400, -300);
 
         public string WindowTitle = "PushEngine";
         public int bpp = 32;
     }
 
-    internal class Configuration
+    internal class Configuration : ConfigurationData
     {
-        public ConfigurationData configurationData = new ConfigurationData();
-        private static string configFile = "config.bin";
+        private static Configuration conf = new Configuration();
+
+        private const string configFile = "config.bin";
         public GraphicsMode graphicsMode = null;
 
-        internal void ApplyConfiguration()
-        {
-            PushEngineCore.Instance.Width = configurationData.WindowSize.Width;
-            PushEngineCore.Instance.Height = configurationData.WindowSize.Height;
-            graphicsMode = new GraphicsMode(new ColorFormat(configurationData.bpp));
-
-
-        }
-
-        internal void ReadConfigFile()
+        internal static Configuration ReadConfigFile()
         {
             try
             {
@@ -51,16 +43,19 @@ namespace PushEngine
             catch (Exception)
             {
             }
+
+            conf.graphicsMode = new GraphicsMode(new ColorFormat(conf.bpp));
+            return conf;
         }
 
-        internal void SaveConfigFile()
+        internal static void SaveConfigFile()
         {
             Stream stream = null;
             try
             {
                 IFormatter formatter = new BinaryFormatter();
                 stream = new FileStream(configFile, FileMode.Create, FileAccess.Write, FileShare.None);
-                formatter.Serialize(stream, configurationData);
+                formatter.Serialize(stream, conf as ConfigurationData);
                 stream.Close();
             }
             catch (Exception)

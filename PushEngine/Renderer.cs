@@ -79,5 +79,29 @@ namespace PushEngine
         {
             GL.PopMatrix();
         }
+
+        public void ClearScreen()
+        {
+            GL.ClearColor(Color4.Black);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        }
+
+        public void ResetProjection()
+        {
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+        }
+
+        public void ResetModelView()
+        {
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+        }
+
+        public void ResetAll()
+        {
+            ResetProjection();
+            ResetModelView();
+        }
     }
 }

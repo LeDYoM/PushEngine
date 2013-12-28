@@ -13,6 +13,8 @@ namespace PushEngine.Demos
         int qHeight = 50;
         int pWidth = 100;
         int pHeight = 50;
+        int nLines = 5;
+        int nCols = 20;
 
         internal Blocker()
             : base()
@@ -27,7 +29,7 @@ namespace PushEngine.Demos
         public override void Start()
         {
             base.Start();
-            GetNewAndPush();
+            sceneDirector.GetNewAndPush();
 
             CreateBoard();
             CreatePlayer();
@@ -38,7 +40,7 @@ namespace PushEngine.Demos
 
         private void CreatePlayer()
         {
-            player = CurrentScene.GetNewDrawElement<Sprite>();
+            player = sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
             player.CreateSprite(new System.Drawing.SizeF(pWidth, pHeight), Color4.Aqua);
             player.PositionX = 100;
             player.PositionY = 200;
@@ -58,13 +60,13 @@ namespace PushEngine.Demos
                             player.PositionX += (frameData.ellapsedSinceLastFrame * pressRate);
                         }
 
-                        if (player.LeftPosition < ParentContainer.TopLeft.X)
+                        if (player.LeftPosition < ClientWindow.TopLeft.X)
                         {
-                            player.LeftPosition = ParentContainer.TopLeft.X;
+                            player.LeftPosition = ClientWindow.TopLeft.X;
                         }
-                        else if (player.RightPosition > ParentContainer.DownRight.X)
+                        else if (player.RightPosition > ClientWindow.DownRight.X)
                         {
-                            player.RightPosition = ParentContainer.DownRight.X;
+                            player.RightPosition = ClientWindow.DownRight.X;
                         }
                     }
                 }
@@ -77,21 +79,21 @@ namespace PushEngine.Demos
 
         private void CreateBlock(int x, int y)
         {
-            Sprite block = CurrentScene.GetNewDrawElement<Sprite>();
+            Sprite block = sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
             block.CreateSprite(new System.Drawing.SizeF(qWidth,qHeight), 
                 x % 2 == 0 ? 
 				(y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));
             block.Width = qWidth;
             block.Height = qHeight;
-            block.LeftPosition = ParentContainer.TopLeft.X + (x * qWidth);
-			block.TopPosition = ParentContainer.TopLeft.Y - (y * qHeight);
+            block.LeftPosition = ClientWindow.TopLeft.X + (x * qWidth);
+			block.TopPosition = ClientWindow.TopLeft.Y - (y * qHeight);
         }
 
         private void CreateBoard()
         {
-			for (int y = 0; y < 5; y++)
+			for (int y = 0; y < nLines; y++)
             {
-                for (int x = 0; x < 19; x++)
+                for (int x = 0; x < nCols; x++)
                 {
                     CreateBlock(x, y);
                 }

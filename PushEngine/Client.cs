@@ -9,18 +9,20 @@ namespace PushEngine
 {
     public delegate void PEEventReceiver(PEEvent event_);
 
-    public class Client : SceneDirector, IDisposable
+    public class Client : IDisposable
     {
         public PEEventReceiver OnEventReceived = null;
-        public Container ParentContainer
+        internal FrameData frameData = new FrameData();
+        internal SceneDirector sceneDirector = new SceneDirector();
+        public WindowContainer ClientWindow
         {
-            get { return PushEngineCore.Instance.mainWindowContainer; }
+            internal set;
+            get;
         }
 
-        internal FrameData frameData = new FrameData();
-
-        protected Client()
+        public Client()
         {
+            ClientWindow = new WindowContainer(new Vector2d(-400, 300), new Vector2d(400, -300), new Size(800, 600));
         }
 
         public virtual void Start()
@@ -32,7 +34,7 @@ namespace PushEngine
             return "NoNamed";
         }
 
-        public override void ReceiveEvent(PEEvent event_)
+        public void ReceiveEvent(PEEvent event_)
         {
             if (OnEventReceived != null)
             {
@@ -40,14 +42,14 @@ namespace PushEngine
             }
         }
 
-        public override void Update()
+        public void Update()
         {
-            base.Update();
+            sceneDirector.Update();
         }
 
-        public override void Render()
+        public void Render()
         {
-            base.Render();
+            sceneDirector.Render();
         }
 
         public void SendEvent(PEEvent event_)
@@ -55,7 +57,7 @@ namespace PushEngine
             PushEngineCore.Instance.eManager.AddEvent(event_);
         }
 
-        public override void Dispose()
+        public virtual void Dispose()
         {
             GC.SuppressFinalize(this);
         }

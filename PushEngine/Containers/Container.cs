@@ -3,6 +3,7 @@ using OpenTK;
 using System.Drawing;
 using PushEngine.Draw;
 using System.Collections.Generic;
+using OpenTK.Graphics.OpenGL;
 
 namespace PushEngine.Containers
 {
@@ -15,8 +16,17 @@ namespace PushEngine.Containers
         {
         }
 
-        public virtual void Apply()
+        public virtual void StartContainer()
         {
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.PushMatrix();
+            GL.MultMatrix(ref matrix);
+        }
+
+        public virtual void FinishContainer()
+        {
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.PopMatrix();
         }
 
         public virtual void Update()
