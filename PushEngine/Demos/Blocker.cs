@@ -60,13 +60,13 @@ namespace PushEngine.Demos
                             player.PositionX += (frameData.ellapsedSinceLastFrame * pressRate);
                         }
 
-                        if (player.LeftPosition < ClientWindow.TopLeft.X)
+                        if (player.LeftPosition < sceneDirector.CurrentScene.ClientWindow.TopLeft.X)
                         {
-                            player.LeftPosition = ClientWindow.TopLeft.X;
+                            player.LeftPosition = sceneDirector.CurrentScene.ClientWindow.TopLeft.X;
                         }
-                        else if (player.RightPosition > ClientWindow.DownRight.X)
+                        else if (player.RightPosition > sceneDirector.CurrentScene.ClientWindow.DownRight.X)
                         {
-                            player.RightPosition = ClientWindow.DownRight.X;
+                            player.RightPosition = sceneDirector.CurrentScene.ClientWindow.DownRight.X;
                         }
                     }
                 }
@@ -85,8 +85,8 @@ namespace PushEngine.Demos
 				(y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));
             block.Width = qWidth;
             block.Height = qHeight;
-            block.LeftPosition = ClientWindow.TopLeft.X + (x * qWidth);
-			block.TopPosition = ClientWindow.TopLeft.Y - (y * qHeight);
+            block.LeftPosition = sceneDirector.CurrentScene.ClientWindow.TopLeft.X + (x * qWidth);
+            block.TopPosition = sceneDirector.CurrentScene.ClientWindow.TopLeft.Y - (y * qHeight);
         }
 
         private void CreateBoard()

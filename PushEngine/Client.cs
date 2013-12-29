@@ -14,15 +14,9 @@ namespace PushEngine
         public PEEventReceiver OnEventReceived = null;
         internal FrameData frameData = new FrameData();
         internal SceneDirector sceneDirector = new SceneDirector();
-        public WindowContainer ClientWindow
-        {
-            internal set;
-            get;
-        }
 
         public Client()
         {
-            ClientWindow = new WindowContainer(new Vector2d(-400, 300), new Vector2d(400, -300), new Size(800, 600));
         }
 
         public virtual void Start()

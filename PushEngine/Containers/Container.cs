@@ -9,7 +9,7 @@ namespace PushEngine.Containers
 {
     public class Container : View, IUpdateAndRender
     {
-        protected Matrix4d matrix;
+        protected Matrix4d matrix = Matrix4d.Identity;
         protected List<IUpdateAndRender> elements = new List<IUpdateAndRender>();
 
         public Container() : base()

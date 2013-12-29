@@ -26,7 +26,7 @@ namespace PushEngine
         {
             clients.Add(newP);
             Debug.Log("Created client with name:" + newP.Name());
-            Debug.Log("Client " + newP.Name() + " wants view of: " + newP.ClientWindow.ViewRectangle);
+            Debug.Log("Client " + newP.Name());
             newP.Start();
         }
 
@@ -34,7 +34,7 @@ namespace PushEngine
         {
             foreach (Client cl in clients)
             {
-                cl.ClientWindow.StartContainer();
+//                cl.ClientWindow.StartContainer();
             }
         }
 
