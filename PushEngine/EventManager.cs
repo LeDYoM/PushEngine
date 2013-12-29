@@ -58,7 +58,7 @@ namespace PushEngine
 
         private void toAllActiveObjects(PEEvent event_, Client cl)
         {
-            cl.sceneDirector.CurrentScene.ActiveElements.ForEach(y => y.ReceiveEvent(event_));
+//            cl.sceneDirector.CurrentScene.ActiveElements.ForEach(y => y.ReceiveEvent(event_));
         }
     }
 }

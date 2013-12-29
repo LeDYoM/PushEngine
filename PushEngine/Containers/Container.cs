@@ -36,7 +36,9 @@ namespace PushEngine.Containers
 
         public virtual void Render()
         {
+            StartContainer();
             elements.ForEach(x => x.Render());
+            FinishContainer();
         }
     }
 }

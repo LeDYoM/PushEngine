@@ -7,52 +7,36 @@ using System.Drawing;
 
 namespace PushEngine.Draw
 {
-    public class Scene : IDisposable
+    public class Scene : WindowContainer, IDisposable
     {
-        private List<SceneElement> sceneElements = new List<SceneElement>();
         private Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
-        public WindowContainer ClientWindow
-        {
-            internal set;
-            get;
-        }
 
-        internal Scene()
+        internal Scene():base(new Vector2d(-400, 300), new Vector2d(400, -300), new Size(800, 600))
         {
-            ClientWindow = new WindowContainer(new Vector2d(-400, 300), new Vector2d(400, -300), new Size(800, 600));
         }
 
         internal T GetNewDrawElement<T>() where T : SceneElement, new()
         {
             T obj = new T();
-            sceneElements.Add(obj);
+            elements.Add(obj);
             return obj;
         }
 
-        public void Update()
-        {
-            sceneElements.ForEach(x => x.Update());
-        }
-
-        public void Render()
+        public override void Render()
         {
             renderer.ClearScreen();
             renderer.ResetAll();
-            ClientWindow.StartContainer();
-            sceneElements.ForEach(x => x.Render());
-            ClientWindow.FinishContainer();
+            base.Render();
         }
 
-        internal List<SceneElement> ActiveElements
+        internal List<IUpdateAndRender> ActiveElements
         {
-            get { return sceneElements; } 
+            get { return elements; } 
         }
 
         public void Dispose()
         {
             GC.SuppressFinalize(this);
-            sceneElements.ForEach(x => x.Dispose());
-            sceneElements.Clear();
         }
 
         ~Scene()
