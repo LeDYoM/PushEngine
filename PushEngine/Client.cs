@@ -28,12 +28,9 @@ namespace PushEngine
             return "NoNamed";
         }
 
-        public void ReceiveEvent(PEEvent event_)
+        public bool OnEvent(PEEvent event_)
         {
-            if (OnEventReceived != null)
-            {
-                OnEventReceived(event_);
-            }
+            return sceneDirector.OnEvent(event_);
         }
 
         public void Update()
@@ -48,7 +45,7 @@ namespace PushEngine
 
         public void SendEvent(PEEvent event_)
         {
-            PushEngineCore.Instance.eManager.AddEvent(event_);
+            PushEngineCore.Instance.clientManager.AddEvent(event_);
         }
 
         public virtual void Dispose()

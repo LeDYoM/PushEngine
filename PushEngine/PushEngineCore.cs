@@ -39,11 +39,9 @@ namespace PushEngine
 
         internal ClientManager clientManager = new ClientManager();
         internal Keyboard keyboard = new Keyboard();
-        internal EventManager eManager = new EventManager();
 
         private void InitSubModules()
         {
-            eManager.Start();
             renderer = new Renderer();
             keyboard.setKeyboard(Keyboard);
 
@@ -83,7 +81,7 @@ namespace PushEngine
                 ellapsed = 0;
             }
 
-            eManager.ProcessEvents();
+            clientManager.ProcessEvents();
             clientManager.OnUpdateFrame(e);
 
             keyboard.ApplyUpdate();
@@ -102,8 +100,6 @@ namespace PushEngine
         {
             base.OnUnload(e);
 
-            eManager.Stop();
-            eManager = null;
             clientManager.Stop();
             clientManager.Dispose();
             Configuration.SaveConfigFile();

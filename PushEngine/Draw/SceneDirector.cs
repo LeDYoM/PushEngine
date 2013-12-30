@@ -55,6 +55,20 @@ namespace PushEngine.Draw
                 currentScene.Render();
         }
 
+        public override bool OnEvent(PEEvent event_)
+        {
+            bool t = base.OnEvent(event_);
+            if (CurrentScene != null)
+            {
+                return CurrentScene.OnEvent(event_);
+            }
+            else
+            {
+                Debug.Log("Received event without having a current Scene");
+                return false;
+            }
+        }
+
         public virtual void Dispose()
         {
             GC.SuppressFinalize(this);

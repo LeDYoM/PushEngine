@@ -10,7 +10,7 @@ namespace PushEngine.Draw
 {
     public delegate void DrawElementDelegate(SceneElement self);
 
-    public class SceneElement : Object, IUpdateAndRender, IDisposable
+    public class SceneElement : Object, ISceneElement, IDisposable
     {
         // Delegates
         public PEEventReceiver OnEventReceived = null;
@@ -22,12 +22,14 @@ namespace PushEngine.Draw
         {
         }
 
-        public override void ReceiveEvent(PEEvent event_)
+        public bool OnEvent(PEEvent event_)
         {
             if (OnEventReceived != null)
             {
                 OnEventReceived(event_);
+                return true;
             }
+            return false;
         }
 
         public void Update()

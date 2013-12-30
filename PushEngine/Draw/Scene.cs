@@ -29,7 +29,17 @@ namespace PushEngine.Draw
             base.Render();
         }
 
-        internal List<IUpdateAndRender> ActiveElements
+        public override bool OnEvent(PEEvent event_)
+        {
+            bool t = base.OnEvent(event_);
+            foreach (var element in elements)
+            {
+                t = t | element.OnEvent(event_);
+            }
+            return t;
+        }
+
+        internal List<ISceneElement> ActiveElements
         {
             get { return elements; } 
         }

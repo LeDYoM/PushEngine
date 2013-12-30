@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace PushEngine
 {
-    internal class ClientManager : IDisposable
+    internal class ClientManager : EventManager, IDisposable
     {
         private List<Client> clients = new List<Client>();
 
@@ -46,6 +46,27 @@ namespace PushEngine
         internal void OnRenderFrame(FrameEventArgs e)
         {
             clients.ForEach(x => { x.frameData.Apply(e); x.Render(); });
+        }
+
+        internal override void OnEvent(PEEvent evnt)
+        {
+            if (evnt.receiverClient == null)
+            {
+                foreach (Client cl in clients)
+                {
+                    evnt.receiverClient = cl;
+                    sendEventToClient(evnt);
+                }
+            }
+            else
+            {
+                sendEventToClient(evnt);
+            }
+        }
+
+        private void sendEventToClient(PEEvent evnt)
+        {
+            evnt.receiverClient.OnEvent(evnt);
         }
 
         internal void Stop()

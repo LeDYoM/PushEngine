@@ -2,8 +2,8 @@
 
 namespace PushEngine
 {
-    interface IEventReceiver
+    public interface IEventReceiver
     {
-        void ReceiveEvent(PEEvent event_);
+        bool OnEvent(PEEvent event_);
     }
 }

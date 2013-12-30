@@ -10,7 +10,7 @@ namespace PushEngine.Containers
     public class Container : View, IUpdateAndRender
     {
         protected Matrix4d matrix = Matrix4d.Identity;
-        protected List<IUpdateAndRender> elements = new List<IUpdateAndRender>();
+        protected List<ISceneElement> elements = new List<ISceneElement>();
 
         public Container() : base()
         {
@@ -39,6 +39,11 @@ namespace PushEngine.Containers
             StartContainer();
             elements.ForEach(x => x.Render());
             FinishContainer();
+        }
+
+        public virtual bool OnEvent(PEEvent event_)
+        {
+            return false;
         }
     }
 }

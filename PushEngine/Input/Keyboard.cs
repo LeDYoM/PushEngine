@@ -44,13 +44,13 @@ namespace PushEngine.Input
                     switch (kd.keyState)
                     {
                         case KeyData.KeyState.Pressed:
-                            PushEngineCore.Instance.eManager.AddEvent(PEEvent.KeyPressedEvent(kd.KeyId));
+                            PushEngineCore.Instance.clientManager.AddEvent(PEEvent.KeyPressedEvent(kd.KeyId));
                             break;
                         case KeyData.KeyState.Pressing:
-                            PushEngineCore.Instance.eManager.AddEvent(PEEvent.KeyPressingEvent(kd.KeyId));
+                            PushEngineCore.Instance.clientManager.AddEvent(PEEvent.KeyPressingEvent(kd.KeyId));
                             break;
                         case KeyData.KeyState.Released:
-                            PushEngineCore.Instance.eManager.AddEvent(PEEvent.KeyReleasedEvent(kd.KeyId));
+                            PushEngineCore.Instance.clientManager.AddEvent(PEEvent.KeyReleasedEvent(kd.KeyId));
                             break;
                         default:
                             break;

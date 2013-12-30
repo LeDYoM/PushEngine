@@ -2,7 +2,7 @@
 
 namespace PushEngine
 {
-    public class Object : IEventReceiver
+    public class Object
     {
         protected string id = "noname";
 
@@ -19,12 +19,6 @@ namespace PushEngine
         public virtual string DebugDescription()
         {
             return "<" + id + ">";
-        }
-
-
-        public virtual void ReceiveEvent(PEEvent event_)
-        {
-            throw new NotImplementedException();
         }
     }
 }
