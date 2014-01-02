@@ -7,12 +7,19 @@ using System.Drawing;
 
 namespace PushEngine.Draw
 {
-    public class Scene : WindowContainer, IDisposable
+    public class Scene : WindowContainer, INamedObject, IDisposable
     {
-        private Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
 
-        internal Scene():base(new Vector2d(-400, 300), new Vector2d(400, -300), new Size(800, 600))
+        private Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
+        public string Name
         {
+            get;
+            internal set;
+        }
+
+        public Scene(string name_):base(new Vector2d(-400, 300), new Vector2d(400, -300), new Size(800, 600))
+        {
+            Name = name_;
         }
 
         internal T GetNewDrawElement<T>() where T : SceneElement, new()
@@ -43,6 +50,8 @@ namespace PushEngine.Draw
         {
             get { return elements; } 
         }
+
+
 
         public void Dispose()
         {

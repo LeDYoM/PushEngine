@@ -5,11 +5,28 @@ namespace PushEngine
 {
     public static class Debug
     {
+        public static void Assert(bool condition, object o = null)
+        {
+            if (!condition)
+            {
+                Debug.LogError(o);
+                System.Diagnostics.Debug.Assert(condition);
+            }
+        }
+
+        public static void LogError(object o)
+        {
+            Debug.Log(o);
+        }
+
         public static void Log(object o)
         {
-            string output = extraInfo() + o.ToString();
-            System.Diagnostics.Debug.WriteLine(output);
-            Console.WriteLine(output);
+            if (o != null)
+            {
+                string output = extraInfo() + o.ToString();
+                System.Diagnostics.Debug.WriteLine(output);
+                Console.WriteLine(output);
+            }
         }
 
         private static string extraInfo()
@@ -21,5 +38,7 @@ namespace PushEngine
 
             return line + ": " + method + ":: ";
         }
+
+
     }
 }

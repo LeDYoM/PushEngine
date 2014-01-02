@@ -23,7 +23,6 @@ namespace PushEngine
     internal class Configuration : ConfigurationData
     {
         private static Configuration conf = new Configuration();
-
         private const string configFile = "config.bin";
         public GraphicsMode graphicsMode = null;
 

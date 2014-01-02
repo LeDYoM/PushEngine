@@ -9,6 +9,7 @@ using PushEngine.Input;
 namespace PushEngine.Draw
 {
     public delegate void DrawElementDelegate(SceneElement self);
+    public delegate void PEEventReceiver(PEEvent event_);
 
     public class SceneElement : Object, ISceneElement, IDisposable
     {

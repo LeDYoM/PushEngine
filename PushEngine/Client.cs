@@ -7,20 +7,29 @@ using System.Drawing;
 
 namespace PushEngine
 {
-    public delegate void PEEventReceiver(PEEvent event_);
-
     public class Client : IDisposable
     {
-        public PEEventReceiver OnEventReceived = null;
+        public delegate void ClientLogicDelegate();
+
         internal FrameData frameData = new FrameData();
         internal SceneDirector sceneDirector = new SceneDirector();
+        public ClientLogicDelegate OnStart = null;
 
         public Client()
         {
         }
 
-        public virtual void Start()
+        private void ExecuteIfExists(ClientLogicDelegate d)
         {
+            if (d != null)
+            {
+                d();
+            }
+        }
+
+        public void Start()
+        {
+            ExecuteIfExists(OnStart);
         }
 
         public virtual string Name()

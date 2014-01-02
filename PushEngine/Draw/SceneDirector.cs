@@ -16,29 +16,47 @@ namespace PushEngine.Draw
 
         public Scene CurrentScene { get { return currentScene; } }
 
-        public void Push(Scene scene)
+        public bool addScenes(string[] names, int startIndex)
+        {
+            if (scenes.Count < 1 && scenesStack.Count < 1)
+            {
+                Debug.Assert(names != null, "Scene names list cannot be null");
+                Debug.Assert(names.Length > 0, "Scene list is 0 length");
+                Debug.Assert(startIndex < names.Length, "Start index is out of range");
+
+                foreach (string name in names)
+                {
+                    GetNew(name);
+                }
+                Push(scenes[startIndex]);
+                return true;
+            }
+            return false;
+        }
+
+        private void Push(Scene scene)
         {
             scenesStack.Push(scene);
             currentScene = scene;
         }
 
-        public Scene Pop()
+        private Scene Pop()
         {
             Scene tmp = scenesStack.Pop();
             currentScene = scenesStack.Peek();
             return tmp;
         }
 
-        public Scene GetNew()
+        private Scene GetNew(string name_)
         {
-            Scene tmp = new Scene();
+            Scene tmp = new Scene(name_);
             scenes.Add(tmp);
             return tmp;
         }
 
-        public Scene GetNewAndPush()
+        private Scene GetNewAndPush(string name_)
         {
-            Scene tmp = GetNew();
+            Scene tmp = GetNew(name_);
             Push(tmp);
             return tmp;
         }
@@ -67,6 +85,11 @@ namespace PushEngine.Draw
                 Debug.Log("Received event without having a current Scene");
                 return false;
             }
+        }
+
+        public Scene getByName(string name_)
+        {
+            return scenes.Find(x => x.Name.Equals(name_));
         }
 
         public virtual void Dispose()

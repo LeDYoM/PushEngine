@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PushEngine.Containers
 {
-    public class Container : View, IUpdateAndRender
+    public class Container : View, ISceneElement
     {
         protected Matrix4d matrix = Matrix4d.Identity;
         protected List<ISceneElement> elements = new List<ISceneElement>();

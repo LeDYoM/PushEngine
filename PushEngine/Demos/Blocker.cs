@@ -19,21 +19,21 @@ namespace PushEngine.Demos
         internal Blocker()
             : base()
         {
+            this.OnStart += delegate()
+            {
+                sceneDirector.addScenes(new string[] { "gamePlay" }, 0);
+
+                sceneDirector.getByName("gamePlay");
+
+                CreateBoard();
+                CreatePlayer();
+                //CreateBall();
+            };
         }
 
         public override string  Name()
         {
             return "Blocker";
-        }
-
-        public override void Start()
-        {
-            base.Start();
-            sceneDirector.GetNewAndPush();
-
-            CreateBoard();
-            CreatePlayer();
-            //CreateBall();
         }
 
         private const double pressRate = 500.0;
