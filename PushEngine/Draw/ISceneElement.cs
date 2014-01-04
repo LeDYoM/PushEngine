@@ -2,7 +2,9 @@
 
 namespace PushEngine.Draw
 {
-    public interface ISceneElement : IEventReceiver, IUpdateAndRender
+    public interface ISceneElement : IUpdateAndRender
     {
+        void StartContainer();
+        void FinishContainer();
     }
 }

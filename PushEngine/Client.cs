@@ -4,42 +4,35 @@ using OpenTK.Input;
 using PushEngine.Draw;
 using PushEngine.Containers;
 using System.Drawing;
+using PushEngine.Events;
 
 namespace PushEngine
 {
+    public delegate void ClientLogicDelegate();
+    public delegate void ClientKeyDelegate(KeyEventData ked_);
+
     public class Client : IDisposable
     {
-        public delegate void ClientLogicDelegate();
-
         internal FrameData frameData = new FrameData();
         internal SceneDirector sceneDirector = new SceneDirector();
-        public ClientLogicDelegate OnStart = null;
 
         public Client()
         {
         }
 
-        private void ExecuteIfExists(ClientLogicDelegate d)
+        public virtual void Start()
         {
-            if (d != null)
-            {
-                d();
-            }
+            sceneDirector.Start();
         }
 
-        public void Start()
+        public virtual void OnKey(KeyEventData kev_)
         {
-            ExecuteIfExists(OnStart);
+            sceneDirector.OnKey(kev_);
         }
 
         public virtual string Name()
         {
             return "NoNamed";
-        }
-
-        public bool OnEvent(PEEvent event_)
-        {
-            return sceneDirector.OnEvent(event_);
         }
 
         public void Update()
@@ -50,11 +43,6 @@ namespace PushEngine
         public void Render()
         {
             sceneDirector.Render();
-        }
-
-        public void SendEvent(PEEvent event_)
-        {
-            PushEngineCore.Instance.clientManager.AddEvent(event_);
         }
 
         public virtual void Dispose()

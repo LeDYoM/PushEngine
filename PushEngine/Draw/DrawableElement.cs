@@ -10,6 +10,7 @@ namespace PushEngine.Draw
     {
         protected Material material;
         protected SizeF size_;
+        protected Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
 
         // Private properties
         protected Vector3d[] vertex = null;

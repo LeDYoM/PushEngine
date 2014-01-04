@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PushEngine.Containers;
+using PushEngine.Events;
 
 namespace PushEngine.Draw
 {
@@ -32,6 +33,18 @@ namespace PushEngine.Draw
                 return true;
             }
             return false;
+        }
+
+        internal void Start()
+        {
+            Debug.Assert(currentScene != null, "There is no scene on Start");
+            if (currentScene.OnStart != null) currentScene.OnStart();
+        }
+
+        internal void OnKey(KeyEventData kev_)
+        {
+            Debug.Assert(currentScene != null, "There is no scene on Key");
+            if (currentScene.OnKey != null) currentScene.OnKey(kev_);
         }
 
         private void Push(Scene scene)
@@ -71,20 +84,6 @@ namespace PushEngine.Draw
         {
             if (currentScene != null)
                 currentScene.Render();
-        }
-
-        public override bool OnEvent(PEEvent event_)
-        {
-            bool t = base.OnEvent(event_);
-            if (CurrentScene != null)
-            {
-                return CurrentScene.OnEvent(event_);
-            }
-            else
-            {
-                Debug.Log("Received event without having a current Scene");
-                return false;
-            }
         }
 
         public Scene getByName(string name_)

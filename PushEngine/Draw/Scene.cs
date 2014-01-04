@@ -7,17 +7,18 @@ using System.Drawing;
 
 namespace PushEngine.Draw
 {
-    public class Scene : WindowContainer, INamedObject, IDisposable
+    public class Scene : ClientContainer, INamedObject, IDisposable
     {
-
         private Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
+        protected View perspectiveView = new View();
+
         public string Name
         {
             get;
             internal set;
         }
 
-        public Scene(string name_):base(new Vector2d(-400, 300), new Vector2d(400, -300), new Size(800, 600))
+        public Scene(string name_):base()
         {
             Name = name_;
         }
@@ -33,17 +34,9 @@ namespace PushEngine.Draw
         {
             renderer.ClearScreen();
             renderer.ResetAll();
-            base.Render();
-        }
 
-        public override bool OnEvent(PEEvent event_)
-        {
-            bool t = base.OnEvent(event_);
-            foreach (var element in elements)
-            {
-                t = t | element.OnEvent(event_);
-            }
-            return t;
+
+            base.Render();
         }
 
         internal List<ISceneElement> ActiveElements

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PushEngine.Draw;
 using OpenTK.Graphics;
 using PushEngine.Input;
+using PushEngine.Events;
 
 namespace PushEngine.Demos
 {
@@ -19,18 +20,23 @@ namespace PushEngine.Demos
         internal Blocker()
             : base()
         {
-            this.OnStart += delegate()
+        }
+
+        public override void Start()
+        {
+            this.
+            sceneDirector.addScenes(new string[] { "gamePlay" }, 0);
+
+            sceneDirector.getByName("gamePlay").OnStart = delegate()
             {
-                sceneDirector.addScenes(new string[] { "gamePlay" }, 0);
-
-                sceneDirector.getByName("gamePlay");
-
                 CreateBoard();
                 CreatePlayer();
                 //CreateBall();
             };
-        }
 
+            base.Start();
+
+        }
         public override string  Name()
         {
             return "Blocker";
@@ -45,29 +51,26 @@ namespace PushEngine.Demos
             player.PositionX = 100;
             player.PositionY = 200;
 
-            player.OnEventReceived = delegate(PEEvent event_)
+            player.OnKey = delegate(KeyEventData kev_)
             {
-                if (event_.isKeyEvent)
+                if (kev_.KState == KeyData.KeyState.Pressing)
                 {
-                    if (event_.IsKeyPressing)
+                    if (kev_.EventKey == Key.A)
                     {
-                        if (event_.EventKey == Key.A)
-                        {
-                            player.PositionX -= (frameData.ellapsedSinceLastFrame * pressRate);
-                        }
-                        else if (event_.EventKey == Key.D)
-                        {
-                            player.PositionX += (frameData.ellapsedSinceLastFrame * pressRate);
-                        }
+                        player.PositionX -= (frameData.ellapsedSinceLastFrame * pressRate);
+                    }
+                    else if (kev_.EventKey == Key.D)
+                    {
+                        player.PositionX += (frameData.ellapsedSinceLastFrame * pressRate);
+                    }
 
-                        if (player.LeftPosition < sceneDirector.CurrentScene.TopLeft.X)
-                        {
-                            player.LeftPosition = sceneDirector.CurrentScene.TopLeft.X;
-                        }
-                        else if (player.RightPosition > sceneDirector.CurrentScene.DownRight.X)
-                        {
-                            player.RightPosition = sceneDirector.CurrentScene.DownRight.X;
-                        }
+                    if (player.LeftPosition < sceneDirector.CurrentScene.TopLeft.X)
+                    {
+                        player.LeftPosition = sceneDirector.CurrentScene.TopLeft.X;
+                    }
+                    else if (player.RightPosition > sceneDirector.CurrentScene.DownRight.X)
+                    {
+                        player.RightPosition = sceneDirector.CurrentScene.DownRight.X;
                     }
                 }
             };

@@ -7,6 +7,18 @@ namespace PushEngine
 {
     public class Renderer
     {
+        public void MultAndPushModelView(ref Matrix4d matrix)
+        {
+            GL.MatrixMode(MatrixMode.Modelview);
+            PushMatrix(ref matrix);
+        }
+
+        public void PopModelView()
+        {
+            GL.MatrixMode(MatrixMode.Modelview);
+            PopMatrix();
+        }
+
         public void StartBlending()
         {
             GL.Enable(EnableCap.Blend);
@@ -69,7 +81,7 @@ namespace PushEngine
             GL.Vertex3(v);
         }
 
-        public void PutMatrix(ref Matrix4d m)
+        public void PushMatrix(ref Matrix4d m)
         {
             GL.PushMatrix();
             GL.MultMatrix(ref m);

@@ -73,11 +73,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="Containers\ClientContainer.cs" />
     <Compile Include="Containers\Container.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Demos\Blocker.cs" />
     <Compile Include="Draw\DrawableElement.cs" />
     <Compile Include="Draw\ISceneElement.cs" />
+    <Compile Include="Draw\View.cs" />
+    <Compile Include="Events\KeyEventData.cs" />
     <Compile Include="INamedObject.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="Draw\SceneElement.cs" />
@@ -97,14 +100,12 @@
     <Compile Include="PEEvent.cs" />
     <Compile Include="ClientManager.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Containers\WindowContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushEngineCore.cs" />
     <Compile Include="Draw\SceneDirector.cs" />
     <Compile Include="TextAlignment.cs" />
     <Compile Include="Texture.cs" />
     <Compile Include="TextureUtils.cs" />
-    <Compile Include="View.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

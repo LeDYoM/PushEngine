@@ -4,6 +4,7 @@ using PushEngine.Demos;
 using System.Collections.Generic;
 using OpenTK.Input;
 using System.Drawing;
+using PushEngine.Events;
 
 namespace PushEngine
 {
@@ -19,7 +20,6 @@ namespace PushEngine
         internal void Start()
         {
             StartNewProcess(new Blocker());
-//            StartNewProcess(new DirectDemoQuad());
         }
 
         internal void StartNewProcess(Client newP)
@@ -38,6 +38,11 @@ namespace PushEngine
             }
         }
 
+        internal void OnKey(KeyEventData ked_)
+        {
+            clients.ForEach(x => x.OnKey(ked_));
+        }
+
         internal void OnUpdateFrame(FrameEventArgs e)
         {
             clients.ForEach(x => x.Update());
@@ -46,27 +51,6 @@ namespace PushEngine
         internal void OnRenderFrame(FrameEventArgs e)
         {
             clients.ForEach(x => { x.frameData.Apply(e); x.Render(); });
-        }
-
-        internal override void OnEvent(PEEvent evnt)
-        {
-            if (evnt.receiverClient == null)
-            {
-                foreach (Client cl in clients)
-                {
-                    evnt.receiverClient = cl;
-                    sendEventToClient(evnt);
-                }
-            }
-            else
-            {
-                sendEventToClient(evnt);
-            }
-        }
-
-        private void sendEventToClient(PEEvent evnt)
-        {
-            evnt.receiverClient.OnEvent(evnt);
         }
 
         internal void Stop()

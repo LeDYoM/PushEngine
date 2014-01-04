@@ -48,10 +48,10 @@ namespace PushEngine.Draw
             SizeChanged();
         }
 
-        internal override void PreRender()
+        public override void StartContainer()
         {
             material.startMaterialRenderer();
-            renderer.PutMatrix(ref matrix);
+            renderer.PushMatrix(ref matrix);
 
         }
 
@@ -60,7 +60,7 @@ namespace PushEngine.Draw
             renderer.RenderQuad(vertex, material.textureCoordinates, material.color);
         }
 
-        internal override void PostRender()
+        public override void FinishContainer()
         {
             renderer.PopMatrix();
             material.PostRender();

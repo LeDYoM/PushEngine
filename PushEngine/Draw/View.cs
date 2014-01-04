@@ -2,36 +2,31 @@
 using OpenTK;
 using System.Drawing;
 
-namespace PushEngine
+namespace PushEngine.Draw
 {
-    public class View : Object
+    public class View
     {
+        public Size pixelSize;
         protected Vector2d[] view;
 
-        public View()
+        public View(Vector2d topLeft, Vector2d downRight)
         {
             view = new Vector2d[2];
-            view[0] = new Vector2d(-1, -1);
-            view[1] = new Vector2d(1, 1);
-        }
-
-        public View(Vector2d topLeft, Vector2d downRight) : this()
-        {
             view[0] = topLeft;
             view[1] = downRight;
+
+            pixelSize = new Size(800, 600);
         }
 
-        public View(double top, double down, double left, double right) : this()
+        public View()
+            : this(new Vector2d(-400, 300), new Vector2d(400, -300))
         {
-            view[0].X = left;
-            view[0].Y = top;
-            view[1].X = right;
-            view[1].Y = down;
+            pixelSize = new Size(800, 600);
         }
 
-        public View(RectangleF rect) : this()
+        protected Matrix4d updateMatrixFromView()
         {
-            this.ViewRectangle = rect;
+            return Matrix4d.CreateOrthographicOffCenter(view[0].X, view[1].X, view[1].Y, view[0].Y, -1.0, 1.0);
         }
 
         public RectangleF ViewRectangle
@@ -54,5 +49,6 @@ namespace PushEngine
         {
             return ViewRectangle.ToString();
         }
+
     }
 }

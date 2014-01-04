@@ -11,22 +11,16 @@ namespace PushEngine.Containers
     {
         protected Matrix4d matrix = Matrix4d.Identity;
         protected List<ISceneElement> elements = new List<ISceneElement>();
-
-        public Container() : base()
-        {
-        }
+        private Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
 
         public virtual void StartContainer()
         {
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.PushMatrix();
-            GL.MultMatrix(ref matrix);
+            renderer.MultAndPushModelView(ref matrix);
         }
 
         public virtual void FinishContainer()
         {
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.PopMatrix();
+            renderer.PopModelView();
         }
 
         public virtual void Update()
@@ -39,11 +33,6 @@ namespace PushEngine.Containers
             StartContainer();
             elements.ForEach(x => x.Render());
             FinishContainer();
-        }
-
-        public virtual bool OnEvent(PEEvent event_)
-        {
-            return false;
         }
     }
 }
