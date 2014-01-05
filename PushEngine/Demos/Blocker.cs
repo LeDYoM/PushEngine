@@ -31,6 +31,7 @@ namespace PushEngine.Demos
             {
                 CreateBoard();
                 CreatePlayer();
+
                 //CreateBall();
             };
 
@@ -64,13 +65,13 @@ namespace PushEngine.Demos
                         player.PositionX += (frameData.ellapsedSinceLastFrame * pressRate);
                     }
 
-                    if (player.LeftPosition < sceneDirector.CurrentScene.TopLeft.X)
+                    if (player.LeftPosition < sceneDirector.CurrentScene.ModelView.TopLeft.X)
                     {
-                        player.LeftPosition = sceneDirector.CurrentScene.TopLeft.X;
+                        player.LeftPosition = sceneDirector.CurrentScene.ModelView.TopLeft.X;
                     }
-                    else if (player.RightPosition > sceneDirector.CurrentScene.DownRight.X)
+                    else if (player.RightPosition > sceneDirector.CurrentScene.ModelView.DownRight.X)
                     {
-                        player.RightPosition = sceneDirector.CurrentScene.DownRight.X;
+                        player.RightPosition = sceneDirector.CurrentScene.ModelView.DownRight.X;
                     }
                 }
             };
@@ -88,8 +89,8 @@ namespace PushEngine.Demos
 				(y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));
             block.Width = qWidth;
             block.Height = qHeight;
-            block.LeftPosition = sceneDirector.CurrentScene.TopLeft.X + (x * qWidth);
-            block.TopPosition = sceneDirector.CurrentScene.TopLeft.Y - (y * qHeight);
+            block.LeftPosition = sceneDirector.CurrentScene.ModelView.TopLeft.X + (x * qWidth);
+            block.TopPosition = sceneDirector.CurrentScene.ModelView.TopLeft.Y - (y * qHeight);
         }
 
         private void CreateBoard()

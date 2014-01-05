@@ -51,17 +51,17 @@ namespace PushEngine.Draw
         {
             base.StartContainer();
             material.startMaterialRenderer();
-            renderer.PushMatrix(ref matrix);
         }
 
         public override void Render()
         {
+            StartContainer();
             renderer.RenderQuad(vertex, material.textureCoordinates, material.color);
+            FinishContainer();
         }
 
         public override void FinishContainer()
         {
-            renderer.PopMatrix();
             material.PostRender();
             base.FinishContainer();
         }

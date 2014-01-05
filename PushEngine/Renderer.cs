@@ -13,6 +13,12 @@ namespace PushEngine
             PushMatrix(ref matrix);
         }
 
+        public void PopPerspective()
+        {
+            GL.MatrixMode(MatrixMode.Projection);
+            PopMatrix();
+        }
+
         public void MultAndPushModelView(ref Matrix4d matrix)
         {
             GL.MatrixMode(MatrixMode.Modelview);

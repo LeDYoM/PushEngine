@@ -10,6 +10,9 @@ namespace PushEngine.Draw
     public class Scene : ClientContainer, INamedObject, IDisposable
     {
         protected View perspectiveView = new View();
+        protected View modelView = new View();
+
+        public View ModelView { get { return modelView; } }
 
         public string Name
         {
@@ -35,14 +38,19 @@ namespace PushEngine.Draw
             renderer.SetPerspective(ref temp);
         }
 
-        public override void Render()
+        public override void StartContainer()
         {
             renderer.ClearScreen();
             renderer.ResetAll();
             setPerspective();
-            base.Render();
+            base.StartContainer();
         }
 
+        public override void FinishContainer()
+        {
+            base.FinishContainer();
+            renderer.PopPerspective();
+        }
         internal List<LeafClientContainer> ActiveElements
         {
             get { return elements; } 

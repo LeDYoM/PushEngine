@@ -4,7 +4,7 @@ using OpenTK;
 
 namespace PushEngine.Containers
 {
-    public class LeafContainer : View
+    public class LeafContainer
     {
         protected Matrix4d matrix = Matrix4d.Identity;
         protected Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
