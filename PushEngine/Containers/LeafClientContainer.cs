@@ -1,10 +1,9 @@
 ﻿using System;
-using PushEngine.Draw;
 using PushEngine.Events;
 
 namespace PushEngine.Containers
 {
-    public class ClientContainer : Container
+    public class LeafClientContainer : LeafContainer
     {
         public ClientLogicDelegate OnStart = null;
         public ClientKeyDelegate OnKey = null;

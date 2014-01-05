@@ -7,6 +7,12 @@ namespace PushEngine
 {
     public class Renderer
     {
+        public void SetPerspective(ref Matrix4d matrix)
+        {
+            GL.MatrixMode(MatrixMode.Projection);
+            PushMatrix(ref matrix);
+        }
+
         public void MultAndPushModelView(ref Matrix4d matrix)
         {
             GL.MatrixMode(MatrixMode.Modelview);

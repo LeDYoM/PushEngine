@@ -7,28 +7,16 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PushEngine.Containers
 {
-    public class Container : View, ISceneElement
+    public class Container : LeafContainer
     {
-        protected Matrix4d matrix = Matrix4d.Identity;
-        protected List<ISceneElement> elements = new List<ISceneElement>();
-        private Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
+        protected List<LeafClientContainer> elements = new List<LeafClientContainer>();
 
-        public virtual void StartContainer()
+        public override void Update()
         {
-            renderer.MultAndPushModelView(ref matrix);
+            base.Update();
         }
 
-        public virtual void FinishContainer()
-        {
-            renderer.PopModelView();
-        }
-
-        public virtual void Update()
-        {
-            elements.ForEach(x => x.Update());
-        }
-
-        public virtual void Render()
+        public override void Render()
         {
             StartContainer();
             elements.ForEach(x => x.Render());

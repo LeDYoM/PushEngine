@@ -19,7 +19,6 @@ namespace PushEngine.Draw
             material = new Material(4, null, color);
             size_ = s;
             PostCreate();
-
         }
 
         internal void CreateSprite(Texture t, Color4? color)
@@ -50,12 +49,12 @@ namespace PushEngine.Draw
 
         public override void StartContainer()
         {
+            base.StartContainer();
             material.startMaterialRenderer();
             renderer.PushMatrix(ref matrix);
-
         }
 
-        internal override void RenderObject()
+        public override void Render()
         {
             renderer.RenderQuad(vertex, material.textureCoordinates, material.color);
         }
@@ -64,6 +63,7 @@ namespace PushEngine.Draw
         {
             renderer.PopMatrix();
             material.PostRender();
+            base.FinishContainer();
         }
 
 

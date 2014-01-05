@@ -6,11 +6,10 @@ using PushEngine.Containers;
 
 namespace PushEngine.Draw
 {
-    public class DrawableElement : SceneElement
+    public class DrawableElement : LeafClientContainer
     {
         protected Material material;
         protected SizeF size_;
-        protected Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
 
         // Private properties
         protected Vector3d[] vertex = null;
@@ -96,9 +95,8 @@ namespace PushEngine.Draw
             vertex = new Vector3d[numVertex];
         }
 
-        public override void Dispose()
+        public virtual void Dispose()
         {
-            base.Dispose();
             GC.SuppressFinalize(this);
             if (material != null)
             {

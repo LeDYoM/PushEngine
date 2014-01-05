@@ -75,15 +75,15 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Containers\ClientContainer.cs" />
     <Compile Include="Containers\Container.cs" />
+    <Compile Include="Containers\LeafClientContainer.cs" />
+    <Compile Include="Containers\LeafContainer.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Demos\Blocker.cs" />
     <Compile Include="Draw\DrawableElement.cs" />
-    <Compile Include="Draw\ISceneElement.cs" />
     <Compile Include="Draw\View.cs" />
     <Compile Include="Events\KeyEventData.cs" />
     <Compile Include="INamedObject.cs" />
     <Compile Include="Renderer.cs" />
-    <Compile Include="Draw\SceneElement.cs" />
     <Compile Include="Draw\IUpdateAndRender.cs" />
     <Compile Include="Draw\Material.cs" />
     <Compile Include="Draw\Sprite.cs" />

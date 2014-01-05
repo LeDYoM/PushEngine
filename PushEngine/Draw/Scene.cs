@@ -9,7 +9,6 @@ namespace PushEngine.Draw
 {
     public class Scene : ClientContainer, INamedObject, IDisposable
     {
-        private Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
         protected View perspectiveView = new View();
 
         public string Name
@@ -23,28 +22,31 @@ namespace PushEngine.Draw
             Name = name_;
         }
 
-        internal T GetNewDrawElement<T>() where T : SceneElement, new()
+        internal T GetNewDrawElement<T>() where T : LeafClientContainer, new()
         {
             T obj = new T();
             elements.Add(obj);
             return obj;
         }
 
+        private void setPerspective()
+        {
+            Matrix4d temp = perspectiveView.updateMatrixFromView();
+            renderer.SetPerspective(ref temp);
+        }
+
         public override void Render()
         {
             renderer.ClearScreen();
             renderer.ResetAll();
-
-
+            setPerspective();
             base.Render();
         }
 
-        internal List<ISceneElement> ActiveElements
+        internal List<LeafClientContainer> ActiveElements
         {
             get { return elements; } 
         }
-
-
 
         public void Dispose()
         {

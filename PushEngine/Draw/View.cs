@@ -24,7 +24,7 @@ namespace PushEngine.Draw
             pixelSize = new Size(800, 600);
         }
 
-        protected Matrix4d updateMatrixFromView()
+        public Matrix4d updateMatrixFromView()
         {
             return Matrix4d.CreateOrthographicOffCenter(view[0].X, view[1].X, view[1].Y, view[0].Y, -1.0, 1.0);
         }
