@@ -88,16 +88,11 @@
     <Compile Include="Draw\Material.cs" />
     <Compile Include="Draw\Sprite.cs" />
     <Compile Include="Draw\Scene.cs" />
-    <Compile Include="EventManager.cs" />
     <Compile Include="FrameData.cs" />
     <Compile Include="Input\Key.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\KeyData.cs" />
     <Compile Include="Client.cs" />
-    <Compile Include="IEventReceiver.cs" />
-    <Compile Include="Object.cs" />
-    <Compile Include="ObjectWithContext.cs" />
-    <Compile Include="PEEvent.cs" />
     <Compile Include="ClientManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

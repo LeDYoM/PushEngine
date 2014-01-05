@@ -81,7 +81,6 @@ namespace PushEngine
                 ellapsed = 0;
             }
 
-            clientManager.ProcessEvents();
             clientManager.OnUpdateFrame(e);
 
             keyboard.ApplyUpdate();

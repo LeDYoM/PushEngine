@@ -9,15 +9,8 @@ using PushEngine.Containers;
 
 namespace PushEngine.Draw
 {
-    public delegate void DrawElementDelegate(SceneElement self);
-    public delegate void PEEventReceiver(PEEvent event_);
-    
-
     public class SceneElement : ClientContainer, ISceneElement, IDisposable
     {
-        // Delegates
-        public PEEventReceiver OnEventReceived = null;
-
         internal SceneElement()
         {
         }

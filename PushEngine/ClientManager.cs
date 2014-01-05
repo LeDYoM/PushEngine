@@ -8,7 +8,7 @@ using PushEngine.Events;
 
 namespace PushEngine
 {
-    internal class ClientManager : EventManager, IDisposable
+    internal class ClientManager : IDisposable
     {
         private List<Client> clients = new List<Client>();
 
