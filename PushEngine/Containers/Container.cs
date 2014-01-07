@@ -1,26 +1,58 @@
 ﻿using System;
-using OpenTK;
-using System.Drawing;
-using PushEngine.Draw;
 using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL;
+using OpenTK;
+using PushEngine.Events;
 
 namespace PushEngine.Containers
 {
-    public class Container : LeafContainer
+    public class Container
     {
-        protected List<LeafClientContainer> elements = new List<LeafClientContainer>();
+        public ClientLogicDelegate OnStart = null;
+        public ClientKeyDelegate OnKey = null;
 
-        public override void Update()
+        protected List<Container> elements = new List<Container>();
+        protected Matrix4d matrix = Matrix4d.Identity;
+        protected Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
+
+        public virtual void StartContainer()
         {
-            base.Update();
+            renderer.MultAndPushModelView(ref matrix);
         }
 
-        public override void Render()
+        public virtual void FinishContainer()
+        {
+            renderer.PopModelView();
+        }
+
+        public virtual void Update()
+        {
+        }
+
+        public virtual void Render()
         {
             StartContainer();
             elements.ForEach(x => x.Render());
             FinishContainer();
+        }
+
+        internal virtual void InternalOnStart()
+        {
+            elements.ForEach(x => x.InternalOnStart());
+
+            if (OnStart != null)
+            {
+                OnStart();
+            }
+        }
+
+        internal virtual void InternalOnKey(KeyEventData kev_)
+        {
+            elements.ForEach(x => x.InternalOnKey(kev_));
+
+            if (OnKey != null)
+            {
+                OnKey(kev_);
+            }
         }
     }
 }

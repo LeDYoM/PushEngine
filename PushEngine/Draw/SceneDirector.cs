@@ -41,7 +41,7 @@ namespace PushEngine.Draw
             if (currentScene.OnStart != null) currentScene.OnStart();
         }
 
-        internal void OnKey(KeyEventData kev_)
+        internal override void InternalOnKey(KeyEventData kev_)
         {
             Debug.Assert(currentScene != null, "There is no scene on Key");
             if (currentScene.OnKey != null) currentScene.OnKey(kev_);

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace PushEngine.Draw
 {
-    public class Scene : ClientContainer, INamedObject, IDisposable
+    public class Scene : Container, INamedObject, IDisposable
     {
         protected View perspectiveView = new View();
         protected View modelView = new View();
@@ -25,7 +25,7 @@ namespace PushEngine.Draw
             Name = name_;
         }
 
-        internal T GetNewDrawElement<T>() where T : LeafClientContainer, new()
+        internal T GetNewDrawElement<T>() where T : Container, new()
         {
             T obj = new T();
             elements.Add(obj);
@@ -51,7 +51,7 @@ namespace PushEngine.Draw
             base.FinishContainer();
             renderer.PopPerspective();
         }
-        internal List<LeafClientContainer> ActiveElements
+        internal List<Container> ActiveElements
         {
             get { return elements; } 
         }
