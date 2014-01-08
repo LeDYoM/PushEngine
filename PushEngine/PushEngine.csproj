@@ -80,7 +80,6 @@
     <Compile Include="Draw\View.cs" />
     <Compile Include="Events\KeyEventData.cs" />
     <Compile Include="INamedObject.cs" />
-    <Compile Include="LogicImplementer.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="Draw\IUpdateAndRender.cs" />
     <Compile Include="Draw\Material.cs" />

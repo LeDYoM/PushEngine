@@ -54,13 +54,13 @@ namespace PushEngine.Demos
 
             player.OnKey = delegate(KeyEventData kev_)
             {
-                if (kev_.KState == KeyData.KeyState.Pressing)
+                if (kev_.kData.KState == KeyData.KeyState.Pressing)
                 {
-                    if (kev_.EventKey == Key.A)
+                    if (kev_.kData.KeyId == Key.A)
                     {
                         player.PositionX -= (frameData.ellapsedSinceLastFrame * pressRate);
                     }
-                    else if (kev_.EventKey == Key.D)
+                    else if (kev_.kData.KeyId == Key.D)
                     {
                         player.PositionX += (frameData.ellapsedSinceLastFrame * pressRate);
                     }

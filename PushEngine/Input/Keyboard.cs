@@ -38,23 +38,10 @@ namespace PushEngine.Input
             foreach (KeyData kd in active)
             {
                 kd.UpdateIdle();
-                if (kd.keyState != KeyData.KeyState.NotPressed)
+                if (kd.KState != KeyData.KeyState.NotPressed)
                 {
                     temp.Add(kd);
-                    switch (kd.keyState)
-                    {
-                        case KeyData.KeyState.Pressed:
-//                            PushEngineCore.Instance.clientManager.AddEvent(PEEvent.KeyPressedEvent(kd.KeyId));
-                            break;
-                        case KeyData.KeyState.Pressing:
-//                            PushEngineCore.Instance.clientManager.AddEvent(PEEvent.KeyPressingEvent(kd.KeyId));
-                            break;
-                        case KeyData.KeyState.Released:
-//                            PushEngineCore.Instance.clientManager.AddEvent(PEEvent.KeyReleasedEvent(kd.KeyId));
-                            break;
-                        default:
-                            break;
-                    }
+                    PushEngineCore.Instance.clientManager.OnKey(new Events.KeyEventData(kd));
                 }
             }
             active = temp;

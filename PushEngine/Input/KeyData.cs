@@ -15,40 +15,40 @@ namespace PushEngine.Input
             Released = 3
         }
 
-        internal Key KeyId;
-        public KeyState keyState { get; private set; }
+        public readonly Key KeyId;
+        public KeyState KState { get; private set; }
 
         internal KeyData(Key keyValue)
         {
             KeyId = keyValue;
-            keyState = KeyState.NotPressed;
+            KState = KeyState.NotPressed;
         }
 
         internal void ApplyKeyDown(KeyboardKeyEventArgs e)
         {
-            keyState = KeyState.Pressed;
+            KState = KeyState.Pressed;
         }
 
         internal void ApplyKeyUp(KeyboardKeyEventArgs e)
         {
-            keyState = KeyState.Released;
+            KState = KeyState.Released;
         }
 
         internal void UpdateIdle()
         {
-            switch (keyState)
+            switch (KState)
             {
                 case KeyState.NotPressed:
                     // Should not happen
                     break;
                 case KeyState.Pressed:
-                    keyState = KeyState.Pressing;
+                    KState = KeyState.Pressing;
                     break;
                 case KeyState.Pressing:
                     // Maintain the state
                     break;
                 case KeyState.Released:
-                    keyState = KeyState.NotPressed;
+                    KState = KeyState.NotPressed;
                     break;
                 default:
                     break;

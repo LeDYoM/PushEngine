@@ -5,13 +5,11 @@ namespace PushEngine.Events
 {
     public class KeyEventData : EventArgs
     {
-        public readonly KeyData.KeyState KState;
-        public readonly Key EventKey;
+        public readonly KeyData kData;
 
-        internal KeyEventData(KeyData.KeyState kState_, Key key_)
+        internal KeyEventData(KeyData kData_)
         {
-            KState = kState_;
-            EventKey = key_;
+            kData = kData_;
         }
     }
 }

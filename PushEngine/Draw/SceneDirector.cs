@@ -35,16 +35,16 @@ namespace PushEngine.Draw
             return false;
         }
 
-        internal void Start()
+        internal override void  InternalOnStart()
         {
             Debug.Assert(currentScene != null, "There is no scene on Start");
-            if (currentScene.OnStart != null) currentScene.OnStart();
+            currentScene.InternalOnStart();
         }
 
         internal override void InternalOnKey(KeyEventData kev_)
         {
             Debug.Assert(currentScene != null, "There is no scene on Key");
-            if (currentScene.OnKey != null) currentScene.OnKey(kev_);
+            currentScene.InternalOnKey(kev_);
         }
 
         private void Push(Scene scene)
