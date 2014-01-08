@@ -5,6 +5,9 @@ using PushEngine.Events;
 
 namespace PushEngine.Containers
 {
+    public delegate void ClientLogicDelegate();
+    public delegate void ClientKeyDelegate(KeyEventData ked_);
+
     public class Container
     {
         public ClientLogicDelegate OnStart = null;

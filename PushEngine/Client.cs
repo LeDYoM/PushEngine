@@ -8,9 +8,6 @@ using PushEngine.Events;
 
 namespace PushEngine
 {
-    public delegate void ClientLogicDelegate();
-    public delegate void ClientKeyDelegate(KeyEventData ked_);
-
     public class Client : IDisposable
     {
         internal FrameData frameData = new FrameData();
