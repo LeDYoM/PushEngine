@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="Containers\Container.cs" />
+    <Compile Include="Containers\ContainerDelegate.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Demos\Blocker.cs" />
     <Compile Include="Draw\DrawableElement.cs" />

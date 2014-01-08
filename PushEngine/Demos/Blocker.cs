@@ -24,7 +24,6 @@ namespace PushEngine.Demos
 
         public override void Start()
         {
-            this.
             sceneDirector.addScenes(new string[] { "gamePlay" }, 0);
 
             sceneDirector.getByName("gamePlay").OnStart = delegate()

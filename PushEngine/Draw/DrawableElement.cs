@@ -6,7 +6,7 @@ using PushEngine.Containers;
 
 namespace PushEngine.Draw
 {
-    public class DrawableElement : Container
+    public class DrawableElement : ContainerDelegate
     {
         protected Material material;
         protected SizeF size_;

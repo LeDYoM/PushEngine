@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace PushEngine.Draw
 {
-    public class Scene : Container, INamedObject, IDisposable
+    public class Scene : ContainerDelegate, INamedObject, IDisposable
     {
         protected View perspectiveView = new View();
         protected View modelView = new View();

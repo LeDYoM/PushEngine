@@ -10,9 +10,6 @@ namespace PushEngine.Containers
 
     public class Container
     {
-        public ClientLogicDelegate OnStart = null;
-        public ClientKeyDelegate OnKey = null;
-
         protected List<Container> elements = new List<Container>();
         protected Matrix4d matrix = Matrix4d.Identity;
         protected Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
@@ -41,21 +38,11 @@ namespace PushEngine.Containers
         internal virtual void InternalOnStart()
         {
             elements.ForEach(x => x.InternalOnStart());
-
-            if (OnStart != null)
-            {
-                OnStart();
-            }
         }
 
         internal virtual void InternalOnKey(KeyEventData kev_)
         {
             elements.ForEach(x => x.InternalOnKey(kev_));
-
-            if (OnKey != null)
-            {
-                OnKey(kev_);
-            }
         }
     }
 }
