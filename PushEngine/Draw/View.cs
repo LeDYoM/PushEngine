@@ -7,13 +7,13 @@ namespace PushEngine.Draw
     public class View
     {
         public Size pixelSize;
-        protected Vector2d[] view;
+		public Vector2d TopLeft;
+		public Vector2d DownRight;
 
         public View(Vector2d topLeft, Vector2d downRight)
         {
-            view = new Vector2d[2];
-            view[0] = topLeft;
-            view[1] = downRight;
+			TopLeft = topLeft;
+			DownRight = downRight;
 
             pixelSize = new Size(800, 600);
         }
@@ -26,23 +26,13 @@ namespace PushEngine.Draw
 
         public Matrix4d updateMatrixFromView()
         {
-            return Matrix4d.CreateOrthographicOffCenter(view[0].X, view[1].X, view[1].Y, view[0].Y, -1.0, 1.0);
+			return Matrix4d.CreateOrthographicOffCenter(TopLeft.X, DownRight.X, DownRight.Y, TopLeft.Y, -1.0, 1.0);
         }
 
         public RectangleF ViewRectangle
         {
-            get { return new RectangleF((float)view[0].X, (float)view[0].Y, (float)(view[1].X - view[0].X), (float)(view[1].Y - view[0].Y)); }
-            set { view[0] = new Vector2d(value.Left, value.Top); view[1] = new Vector2d(value.Right, value.Bottom); }
-        }
-
-        public Vector2d TopLeft
-        {
-            get { return view[0]; }
-        }
-
-        public Vector2d DownRight
-        {
-            get { return view[1]; }
+			get { return new RectangleF((float)TopLeft.X, (float)TopLeft.Y, (float)(DownRight.X - TopLeft.X), (float)(DownRight.Y - TopLeft.Y)); }
+			set { TopLeft = new Vector2d(value.Left, value.Top); DownRight = new Vector2d(value.Right, value.Bottom); }
         }
 
         public override string ToString()
