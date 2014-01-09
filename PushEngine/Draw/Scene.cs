@@ -40,6 +40,8 @@ namespace PushEngine.Draw
 
         public override void StartContainer()
         {
+			modelView.TopLeft = new Vector2d (-200, 150);
+			modelView.DownRight = new Vector2d (200 - 150);
             renderer.ClearScreen();
             renderer.ResetAll();
             setPerspective();
