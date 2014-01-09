@@ -10,9 +10,8 @@ namespace PushEngine.Draw
     public class Scene : ContainerDelegate, INamedObject, IDisposable
     {
         protected View perspectiveView = new View();
-        protected View modelView = new View();
 
-        public View ModelView { get { return modelView; } }
+        public View SceneView { get { return perspectiveView; } }
 
         public string Name
         {
@@ -40,8 +39,6 @@ namespace PushEngine.Draw
 
         public override void StartContainer()
         {
-			modelView.TopLeft = new Vector2d (-200, 150);
-			modelView.DownRight = new Vector2d (200 - 150);
             renderer.ClearScreen();
             renderer.ResetAll();
             setPerspective();
