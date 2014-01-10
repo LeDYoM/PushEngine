@@ -23,7 +23,8 @@ namespace PushEngine.Containers
 
         public virtual void Update()
         {
-        }
+			elements.ForEach(x => x.Update());
+		}
 
         public virtual void Render()
         {
