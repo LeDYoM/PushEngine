@@ -3,6 +3,9 @@ using PushEngine.Events;
 
 namespace PushEngine.Containers
 {
+	public delegate void ClientLogicDelegate();
+	public delegate void ClientKeyDelegate(KeyEventData ked_);
+
     public class ContainerDelegate : Container
     {
         public ClientLogicDelegate OnStart = null;
@@ -11,7 +14,6 @@ namespace PushEngine.Containers
         internal override void InternalOnStart()
         {
             base.InternalOnStart();
-            elements.ForEach(x => x.InternalOnStart());
 
             if (OnStart != null)
             {
