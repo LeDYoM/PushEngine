@@ -19,7 +19,8 @@ namespace PushEngine
 
         internal void Start()
         {
-            StartNewProcess(new Blocker());
+//            StartNewProcess(new Blocker());
+            StartNewProcess(new Zooper());
         }
 
         internal void StartNewProcess(Client newP)
