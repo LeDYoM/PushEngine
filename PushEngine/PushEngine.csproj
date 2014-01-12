@@ -102,5 +102,7 @@
     <Compile Include="ClientLogicImplementer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Types\" />
+  </ItemGroup>
 </Project>
