@@ -5,19 +5,22 @@ using OpenTK.Graphics;
 using PushEngine.Input;
 using PushEngine.Events;
 
-namespace PushEngine.Demos
+namespace PushEngine.Demos.Zooper
 {
-    internal class Blocker : Client
+    internal class Zooper : Client
     {
         private Sprite player;
-        int qWidth = 40;
-        int qHeight = 50;
-        int pWidth = 100;
-        int pHeight = 50;
+        float qWidth = 0.05f;
+        float qHeight = 0.0625f;
+        float pWidth = 0.125f;
+        float pHeight = 0.0625f;
+        float pPositionX = 0.125f;
+        float pPositionY = 0.25f;
+
         int nLines = 5;
         int nCols = 20;
 
-        internal Blocker()
+        internal Zooper()
             : base()
         {
         }
@@ -28,6 +31,9 @@ namespace PushEngine.Demos
 
             sceneDirector.getByName("gamePlay").OnStart = delegate()
             {
+                Scene scn = sceneDirector.getByName("gamePlay");
+                scn.SceneView.TopLeft = new OpenTK.Vector2d(-0.5, 0.5);
+                scn.SceneView.DownRight = new OpenTK.Vector2d(0.5, -0.5);
                 CreateBoard();
                 CreatePlayer();
 
@@ -37,19 +43,19 @@ namespace PushEngine.Demos
             base.Start();
 
         }
-        public override string  Name()
+        public override string Name()
         {
             return "Blocker";
         }
 
-        private const double pressRate = 500.0;
+        private const float pressRate = 0.7f;
 
         private void CreatePlayer()
         {
             player = sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
             player.CreateSprite(new System.Drawing.SizeF(pWidth, pHeight), Color4.Aqua);
-            player.PositionX = 100;
-            player.PositionY = 200;
+            player.PositionX = pPositionX;
+            player.PositionY = pPositionY;
 
             player.OnKey = delegate(KeyEventData kev_)
             {
@@ -83,9 +89,9 @@ namespace PushEngine.Demos
         private void CreateBlock(int x, int y)
         {
             Sprite block = sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
-            block.CreateSprite(new System.Drawing.SizeF(qWidth,qHeight), 
-                x % 2 == 0 ? 
-				(y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));
+            block.CreateSprite(new System.Drawing.SizeF(qWidth, qHeight),
+                x % 2 == 0 ?
+                (y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));
             block.Width = qWidth;
             block.Height = qHeight;
             block.LeftPosition = sceneDirector.CurrentScene.SceneView.TopLeft.X + (x * qWidth);
@@ -94,7 +100,7 @@ namespace PushEngine.Demos
 
         private void CreateBoard()
         {
-			for (int y = 0; y < nLines; y++)
+            for (int y = 0; y < nLines; y++)
             {
                 for (int x = 0; x < nCols; x++)
                 {

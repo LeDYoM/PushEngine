@@ -19,12 +19,12 @@ namespace PushEngine
 
         public virtual void Start()
         {
-            sceneDirector.InternalOnStart();
+            sceneDirector.OnStart();
         }
 
         public virtual void OnKey(KeyEventData kev_)
         {
-            sceneDirector.InternalOnKey(kev_);
+            sceneDirector.OnKey(kev_);
         }
 
         public virtual string Name()

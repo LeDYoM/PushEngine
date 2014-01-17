@@ -5,7 +5,7 @@ using PushEngine.Events;
 
 namespace PushEngine.Containers
 {
-	public class Container : ClientLogicImplementer
+	public class Container
     {
         protected List<Container> elements = new List<Container>();
         protected Matrix4d matrix = Matrix4d.Identity;
@@ -33,16 +33,14 @@ namespace PushEngine.Containers
             FinishContainer();
         }
 
-		internal override void InternalOnStart()
+		internal virtual void OnStart()
         {
-			base.InternalOnStart ();
-            elements.ForEach(x => x.InternalOnStart());
+            elements.ForEach(x => x.OnStart());
         }
 
-		internal override void InternalOnKey(KeyEventData kev_)
+		internal virtual void OnKey(KeyEventData kev_)
         {
-			base.InternalOnKey (kev_);
-            elements.ForEach(x => x.InternalOnKey(kev_));
+            elements.ForEach(x => x.OnKey(kev_));
         }
     }
 }
