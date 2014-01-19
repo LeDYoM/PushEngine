@@ -74,11 +74,11 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="Containers\Container.cs" />
+    <Compile Include="Containers\TContainer.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Draw\DrawableElement.cs" />
     <Compile Include="Draw\View.cs" />
     <Compile Include="Events\KeyEventData.cs" />
-    <Compile Include="INamedObject.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="Draw\IUpdateAndRender.cs" />
     <Compile Include="Draw\Material.cs" />
@@ -103,6 +103,5 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Types\" />
-    <Folder Include="Demos\Zooper\" />
   </ItemGroup>
 </Project>

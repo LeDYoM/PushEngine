@@ -5,12 +5,13 @@ using PushEngine.Events;
 
 namespace PushEngine.Containers
 {
-	public class Container
+    public class TContainer<T> where T : Container
     {
-        protected List<Container> elements = new List<Container>();
+        protected List<T> elements = new List<T>();
         protected Matrix4d matrix = Matrix4d.Identity;
         protected Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
         public string Name { get; set; }
+
 
         public virtual void StartContainer()
         {
@@ -24,8 +25,8 @@ namespace PushEngine.Containers
 
         public virtual void Update()
         {
-			elements.ForEach(x => x.Update());
-		}
+            elements.ForEach(x => x.Update());
+        }
 
         public virtual void Render()
         {
@@ -34,12 +35,12 @@ namespace PushEngine.Containers
             FinishContainer();
         }
 
-		internal virtual void OnStart()
+        internal virtual void OnStart()
         {
             elements.ForEach(x => x.OnStart());
         }
 
-		internal virtual void OnKey(KeyEventData kev_)
+        internal virtual void OnKey(KeyEventData kev_)
         {
             elements.ForEach(x => x.OnKey(kev_));
         }

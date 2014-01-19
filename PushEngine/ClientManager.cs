@@ -19,8 +19,7 @@ namespace PushEngine
 
         internal void Start()
         {
-//            StartNewProcess(new Blocker());
-            StartNewProcess(new Zooper());
+            StartNewProcess(new PushEngine.Demos.Zooper.Zooper());
         }
 
         internal void StartNewProcess(Client newP)

@@ -7,26 +7,17 @@ using System.Drawing;
 
 namespace PushEngine.Draw
 {
-	public class Scene : Container, INamedObject, IDisposable
+	public class Scene : TContainer<Container>, IDisposable
     {
         protected View perspectiveView = new View();
-
         public View SceneView { get { return perspectiveView; } }
 
-        public string Name
-        {
-            get;
-            internal set;
-        }
+        public Scene() { }
 
-        public Scene(string name_):base()
-        {
-            Name = name_;
-        }
-
-        internal T GetNewDrawElement<T>() where T : Container, new()
+        internal T GetNewDrawElement<T>(string name_) where T : Container, new()
         {
             T obj = new T();
+            obj.Name = name_;
             elements.Add(obj);
             return obj;
         }
