@@ -1,0 +1,6 @@
+/Users/iburgos/PushEngine/PushEngine/obj/x86/Debug/.NETFramework,Version=v4.0,Profile=Client.AssemblyAttribute.cs
+/Users/iburgos/PushEngine/PushEngine/bin/x86/Debug/PushEngine.exe.mdb
+/Users/iburgos/PushEngine/PushEngine/bin/x86/Debug/PushEngine.exe
+/Users/iburgos/PushEngine/PushEngine/obj/x86/Debug/PushEngine.exe
+/Users/iburgos/PushEngine/PushEngine/obj/x86/Debug/PushEngine.exe.mdb
+/Users/iburgos/PushEngine/PushEngine/bin/x86/Debug/OpenTK.dll

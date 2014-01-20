@@ -1,6 +1,7 @@
 using System;
 using PushEngine.Draw;
 using OpenTK.Graphics;
+using PushEngine.Events;
 
 namespace PushEngine.Demos.Zooper
 {
@@ -21,7 +22,7 @@ namespace PushEngine.Demos.Zooper
 		{
 		}
 
-		internal override void OnStart ()
+		public override void OnStart ()
 		{
 			base.OnStart ();
 
@@ -41,7 +42,7 @@ namespace PushEngine.Demos.Zooper
             player.CreateSprite(new System.Drawing.SizeF(pWidth, pHeight), Color4.Aqua);
             player.PositionX = pPositionX;
             player.PositionY = pPositionY;
-
+			/*
             player.OnKey = delegate(KeyEventData kev_)
             {
                 if (kev_.kData.KState == KeyData.KeyState.Pressing)
@@ -65,6 +66,7 @@ namespace PushEngine.Demos.Zooper
                     }
                 }
             };
+            */
         }
 
         private void CreateBall()
@@ -73,14 +75,14 @@ namespace PushEngine.Demos.Zooper
 
         private void CreateBlock(int x, int y)
         {
-            Sprite block = sceneDirector.CurrentScene.GetNewDrawElement<Sprite>();
+			Sprite block = GetNewDrawElement<Sprite>("block");
             block.CreateSprite(new System.Drawing.SizeF(qWidth, qHeight),
                 x % 2 == 0 ?
                 (y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));
             block.Width = qWidth;
             block.Height = qHeight;
-            block.LeftPosition = sceneDirector.CurrentScene.SceneView.TopLeft.X + (x * qWidth);
-            block.TopPosition = sceneDirector.CurrentScene.SceneView.TopLeft.Y - (y * qHeight);
+            block.LeftPosition = SceneView.TopLeft.X + (x * qWidth);
+            block.TopPosition = SceneView.TopLeft.Y - (y * qHeight);
         }
 
         private void CreateBoard()

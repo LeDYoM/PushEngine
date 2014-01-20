@@ -25,8 +25,8 @@ namespace PushEngine
         internal void StartNewProcess(Client newP)
         {
             clients.Add(newP);
-            Debug.Log("Created client with name:" + newP.Name());
-            Debug.Log("Client " + newP.Name());
+            PEDebug.Log("Created client with name:" + newP.Name());
+            PEDebug.Log("Client " + newP.Name());
             newP.Start();
         }
 

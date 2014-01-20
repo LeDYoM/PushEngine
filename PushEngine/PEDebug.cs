@@ -3,20 +3,20 @@ using System.Diagnostics;
 
 namespace PushEngine
 {
-    public static class Debug
+    public static class PEDebug
     {
         public static void Assert(bool condition, object o = null)
         {
             if (!condition)
             {
-                Debug.LogError(o);
+                PEDebug.LogError(o);
                 System.Diagnostics.Debug.Assert(condition);
             }
         }
 
         public static void LogError(object o)
         {
-            Debug.Log(o);
+            PEDebug.Log(o);
         }
 
         public static void Log(object o)

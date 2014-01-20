@@ -7,14 +7,14 @@ using System.Drawing;
 
 namespace PushEngine.Draw
 {
-	public class Scene : TContainer<Container>, IDisposable
+	public class Scene : TContainer<IContainer>, IDisposable
     {
         protected View perspectiveView = new View();
         public View SceneView { get { return perspectiveView; } }
 
         public Scene() { }
 
-        internal T GetNewDrawElement<T>(string name_) where T : Container, new()
+		internal T GetNewDrawElement<T>(string name_) where T : IContainer, new()
         {
             T obj = new T();
             obj.Name = name_;
@@ -40,10 +40,6 @@ namespace PushEngine.Draw
         {
             base.FinishContainer();
             renderer.PopPerspective();
-        }
-        internal List<Container> ActiveElements
-        {
-            get { return elements; } 
         }
 
         public void Dispose()

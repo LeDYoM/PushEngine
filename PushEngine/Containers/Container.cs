@@ -5,41 +5,38 @@ using PushEngine.Events;
 
 namespace PushEngine.Containers
 {
-	public class Container
+	public class Container : LeafContainer
     {
-        protected List<Container> elements = new List<Container>();
-        protected Matrix4d matrix = Matrix4d.Identity;
-        protected Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
-        public string Name { get; set; }
+		protected List<IContainer> elements = new List<IContainer>();
 
-        public virtual void StartContainer()
+		public override void StartContainer()
         {
             renderer.MultAndPushModelView(ref matrix);
         }
 
-        public virtual void FinishContainer()
+		public override void FinishContainer()
         {
             renderer.PopModelView();
         }
 
-        public virtual void Update()
+		public override void Update()
         {
 			elements.ForEach(x => x.Update());
 		}
 
-        public virtual void Render()
+		public override void Render()
         {
             StartContainer();
             elements.ForEach(x => x.Render());
             FinishContainer();
         }
 
-		internal virtual void OnStart()
+		public override void OnStart()
         {
             elements.ForEach(x => x.OnStart());
         }
 
-		internal virtual void OnKey(KeyEventData kev_)
+		public override void OnKey(KeyEventData kev_)
         {
             elements.ForEach(x => x.OnKey(kev_));
         }

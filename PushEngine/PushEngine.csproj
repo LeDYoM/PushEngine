@@ -75,7 +75,6 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Containers\Container.cs" />
     <Compile Include="Containers\TContainer.cs" />
-    <Compile Include="Debug.cs" />
     <Compile Include="Draw\DrawableElement.cs" />
     <Compile Include="Draw\View.cs" />
     <Compile Include="Events\KeyEventData.cs" />
@@ -99,6 +98,9 @@
     <Compile Include="TextureUtils.cs" />
     <Compile Include="Demos\Zooper\Zooper.cs" />
     <Compile Include="Demos\Zooper\GameScene.cs" />
+    <Compile Include="Containers\IContainer.cs" />
+    <Compile Include="Containers\LeafContainer.cs" />
+    <Compile Include="PEDebug.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
