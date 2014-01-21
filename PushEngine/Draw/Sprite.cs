@@ -39,7 +39,6 @@ namespace PushEngine.Draw
             vertex[1] = new Vector3d(w2, h2, 0);
             vertex[2] = new Vector3d(w2, h2 * -1, 0);
             vertex[3] = new Vector3d(w2 * -1, h2 * -1, 0);
-
         }
 
         protected void PostCreate()
@@ -65,7 +64,5 @@ namespace PushEngine.Draw
             material.PostRender();
             base.FinishContainer();
         }
-
-
     }
 }

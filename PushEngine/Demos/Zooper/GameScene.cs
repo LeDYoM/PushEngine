@@ -2,6 +2,7 @@ using System;
 using PushEngine.Draw;
 using OpenTK.Graphics;
 using PushEngine.Events;
+using PushEngine.Input;
 
 namespace PushEngine.Demos.Zooper
 {
@@ -35,6 +36,31 @@ namespace PushEngine.Demos.Zooper
 		}
 
         private const float pressRate = 0.7f;
+
+		public override void OnKey (KeyEventData kev_)
+		{
+			base.OnKey (kev_);
+			if (kev_.kData.KState == KeyData.KeyState.Pressing)
+			{
+				if (kev_.kData.KeyId == Key.A)
+				{
+					player.PositionX -= (frameData.ellapsedSinceLastFrame * pressRate);
+				}
+				else if (kev_.kData.KeyId == Key.D)
+				{
+					player.PositionX += (frameData.ellapsedSinceLastFrame * pressRate);
+				}
+
+				if (player.LeftPosition < SceneView.TopLeft.X)
+				{
+					player.LeftPosition = SceneView.TopLeft.X;
+				}
+				else if (player.RightPosition > SceneView.DownRight.X)
+				{
+					player.RightPosition = SceneView.DownRight.X;
+				}
+			}
+		}
 
         private void CreatePlayer()
         {
