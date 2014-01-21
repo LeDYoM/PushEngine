@@ -50,7 +50,8 @@ namespace PushEngine
 
         internal void OnRenderFrame(FrameEventArgs e)
         {
-            clients.ForEach(x => { x.frameData.Apply(e); x.Render(); });
+			FrameData.Apply (e);
+            clients.ForEach(x => { x.Render(); });
         }
 
         internal void Stop()

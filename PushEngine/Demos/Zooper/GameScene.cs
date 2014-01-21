@@ -44,11 +44,11 @@ namespace PushEngine.Demos.Zooper
 			{
 				if (kev_.kData.KeyId == Key.A)
 				{
-					player.PositionX -= (frameData.ellapsedSinceLastFrame * pressRate);
+					player.PositionX -= (FrameData.EllapsedSinceLastFrame * pressRate);
 				}
 				else if (kev_.kData.KeyId == Key.D)
 				{
-					player.PositionX += (frameData.ellapsedSinceLastFrame * pressRate);
+					player.PositionX += (FrameData.EllapsedSinceLastFrame * pressRate);
 				}
 
 				if (player.LeftPosition < SceneView.TopLeft.X)
