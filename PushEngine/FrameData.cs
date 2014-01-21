@@ -3,19 +3,21 @@ using OpenTK;
 
 namespace PushEngine
 {
-    public class FrameData
+	public static class FrameData
     {
-        public double ellapsedSinceStart = 0;
-        public double ellapsedSinceLastFrame = 0;
+		public static double EllapsedSinceStart { get; private set; }
+		public static double EllapsedSinceLastFrame { get; private set; }
 
-        internal FrameData()
+		static FrameData()
         {
+			EllapsedSinceStart = 0;
+			EllapsedSinceLastFrame = 0;
         }
 
-        internal void Apply(FrameEventArgs e)
+		internal static void Apply(FrameEventArgs e)
         {
-            ellapsedSinceStart += e.Time;
-            ellapsedSinceLastFrame = e.Time;
+            EllapsedSinceStart += e.Time;
+            EllapsedSinceLastFrame = e.Time;
         }
     }
 }

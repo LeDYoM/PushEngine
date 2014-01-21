@@ -10,7 +10,6 @@ namespace PushEngine
 {
     public class Client : IDisposable
     {
-        internal FrameData frameData = new FrameData();
         internal SceneDirector sceneDirector = new SceneDirector();
 
         public Client()
