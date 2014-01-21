@@ -73,7 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
-    <Compile Include="Containers\Container.cs" />
     <Compile Include="Containers\TContainer.cs" />
     <Compile Include="Draw\DrawableElement.cs" />
     <Compile Include="Draw\View.cs" />

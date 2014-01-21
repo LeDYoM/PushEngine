@@ -15,7 +15,7 @@ namespace PushEngine.Draw
         protected Vector3d[] vertex = null;
         protected int numVertex = 0;
 
-        public Container ParentContainer
+		public IContainer ParentContainer
         {
             internal set;
             get;

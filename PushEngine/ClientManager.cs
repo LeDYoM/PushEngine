@@ -12,7 +12,7 @@ namespace PushEngine
     {
         private List<Client> clients = new List<Client>();
 
-        internal List<Client> Clients
+		internal List<Client> Clients  
         {
             get { return clients; }
         }

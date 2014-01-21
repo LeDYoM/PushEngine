@@ -9,6 +9,7 @@ namespace PushEngine.Containers
 		protected Matrix4d matrix = Matrix4d.Identity;
 		protected Renderer renderer { get { return PushEngineCore.Instance.renderer; } }
 		public string Name { get; set; }
+		protected bool started = false;
 
 		public virtual void StartContainer()
 		{
@@ -32,6 +33,7 @@ namespace PushEngine.Containers
 
 		public virtual void OnStart()
 		{
+			started = true;
 		}
 
 		public virtual void OnKey(KeyEventData kev_)

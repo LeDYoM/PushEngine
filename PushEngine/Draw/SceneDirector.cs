@@ -33,6 +33,7 @@ namespace PushEngine.Draw
         {
             scenesStack.Push(scene);
             currentScene = scene;
+			currentScene.OnStart ();
             return scene;
         }
 
@@ -45,14 +46,13 @@ namespace PushEngine.Draw
 
 		public override void  OnStart()
         {
-            PEDebug.Assert(currentScene != null, "There is no scene on Start");
-            currentScene.OnStart();
+			base.OnStart ();
         }
 
 		public override void OnKey(KeyEventData kev_)
         {
-            PEDebug.Assert(currentScene != null, "There is no scene on Key");
-            currentScene.OnKey(kev_);
+			if (currentScene != null)
+	            currentScene.OnKey(kev_);
         }
 
         public override void Update()
