@@ -3,21 +3,24 @@ using PushEngine.Draw;
 using OpenTK.Graphics;
 using PushEngine.Events;
 using PushEngine.Input;
+using PushEngine.Draw.Components;
 
 namespace PushEngine.Demos.Zooper
 {
 	public class GameScene : Scene
 	{
         private Sprite player;
-        float qWidth = 0.05f;
-        float qHeight = 0.0625f;
+        float qWidth = 1f;
+        float qHeight = 1f;
+//        float qWidth = 0.05f;
+//        float qHeight = 0.0625f;
         float pWidth = 0.125f;
         float pHeight = 0.0625f;
         float pPositionX = 0.125f;
         float pPositionY = 0.25f;
 
-        int nLines = 5;
-        int nCols = 20;
+        int nLines = 1;
+        int nCols = 1;
 
 		public GameScene ()
 		{
@@ -68,31 +71,6 @@ namespace PushEngine.Demos.Zooper
             player.CreateSprite(new System.Drawing.SizeF(pWidth, pHeight), Color4.Aqua);
             player.PositionX = pPositionX;
             player.PositionY = pPositionY;
-			/*
-            player.OnKey = delegate(KeyEventData kev_)
-            {
-                if (kev_.kData.KState == KeyData.KeyState.Pressing)
-                {
-                    if (kev_.kData.KeyId == Key.A)
-                    {
-                        player.PositionX -= (frameData.ellapsedSinceLastFrame * pressRate);
-                    }
-                    else if (kev_.kData.KeyId == Key.D)
-                    {
-                        player.PositionX += (frameData.ellapsedSinceLastFrame * pressRate);
-                    }
-
-                    if (player.LeftPosition < sceneDirector.CurrentScene.SceneView.TopLeft.X)
-                    {
-                        player.LeftPosition = sceneDirector.CurrentScene.SceneView.TopLeft.X;
-                    }
-                    else if (player.RightPosition > sceneDirector.CurrentScene.SceneView.DownRight.X)
-                    {
-                        player.RightPosition = sceneDirector.CurrentScene.SceneView.DownRight.X;
-                    }
-                }
-            };
-            */
         }
 
         private void CreateBall()
@@ -113,14 +91,16 @@ namespace PushEngine.Demos.Zooper
 
         private void CreateBoard()
         {
+            ImageRenderer iRenderer = GetNewDrawElement<ImageRenderer>("imageRenderer");
+            iRenderer.Configure(nCols, nLines, new OpenTK.Vector2d(1, 1), false);
             for (int y = 0; y < nLines; y++)
             {
                 for (int x = 0; x < nCols; x++)
                 {
-                    CreateBlock(x, y);
+                    iRenderer.setFormColor(x % 2 == 0 ? (y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));
+//                    iRenderer.setTopLeftFormPosition(new OpenTK.Vector3d(SceneView.TopLeft.X + (x * qWidth), SceneView.TopLeft.Y + (x * qHeight), 0), x, y);
                 }
             }
         }
 	}
 }
-

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using PushEngine.Containers;
 using OpenTK;
 using OpenTK.Graphics;
@@ -6,113 +6,190 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PushEngine.Draw.Components
 {
-	public class ImageRenderer : LeafContainer
-	{
-		protected Material material;
+    public class ImageRenderer : LeafContainer
+    {
+        // Private properties
+        protected Vector3d[] vertex = null;
+        protected Color4[] color = null;
+        protected Vector2d[] uv = null;
+        protected Vector2d formSize;
+        protected Vector2d totalSize;
+        protected int numPoints = 0;
+        protected int numPolygons = 0;
+        protected int matrixSizeX = 0;
+        protected int matrixSizeY = 0;
 
-		// Private properties
-		protected Vector3d[] vertex = null;
-		protected Color4[] color;
-		protected int numEntities = 0;
-		protected int matrixSizeX = 0;
-		protected int matrixSizeY = 0;
-		protected int matrixSizeZ = 0;
+        private const int VertexPerForm = 4;
 
-		private const int VertexPerForm = 4; 
+        public ImageRenderer()
+        {
+        }
 
-		public ImageRenderer ()
-		{
-		}
+        public void Configure(Vector2d size, bool perForm)
+        {
+            Configure(1, 1, size, perForm);
+        }
 
-		public void Configure(Vector2d size, bool perForm)
-		{
-			Configure (1, 1, 1, size, perForm);
-		}
+        public void Configure(int numX, Vector2d size, bool perForm)
+        {
+            Configure(numX, 1, size, perForm);
+        }
 
-		public void Configure(int numX, Vector2d size, bool perForm)
-		{
-			Configure (numX, 1, 1, size, perForm);
-		}
+        public void Configure(int numX, int numY, Vector2d size, bool perForm)
+        {
+            PEDebug.Assert(numX > 0 && numY > 0, "numX and numY have to be > 0");
 
-		public void Configure(int numX, int numY, Vector2d size, bool perForm)
-		{
-			Configure (numX, numY, 1, size, perForm);
-		}
+            matrixSizeX = numX;
+            matrixSizeY = numY;
 
-		public void Configure(int numX, int numY, int numZ, Vector2d size, bool perForm)
-		{
-			PEDebug.Assert (numX > 0 && numY > 0, "numX and numY have to be > 0");
+            numPolygons = numX * numY;
+            numPoints = numPolygons * VertexPerForm;
+            vertex = new Vector3d[numPoints];
+            color = new Color4[numPoints];
+            uv = new Vector2d[numPoints];
 
-			matrixSizeX = numX;
-			matrixSizeY = numY;
-			matrixSizeZ = numZ;
+            formSize = new Vector2d(perForm ? size.X : (size.X / numX), perForm ? size.Y : (size.Y / numY));
+            totalSize = new Vector2d(perForm ? (size.X * numX) : size.X, perForm ? (size.Y / numY) : size.Y);
 
-			numEntities = numX * numY * *numZ * VertexPerForm;
-			vertex = new Vector3d[numEntities];
-			color = new Color4[numEntities];
+            setDefaults();
+        }
 
-			Vector2d formSize = new Vector2d (perForm ? size.X : (size.X / numX), perForm ? size.Y : (size.Y / numY));
-		}
+        private Vector2d defaultUVFor(int numVertexInPolygon)
+        {
+            switch (numVertexInPolygon % VertexPerForm)
+            {
+                case 0:
+                    return new Vector2d(0, 1);
+                case 1:
+                    return new Vector2d(1, 1);
+                case 2:
+                    return new Vector2d(1, 0);
+                case 3:
+                    return new Vector2d(0, 0);
+                default:
+                    return new Vector2d(0, 0);
+            }
+        }
 
-		public override void Render ()
-		{
-		}
+        private void setDefaults()
+        {
+            int count = 0;
 
-		private int indexFor(int z)
-		{
-			return z * (matrixSizeX * matrixSizeY);
-		}
+            double top = totalSize.Y * 0.5;
+            double bottom = totalSize.Y * -0.5;
+            double left = totalSize.X * -0.5;
+            double right = totalSize.X * 0.5;
 
-		private int indexFor(int y, int z)
-		{
-			return indexFor(z) + (y * matrixSizeX);
-		}
+            for (int x = 0; x < matrixSizeX; ++x)
+            {
+                for (int y = 0; y < matrixSizeY; ++y)
+                {
+                    for (int i = 0; i < VertexPerForm; ++i)
+                    {
+                        Vector3d temp;
+                        switch (i % VertexPerForm)
+                        {
+                            case 0:
+                                temp = new Vector3d(left + (x * formSize.X), top + (y * formSize.Y), 0);
+                                break;
+                            case 1:
+                                temp = new Vector3d(left + ((x + 1) * formSize.X), top - (y * formSize.Y), 0);
+                                break;
+                            case 2:
+                                temp = new Vector3d(left + ((x + 1) * formSize.X), top - ((y + 1) * formSize.Y), 0);
+                                break;
+                            case 3:
+                                temp = new Vector3d(left + (x * formSize.X), top - ((y + 1) * formSize.Y), 0);
+                                break;
+                            default:
+                                temp = new Vector3d(0, 0, 0);
+                                break;
+                        }
+                     
+                        setVertex(count, temp);
+                        setColor(count, Color4.White);
+                        setCoord(count, defaultUVFor(count));
+                        count++;
+                    }
+                }
+            }
+        }
 
+        public override void Render()
+        {
+            RenderPolygons(vertex, uv, color);
+        }
 
-		private int indexFor(int x, int y, int z)
-		{
-			return indexFor(y, z) + x;
-		}
+        private int indexFor(int y)
+        {
+            return (y * matrixSizeX);
+        }
 
-		public void RenderPolygon(Vector3d[] v, Vector2d[] t, Color4[] col)
-		{
-			int count = 0;
-			GL.Begin (BeginMode.Polygon);
-			for (int i = 0; i < VertexPerForm; ++i)
-			{
-				int index = i;
-				GL.TexCoord2(t[index]);
-				GL.Color4(vertex[index]);
-				GL.Vertex3(v[index]);
-			}
+        private int indexFor(int x, int y)
+        {
+            return indexFor(y) + x;
+        }
 
-			for (int z = 0; z < matrixSizeZ; ++z) 
-			{
-				for (int y = 0; x < matrixSizeY; ++y) 
-				{
-					for (int x = 0; x < matrixSizeX; ++x) 
-					{
+        public void setVertex(int index, Vector3d vertex_)
+        {
+            vertex[index] = vertex_;
+        }
 
-					}
-				}
-			}
+        public void setColor(int index, Color4 color_)
+        {
+            color[index] = color_;
+        }
 
-			GL.Begin(BeginMode.Quads);
-			GL.TexCoord2(t[0]);
-			GL.Color4(col[0]);
-			GL.Vertex3(v[0]);
-			GL.TexCoord2(t[1]);
-			GL.Color4(col[1]);
-			GL.Vertex3(v[1]);
-			GL.TexCoord2(t[2]);
-			GL.Color4(col[2]);
-			GL.Vertex3(v[2]);
-			GL.TexCoord2(t[3]);
-			GL.Color4(col[3]);
-			GL.Vertex3(v[3]);
-			GL.End();
-		}
+        public void setCoord(int index, Vector2d coords_)
+        {
+            uv[index] = coords_;
+        }
 
-	}
+        public void setTopLeftFormPosition(Vector3d position_, int x = 0, int y = 0)
+        {
+            int index = indexFor(x, y);
+
+            vertex[0].X = position_.X;
+            vertex[0].Y = position_.Y;
+
+            vertex[1].X = position_.X + formSize.X;
+            vertex[1].Y = position_.Y;
+
+            vertex[2].X = position_.X + formSize.X;
+            vertex[2].Y = position_.Y - formSize.Y;
+
+            vertex[3].X = position_.X;
+            vertex[3].Y = position_.Y - formSize.Y;
+        }
+
+        public void setFormColor(Color4 color_, int x = 0, int y = 0)
+        {
+            int baseIndex = indexFor(x, y);
+
+            for (int i = 0; i < VertexPerForm; ++i)
+            {
+                setColor(baseIndex + i, color_);
+            }
+        }
+
+        public void RenderPolygons(Vector3d[] vextex, Vector2d[] uv, Color4[] color)
+        {
+            int count = 0;
+
+            for (int i = 0; i < numPolygons; ++i)
+            {
+                GL.Begin(BeginMode.Polygon);
+
+                for (int j = 0; j < VertexPerForm; ++j)
+                {
+                    GL.TexCoord2(uv[count]);
+                    GL.Color4(color[count]);
+                    GL.Vertex3(vertex[count]);
+                    count++;
+                }
+                GL.End();
+            }
+        }
+    }
 }
 
