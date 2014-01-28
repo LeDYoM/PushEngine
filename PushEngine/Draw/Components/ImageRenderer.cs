@@ -90,7 +90,7 @@ namespace PushEngine.Draw.Components
                         switch (i % VertexPerForm)
                         {
                             case 0:
-                                temp = new Vector3d(left + (x * formSize.X), top + (y * formSize.Y), 0);
+							temp = new Vector3d(left + (x * formSize.X), top - (y * formSize.Y), 0);
                                 break;
                             case 1:
                                 temp = new Vector3d(left + ((x + 1) * formSize.X), top - (y * formSize.Y), 0);
@@ -110,6 +110,8 @@ namespace PushEngine.Draw.Components
                         setColor(count, Color4.White);
                         setCoord(count, defaultUVFor(count));
                         count++;
+
+						PEDebug.Log ("Vertex " + count + ": " + temp);
                     }
                 }
             }
@@ -122,12 +124,12 @@ namespace PushEngine.Draw.Components
 
         private int indexFor(int y)
         {
-            return (y * matrixSizeX);
+			return (y * matrixSizeX * VertexPerForm);
         }
 
         private int indexFor(int x, int y)
         {
-            return indexFor(y) + x;
+			return indexFor(y) + (x * VertexPerForm);
         }
 
         public void setVertex(int index, Vector3d vertex_)
@@ -145,23 +147,6 @@ namespace PushEngine.Draw.Components
             uv[index] = coords_;
         }
 
-        public void setTopLeftFormPosition(Vector3d position_, int x = 0, int y = 0)
-        {
-            int index = indexFor(x, y);
-
-            vertex[0].X = position_.X;
-            vertex[0].Y = position_.Y;
-
-            vertex[1].X = position_.X + formSize.X;
-            vertex[1].Y = position_.Y;
-
-            vertex[2].X = position_.X + formSize.X;
-            vertex[2].Y = position_.Y - formSize.Y;
-
-            vertex[3].X = position_.X;
-            vertex[3].Y = position_.Y - formSize.Y;
-        }
-
         public void setFormColor(Color4 color_, int x = 0, int y = 0)
         {
             int baseIndex = indexFor(x, y);
@@ -176,7 +161,7 @@ namespace PushEngine.Draw.Components
         {
             int count = 0;
 
-            for (int i = 0; i < numPolygons; ++i)
+			for (int i = 0; i < numPolygons; ++i)
             {
                 GL.Begin(BeginMode.Polygon);
 

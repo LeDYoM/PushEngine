@@ -19,8 +19,8 @@ namespace PushEngine.Demos.Zooper
         float pPositionX = 0.125f;
         float pPositionY = 0.25f;
 
-        int nLines = 1;
-        int nCols = 1;
+		int nLines = 10;
+		int nCols = 10;
 
 		public GameScene ()
 		{
@@ -97,7 +97,7 @@ namespace PushEngine.Demos.Zooper
             {
                 for (int x = 0; x < nCols; x++)
                 {
-                    iRenderer.setFormColor(x % 2 == 0 ? (y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet));
+					iRenderer.setFormColor(x % 2 == 0 ? (y % 2 == 0 ? Color4.Red : Color4.Blue) : (y % 2 == 0 ? Color4.Yellow : Color4.Violet), x, y);
 //                    iRenderer.setTopLeftFormPosition(new OpenTK.Vector3d(SceneView.TopLeft.X + (x * qWidth), SceneView.TopLeft.Y + (x * qHeight), 0), x, y);
                 }
             }
