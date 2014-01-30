@@ -75,13 +75,9 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Containers\TContainer.cs" />
     <Compile Include="Draw\Components\ImageRenderer.cs" />
-    <Compile Include="Draw\DrawableElement.cs" />
     <Compile Include="Draw\View.cs" />
     <Compile Include="Events\KeyEventData.cs" />
     <Compile Include="Renderer.cs" />
-    <Compile Include="Draw\IUpdateAndRender.cs" />
-    <Compile Include="Draw\Material.cs" />
-    <Compile Include="Draw\Sprite.cs" />
     <Compile Include="Draw\Scene.cs" />
     <Compile Include="FrameData.cs" />
     <Compile Include="Input\Key.cs" />
@@ -101,6 +97,7 @@
     <Compile Include="Containers\IContainer.cs" />
     <Compile Include="Containers\LeafContainer.cs" />
     <Compile Include="PEDebug.cs" />
+    <Compile Include="Draw\Components\DynamicImageRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

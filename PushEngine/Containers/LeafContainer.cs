@@ -11,6 +11,24 @@ namespace PushEngine.Containers
 		public string Name { get; set; }
 		protected bool started = false;
 
+		public double PositionX
+		{
+			get { return matrix.M41; }
+			set
+			{
+				matrix.M41 = value;
+			}
+		}
+
+		public double PositionY
+		{
+			get { return matrix.M42; }
+			set
+			{
+				matrix.M42 = value;
+			}
+		}
+
 		public virtual void StartContainer()
 		{
 			renderer.MultAndPushModelView(ref matrix);

@@ -24,7 +24,7 @@ namespace PushEngine
             if (o != null)
             {
                 string output = extraInfo() + o.ToString();
-                System.Diagnostics.Debug.WriteLine(output);
+				//                System.Diagnostics.Debug.WriteLine(output);
                 Console.WriteLine(output);
             }
         }
