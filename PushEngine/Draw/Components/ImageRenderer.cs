@@ -6,20 +6,22 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PushEngine.Draw.Components
 {
-    public class ImageRenderer : LeafContainer
+	public class ImageRenderer : LeafContainer
     {
-        // Private properties
-        protected Vector3d[] vertex = null;
+		protected Vector3d[] vertex = null;
         protected Color4[] color = null;
         protected Vector2d[] uv = null;
         protected Vector2d formSize;
         protected Vector2d totalSize;
+		protected Vector2d TopLeft;
+		protected bool[] visible;
         protected int numPoints = 0;
         protected int numPolygons = 0;
         protected int matrixSizeX = 0;
         protected int matrixSizeY = 0;
+		protected bool visibleChanged = false;
 
-        private const int VertexPerForm = 4;
+		protected const int VertexPerForm = 4;
 
         public ImageRenderer()
         {
@@ -47,12 +49,35 @@ namespace PushEngine.Draw.Components
             vertex = new Vector3d[numPoints];
             color = new Color4[numPoints];
             uv = new Vector2d[numPoints];
+			visible = new bool[numPolygons];
 
             formSize = new Vector2d(perForm ? size.X : (size.X / numX), perForm ? size.Y : (size.Y / numY));
             totalSize = new Vector2d(perForm ? (size.X * numX) : size.X, perForm ? (size.Y / numY) : size.Y);
+			TopLeft.Y = 0 + (totalSize.Y * 0.5);
+			TopLeft.X = 0 - (totalSize.X * 0.5);
 
             setDefaults();
         }
+
+		public void setAllVisible(bool value_)
+		{
+			for (int i = 0; i < numPolygons; ++i)
+			{
+				visible = value_;
+			}
+			visibleChanged = true;
+		}
+
+		public void setVisibility(bool value_, int x = 0, int y = 0)
+		{
+			int temp = indexForPolygon (x, y);
+			if (visible [temp] != value_)
+			{
+				visible [temp] = value_;
+				visibleChanged = true;
+			}
+
+		}
 
         private Vector2d defaultUVFor(int numVertexInPolygon)
         {
@@ -74,11 +99,7 @@ namespace PushEngine.Draw.Components
         private void setDefaults()
         {
             int count = 0;
-
-            double top = totalSize.Y * 0.5;
-            double bottom = totalSize.Y * -0.5;
-            double left = totalSize.X * -0.5;
-            double right = totalSize.X * 0.5;
+			Vector3d temp;
 
             for (int x = 0; x < matrixSizeX; ++x)
             {
@@ -86,20 +107,19 @@ namespace PushEngine.Draw.Components
                 {
                     for (int i = 0; i < VertexPerForm; ++i)
                     {
-                        Vector3d temp;
                         switch (i % VertexPerForm)
                         {
                             case 0:
-							temp = new Vector3d(left + (x * formSize.X), top - (y * formSize.Y), 0);
+							temp = new Vector3d(TopLeft.X + (x * formSize.X), TopLeft.Y - (y * formSize.Y), 0);
                                 break;
                             case 1:
-                                temp = new Vector3d(left + ((x + 1) * formSize.X), top - (y * formSize.Y), 0);
+							temp = new Vector3d(TopLeft.X + ((x + 1) * formSize.X), TopLeft.Y - (y * formSize.Y), 0);
                                 break;
                             case 2:
-                                temp = new Vector3d(left + ((x + 1) * formSize.X), top - ((y + 1) * formSize.Y), 0);
+							temp = new Vector3d(TopLeft.X + ((x + 1) * formSize.X), TopLeft.Y - ((y + 1) * formSize.Y), 0);
                                 break;
                             case 3:
-                                temp = new Vector3d(left + (x * formSize.X), top - ((y + 1) * formSize.Y), 0);
+							temp = new Vector3d(TopLeft.X + (x * formSize.X), TopLeft.Y - ((y + 1) * formSize.Y), 0);
                                 break;
                             default:
                                 temp = new Vector3d(0, 0, 0);
@@ -131,6 +151,16 @@ namespace PushEngine.Draw.Components
         {
 			return indexFor(y) + (x * VertexPerForm);
         }
+
+		private int indexForPolygon(int y)
+		{
+			return (y * matrixSizeX);
+		}
+
+		private int indexForPolygon(int x, int y)
+		{
+			return indexForPolygon(y) + x;
+		}
 
         public void setVertex(int index, Vector3d vertex_)
         {
