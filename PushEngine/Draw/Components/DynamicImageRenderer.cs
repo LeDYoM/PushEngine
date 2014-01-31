@@ -6,70 +6,46 @@ using OpenTK.Graphics.OpenGL;
 
 namespace PushEngine.Draw.Components
 {
-	public class DynamicImageRenderer : ImageRenderer
+	public class DynamicImageRenderer
 	{
-		protected bool visibleChanged = false;
+		protected Vector3d[] vertex = null;
+		protected Color4[] color = null;
+		protected Vector2d[] uv = null;
+		protected Vector2d formSize;
+		protected Vector2d totalSize;
+		protected Vector2d TopLeft;
+		protected bool[] visible;
+		protected int numPoints = 0;
+		protected int numPolygons = 0;
+		protected int matrixSizeX = 0;
+		protected int matrixSizeY = 0;
+
+		protected const int VertexPerForm = 4;
 
 		public DynamicImageRenderer()
 		{
 		}
 
-		public void setAllVisible(bool value_)
+		public void Configure(Vector2d formSize_, Vector2d totalSize_, int reserveElements = 10)
 		{
-			for (int i = 0; i < numPolygons; ++i)
-			{
-				visible = value_;
-			}
-			visibleChanged = true;
+			PEDebug.Assert(size.X > 0.0000f && size.Y > 0.0000f, "Size has to be > 0 in both coordinates");
+			PEDebug.Assert(reserveElements > 0, "You cannot start reserving 0 elements");
+
+			numPolygons = reserveElements;
+			numPoints = numPolygons * VertexPerForm;
+			vertex = new Vector3d[numPoints];
+			color = new Color4[numPoints];
+			uv = new Vector2d[numPoints];
+			visible = new bool[numPolygons];
+
+			formSize = formSize_;
+			totalSize = totalSize_;
+			TopLeft.Y = 0 + (totalSize.Y * 0.5);
+			TopLeft.X = 0 - (totalSize.X * 0.5);
+
+			setDefaults();
 		}
 
-		public void setVisibility(bool value_, int x = 0, int y = 0)
-		{
-			int temp = indexForPolygon (x, y);
-			if (visible [temp] != value_)
-			{
-				visible [temp] = value_;
-				visibleChanged = true;
-			}
-		}
-
-		private void updateIfNecessary()
-		{
-		}
-
-		public override void Render()
-		{
-			RenderPolygons(vertex, uv, color);
-		}
-
-		private int indexForPolygon(int y)
-		{
-			return (y * matrixSizeX);
-		}
-
-		private int indexForPolygon(int x, int y)
-		{
-			return indexForPolygon(y) + x;
-		}
-
-		public void RenderPolygons(Vector3d[] vextex, Vector2d[] uv, Color4[] color)
-		{
-			int count = 0;
-
-			for (int i = 0; i < numPolygons; ++i)
-			{
-				GL.Begin(BeginMode.Polygon);
-
-				for (int j = 0; j < VertexPerForm; ++j)
-				{
-					GL.TexCoord2(uv[count]);
-					GL.Color4(color[count]);
-					GL.Vertex3(vertex[count]);
-					count++;
-				}
-				GL.End();
-			}
-		}
 	}
 }
 

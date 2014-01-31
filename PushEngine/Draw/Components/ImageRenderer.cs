@@ -19,7 +19,6 @@ namespace PushEngine.Draw.Components
         protected int numPolygons = 0;
         protected int matrixSizeX = 0;
         protected int matrixSizeY = 0;
-		protected bool visibleChanged = false;
 
 		protected const int VertexPerForm = 4;
 
@@ -58,26 +57,6 @@ namespace PushEngine.Draw.Components
 
             setDefaults();
         }
-
-		public void setAllVisible(bool value_)
-		{
-			for (int i = 0; i < numPolygons; ++i)
-			{
-				visible = value_;
-			}
-			visibleChanged = true;
-		}
-
-		public void setVisibility(bool value_, int x = 0, int y = 0)
-		{
-			int temp = indexForPolygon (x, y);
-			if (visible [temp] != value_)
-			{
-				visible [temp] = value_;
-				visibleChanged = true;
-			}
-
-		}
 
         private Vector2d defaultUVFor(int numVertexInPolygon)
         {
