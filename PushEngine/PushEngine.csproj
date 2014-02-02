@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="Containers\TContainer.cs" />
+    <Compile Include="Draw\Components\FitDynamicImageRenderer.cs" />
     <Compile Include="Draw\Components\ImageRenderer.cs" />
     <Compile Include="Draw\View.cs" />
     <Compile Include="Events\KeyEventData.cs" />
