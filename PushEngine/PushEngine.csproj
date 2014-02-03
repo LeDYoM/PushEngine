@@ -99,6 +99,7 @@
     <Compile Include="PEDebug.cs" />
     <Compile Include="Draw\Components\DynamicImageRenderer.cs" />
     <Compile Include="Draw\Components\BaseImageRenderer.cs" />
+    <Compile Include="Demos\Zooper\TokenGroup.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
