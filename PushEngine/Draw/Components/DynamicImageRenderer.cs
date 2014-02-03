@@ -3,37 +3,43 @@ using PushEngine.Containers;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using System.Collections.Generic;
 
 namespace PushEngine.Draw.Components
 {
-	public class DynamicImageRenderer
+	public class DynamicImageRenderer : BaseImageRenderer
 	{
-		protected Vector3d[] vertex = null;
-		protected Color4[] color = null;
-		protected Vector2d[] uv = null;
-		protected Vector2d defaultFormSize;
-		protected int numPoints = 0;
-		protected int numPolygons = 0;
-
-		protected const int VertexPerForm = 4;
-
+		private int maxImages = 0;
 		public DynamicImageRenderer()
 		{
 		}
 
-        public virtual void Configure(Vector2d defaultFormSize_, int reserveElements = 10)
+		public void Configure(Vector2d totalSize_, Vector2d defaultFormSize_, int maxImages_)
 		{
             PEDebug.Assert(defaultFormSize_.X > 0.0000f && defaultFormSize_.Y > 0.0000f, "formSize_ has to be > 0 in both coordinates");
-			PEDebug.Assert(reserveElements > 0, "You cannot start reserving 0 elements");
+			PEDebug.Assert(totalSize_.X > 0.0000f && totalSize_.Y > 0.0000f, "totalSize_ has to be > 0 in both coordinates");
 
-			numPolygons = reserveElements;
-			numPoints = numPolygons * VertexPerForm;
+			maxImages = maxImages_;
+			numPolygons = 0;
+			numPoints = maxImages * VertexPerForm;
 			vertex = new Vector3d[numPoints];
 			color = new Color4[numPoints];
 			uv = new Vector2d[numPoints];
 
             defaultFormSize = defaultFormSize_;
+			totalSize = totalSize_;
+			TopLeft.Y = 0 + (totalSize.Y * 0.5);
+			TopLeft.X = 0 - (totalSize.X * 0.5);
         }
+
+		public void AddImageInMatrix(int x, int y)
+		{
+			if (numPolygons < maxImages)
+			{
+				numPolygons++;
+				AddImageInXY (x, y);
+			}
+		}
 	}
 }
 
