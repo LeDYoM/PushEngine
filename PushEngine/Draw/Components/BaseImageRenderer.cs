@@ -42,18 +42,40 @@ namespace PushEngine.Draw.Components
 			}
 		}
 
-		protected Vector3d defaultPositionFor(int vertexIndex, int x, int y)
+		protected Vector3d defaultPositionFor(int vertexIndex, int x, int y, Vector2d? size)
 		{
+			Vector2d temp = size ?? defaultFormSize;
+
 			switch (vertexIndex % VertexPerForm)
 			{
 			case 0:
-				return new Vector3d(TopLeft.X + (x * defaultFormSize.X), TopLeft.Y - (y * defaultFormSize.Y), 0);
+				return new Vector3d(TopLeft.X + (x * temp.X), TopLeft.Y - (y * temp.Y), 0);
 			case 1:
-				return new Vector3d(TopLeft.X + ((x + 1) * defaultFormSize.X), TopLeft.Y - (y * defaultFormSize.Y), 0);
+				return new Vector3d(TopLeft.X + ((x + 1) * temp.X), TopLeft.Y - (y * temp.Y), 0);
 			case 2:
-				return new Vector3d(TopLeft.X + ((x + 1) * defaultFormSize.X), TopLeft.Y - ((y + 1) * defaultFormSize.Y), 0);
+				return new Vector3d(TopLeft.X + ((x + 1) * temp.X), TopLeft.Y - ((y + 1) * temp.Y), 0);
 			case 3:
-				return new Vector3d(TopLeft.X + (x * defaultFormSize.X), TopLeft.Y - ((y + 1) * defaultFormSize.Y), 0);
+				return new Vector3d(TopLeft.X + (x * temp.X), TopLeft.Y - ((y + 1) * temp.Y), 0);
+			default:
+				return new Vector3d(0, 0, 0);
+			}
+		}
+
+		protected Vector3d defaultPositionFor(int vertexIndex, Vector2d? size)
+		{
+			Vector2d temp = size ?? defaultFormSize;
+			Vector2d halfSize = temp / 2.0;
+
+			switch (vertexIndex % VertexPerForm)
+			{
+			case 0:
+				return new Vector3d(halfSize.X * -1, halfSize.Y, 0);
+			case 1:
+				return new Vector3d(halfSize.X,  halfSize.Y, 0);
+			case 2:
+				return new Vector3d(halfSize.X,  halfSize.Y * -1, 0);
+			case 3:
+				return new Vector3d(halfSize.X * -1, halfSize.Y * -1, 0);
 			default:
 				return new Vector3d(0, 0, 0);
 			}
@@ -99,17 +121,32 @@ namespace PushEngine.Draw.Components
 			uv[index] = coords_;
 		}
 
-		protected void AddImageInXY(int x, int y)
+		protected void AddImageInXY(int x, int y, Vector2d? size_ = null)
 		{
 			int count = indexFor (x, y);
 			for (int i = 0; i < VertexPerForm; ++i)
 			{
-				setVertex(count, defaultPositionFor (i, x, y));
+				setVertex(count, defaultPositionFor (i, x, y, size_));
 				setColor(count, Color4.White);
 				setCoord(count, defaultUVFor(count));
 				count++;
 
-				PEDebug.Log ("Vertex " + count + ": " + defaultPositionFor (i, x, y));
+				PEDebug.Log ("Vertex " + count + ": " + defaultPositionFor (i, x, y, size_));
+			}
+		}
+
+		protected void AddImage(Vector2d? size_)
+		{
+			int count = numPolygons * VertexPerForm;
+
+			for (int i = 0; i < VertexPerForm; ++i)
+			{
+				setVertex(count, defaultPositionFor (i, size_));
+				setColor(count, Color4.White);
+				setCoord(count, defaultUVFor(count));
+				count++;
+
+				PEDebug.Log ("Vertex " + count + ": " + defaultPositionFor (i, size_));
 			}
 		}
 

@@ -40,6 +40,14 @@ namespace PushEngine.Draw.Components
 				AddImageInXY (x, y);
 			}
 		}
+
+		public void AddNewImage(Vector2d? size_)
+		{
+			if (numPolygons < maxImages)
+			{
+				numPolygons++;
+				AddImage (size_);
+			}
+		}
 	}
 }
-
