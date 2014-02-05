@@ -131,6 +131,7 @@ namespace PushEngine.Demos.Zooper
 
 		public void Add(int p, int type_)
 		{
+			PEDebug.Log ("Going to add: " + p + " type: " + type_);
 			switch (direction)
 			{
 				case Direction.Left:
@@ -146,7 +147,13 @@ namespace PushEngine.Demos.Zooper
 					AddToTop (p, type_);
 					break;
 			}
+		}
 
+		public void AddRandom(int type_)
+		{
+			int max = isVertical ? width : height;
+
+			Add (RandomGenerator.IntWithMax (max));
 		}
 	}
 }

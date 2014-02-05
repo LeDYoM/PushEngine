@@ -100,6 +100,8 @@
     <Compile Include="Draw\Components\DynamicImageRenderer.cs" />
     <Compile Include="Draw\Components\BaseImageRenderer.cs" />
     <Compile Include="Demos\Zooper\TokenGroup.cs" />
+    <Compile Include="RandomGenerator.cs" />
+    <Compile Include="Demos\Zooper\Level.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
