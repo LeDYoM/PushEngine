@@ -10,25 +10,24 @@ namespace PushEngine.Demos.Zooper
 	{
 		private DynamicImageRenderer diRenderer;
 		private List<List<int>> model = new List<List<int>>();
-		private int width = 0;
-		private int height = 0;
+		private Rectangle rect;
 
 		public enum Direction
 		{
 			Left,
 			Right,
 			Up,
-			Down
+			Down,
 		};
+
 
 		private Direction direction;
 
-		public TokenGroup (Scene parent, int x_, int y_, Direction direction_)
+		public TokenGroup (Scene parent, Rectangle rect_, Direction direction_)
 		{
 			parent.GetNewDrawElement<DynamicImageRenderer> ("TokenGroup");
 
-			width = x_;
-			height = y_;
+			rect = rect_;
 			direction = direction_;
 
 			ResetModel ();
@@ -38,10 +37,10 @@ namespace PushEngine.Demos.Zooper
 		{
 			model.Clear ();
 
-			for (int x_ = width; x_ < width; ++x_) {
+			for (int x_ = 0; x_ < rect.Width; ++x_) {
 				model.Add (new List<int> ());
-				for (int y_ = height; y_ < height; ++y_) {
-					model [width].Add (0);
+				for (int y_ = 0; y_ < rect.Height; ++y_) {
+					model [x].Add (0);
 				}
 			}
 		}
@@ -70,9 +69,9 @@ namespace PushEngine.Demos.Zooper
 
 		private void AddToRight(int line, int type_)
 		{
-			setTokenInModel (new Point (width - 1, line), type_);
+			setTokenInModel (new Point (rect.Width - 1, line), type_);
 
-			for (int x = 0; x <  width; ++x) {
+			for (int x = 0; x <  rect.Width; ++x) {
 				if (model [x] [line] != 0) {
 					if (x == 0) {
 						EndReached (new Point (x, line));
@@ -87,9 +86,9 @@ namespace PushEngine.Demos.Zooper
 		{
 			setTokenInModel (new Point (0, line), type_);
 
-			for (int x = width - 1; x > -1 ; --x) {
+			for (int x = rect.Width - 1; x > -1 ; --x) {
 				if (model [x] [line] != 0) {
-					if (x == (width - 1)) {
+					if (x == (rect.Width - 1)) {
 						EndReached (new Point (x, line));
 						model [x] [line] = 0;
 					}
@@ -101,9 +100,9 @@ namespace PushEngine.Demos.Zooper
 
 		private void AddToBottom(int column, int type_)
 		{
-			setTokenInModel (new Point (column, height - 1), type_);
+			setTokenInModel (new Point (column, rect.Height - 1), type_);
 
-			for (int y = 0; y <  height; ++y) {
+			for (int y = 0; y <  rect.Height; ++y) {
 				if (model [column] [y] != 0) {
 					if (y == 0) {
 						EndReached (new Point (column, y));
@@ -118,9 +117,9 @@ namespace PushEngine.Demos.Zooper
 		{
 			setTokenInModel (new Point (column, 0), type_);
 
-			for (int y = height - 1; y > -1; --y) {
+			for (int y = rect.Height - 1; y > -1; --y) {
 				if (model [column] [y] != 0) {
-					if (y == (height - 1)) {
+					if (y == (rect.Height - 1)) {
 						EndReached (new Point (column, y));
 						model [column] [y] = 0;
 					}
@@ -151,7 +150,7 @@ namespace PushEngine.Demos.Zooper
 
 		public void AddRandom(int type_)
 		{
-			int max = isVertical ? width : height;
+			int max = isVertical ? rect.Width : rect.Height;
 
 			Add (RandomGenerator.IntWithMax (max));
 		}
