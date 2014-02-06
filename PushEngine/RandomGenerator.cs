@@ -4,7 +4,7 @@ namespace PushEngine
 {
 	public static class RandomGenerator
 	{
-		private Random rand = new Random();
+		private static Random rand = new Random();
 
 		public static int IntInRange(int min, int max)
 		{
