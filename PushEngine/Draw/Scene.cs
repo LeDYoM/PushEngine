@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using PushEngine.Containers;
@@ -11,8 +11,15 @@ namespace PushEngine.Draw
     {
         protected View perspectiveView = new View();
         public View SceneView { get { return perspectiveView; } }
+		protected List<Timer> timers = new List<Timer>();
 
         public Scene() { }
+
+		public Timer newTimer()
+		{
+			timers.Add (new Timer ());
+			return timers[timers.Count - 1];
+		}
 
 		internal T GetNewDrawElement<T>(string name_) where T : IContainer, new()
         {
@@ -41,6 +48,15 @@ namespace PushEngine.Draw
             base.FinishContainer();
             renderer.PopPerspective();
         }
+
+		public override void Update ()
+		{
+			base.Update ();
+			foreach (Timer t in timers)
+			{
+				t.Update ();
+			}
+		}
 
         public void Dispose()
         {
