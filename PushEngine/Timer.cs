@@ -2,13 +2,18 @@ using System;
 
 namespace PushEngine
 {
-	public delegate void OnIntervalDelegate();
+    public struct TimerEventArgs : EventArgs
+    {
+
+    }
 
 	public class Timer
 	{
-		public uint Interval = 0;
-		public uint Ellapsed { get; private set; }
+		public double Interval = 0;
+		public double Ellapsed { get; private set; }
 		public bool IsActive { get; private set; }
+
+        public EventHandler<TimerEventArgs> OnInterval = null;
 
 		internal Timer ()
 		{
@@ -25,7 +30,7 @@ namespace PushEngine
 		{
 			if (IsActive) {
 				Ellapsed += FrameData.EllapsedSinceLastFrame;
-				if (Ellapsed >= Interval) {
+				if (Ellapsed > Interval) {
 					IsActive = false;
 				}
 			}
